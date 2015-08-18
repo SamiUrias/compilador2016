@@ -13,8 +13,19 @@ import java.util.logging.Logger;
  * @author Moises Urias
  */
 public class Subset{
-    ArrayList<Nodo> Nodo;
-    ArrayList<Transicion> transiciones;
+    /**
+     * Un ArrayList<Integer> nodos<p>
+     * Contiene un arreglo de los nododos que va a tener el subconjunto
+     */
+    ArrayList<Integer> Nodos = new ArrayList<Integer>();
+    
+    /**
+     * Un ArrayList<Transicion> transiciones<p>
+     * Contiene un arreglo de las transiciones que va a tener el subconjunto
+     */
+    ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
+    
+    
     
     public Subset() {}
     
@@ -24,14 +35,59 @@ public class Subset{
      * @param nodos
      * @param transiciones 
      */
-    public Subset(ArrayList nodos, ArrayList transiciones)
+    public Subset(int nodos, ArrayList transiciones)
     {
-        System.out.println("Se ha creado un subset");
+       this.Nodos.add(nodos);
+       this.transiciones = transiciones;
+        System.out.println("Se ha añadido un nodo al array de nodos");
+        
     }
 
+    /**
+     * Devuele un ArrayList con todas las transiciones del subset
+     * @return 
+     */
     public ArrayList<Transicion> getTransiciones() {
         return transiciones;
     }
+
+    /**
+     * Devuelve un ArrayList<Integer> de los nodos del subset
+     * @return 
+     */
+    public ArrayList<Integer> getNodos() {
+        return Nodos;
+    }
+
+    /**
+     * Añade un nuevo nodo al arrelgo de nodos del subset
+     * @param nodoFinal 
+     */
+    public void add(int nodoFinal) {
+        this.Nodos.add(nodoFinal);
+        System.out.println("Se ha insertado el nodo: " + nodoFinal);
+    }
+    
+    /**
+     * Este metodo combina dos subsets, añadiendo los nodos del subset ingresado
+     * al subset original.
+     * @param subset1 
+     */
+    public void combinar(Subset subset1)
+    {
+        
+        for(int i=0;i<subset1.getNodos().size();i++)
+        {
+            this.add(subset1.getNodos().get(i));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Subset{" + "Nodos=" + Nodos+ '}';
+    }
+    
+    
 
     
 }

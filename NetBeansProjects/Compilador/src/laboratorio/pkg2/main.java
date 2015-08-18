@@ -18,7 +18,7 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Itof it = new Itof();
+        
         
         // TODO code application logic here
         
@@ -95,8 +95,13 @@ public class main {
         }
         
         /*Crea un subset*/
+        System.out.println("El nodo inicial a introducir en el subset es: " +nodoinicial);
+       
+        System.out.println("La cantidad de transiciones en el automata es: " + aut.getTransiciones().size());
         Subset subset1 = new Subset(nodoinicial,aut.getTransiciones());
-        Subset moi = eClosure(subset1);
+        
+        Subset moi = OpExtra.eClosure(subset1);
+        System.out.println(moi);
     }
     
    
