@@ -27,18 +27,16 @@ public class main {
         long time = System.currentTimeMillis();
         
         
-        System.out.println("REGEX");
+        System.out.println("Ingrese la expresion regular: ");
         
         
-        /*Scanner scaner = new Scanner(System.in);
-        String cadena = scaner.nextLine();*/
+        Scanner scaner = new Scanner(System.in);
+        String cadena = scaner.nextLine();
         
-        String cadena = "(b | b)*abb(     a  | b ) * ";
-        System.out.println(cadena);
+        //String cadena = "(b | b)*abb(     a  | b ) * ";
         cadena = cadena.trim();
         cadena = cadena.replace(" ", "");
         
-        System.out.println(cadena);
         cadena = (RegexConverter.infixToPostfix(cadena));
         
         System.out.println("Cadena con posfix: \n" + cadena+"\n\n\n");
@@ -55,16 +53,10 @@ public class main {
         
                 
         System.out.println("\nLa cantidad de estados es: " + 
-                ContadorNodo.getContador());
-
-        
+                ContadorNodo.getContador()+"\n");
+ 
         aut = aut.automatas.pop(); 
-        
-        System.out.println("\nCantidad de transiciones: " + aut.transiciones.size());
-       
-      
-       
-        
+
         System.out.println("Las transiciones en el automata son: ");
         for (int i=0; i<aut.transiciones.size();i++)
         {   
@@ -72,9 +64,23 @@ public class main {
             System.out.println(i+": "+ aut.transiciones.get(i));
         }
         
-        System.out.println("El estado inicial es: " );
-        System.out.println("El estado final es: ");
+         
+        System.out.println("\nCantidad de transiciones: " + aut.transiciones.size()+"\n");
         
+        ArrayList<Nodo> arnodo = aut.getEstados();
+        int nodoinicial =0;
+        for (int i=0; i<arnodo.size();i++)
+        {
+            
+            if (arnodo.get(i).iseInicial() == true){
+                System.out.println("Estado inicial: " + arnodo.get(i).getId());
+                nodoinicial = arnodo.get(i).getId();
+            }
+            
+            if (arnodo.get(i).iseFinal() == true){
+                System.out.println("Estado final: " + arnodo.get(i).getId());
+            }
+        }
         
         
           /*Se resta el tiempo actual del sistema con el tiempo de inicio y ese
@@ -83,16 +89,7 @@ public class main {
         System.out.println("\nEl tiempo total del programa es: " + time + " milisegundos\n");
         
         
-        ArrayList<Nodo> arnodo = aut.getEstados();
-        int nodoinicial =0;
-        for (int i=0; i<arnodo.size();i++)
-        {
-            System.out.println("El nodo: " + arnodo.get(i).getId());
-            if (arnodo.get(i).iseInicial() == true){
-                System.out.println("Estado inicial: " + arnodo.get(i).getId());
-                nodoinicial = arnodo.get(i).getId();
-            }
-        }
+        
         
         /*Crea un subset*/
         System.out.println("El nodo inicial a introducir en el subset es: " +nodoinicial);

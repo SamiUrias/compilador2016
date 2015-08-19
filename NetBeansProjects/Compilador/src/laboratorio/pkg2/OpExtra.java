@@ -20,23 +20,18 @@ public class OpExtra {
      * @return  subset
      */
     public static Subset eClosure(Subset subset)
-    {
-        System.out.println("Dentro del eClosure");
-        ArrayList<Integer> yaEClosure = new ArrayList<Integer>();
-        ArrayList<Integer> noEClosure = new ArrayList<Integer>();
-        
+    {  
         /*Recorre todas las nodos del subset*/
         for (int i=0;i<subset.getNodos().size();i++)
         {
             /*Toma el nodo actual del ciclo*/
             int nodo = subset.getNodos().get(i);
-            System.out.println(nodo);
+            
             /*Se recorren todas las transiciones del subset para saber si alguna
                de esas transiciones corresponde al nodo seleccionado*/
-            System.out.println("La cantidad de transiciones es: " + subset.getTransiciones().size());
             for (int j=0;j<subset.getTransiciones().size();j++)
             {
-                System.out.println("T("+subset.transiciones.get(j)+")");
+               
                 /*Si la el nodo corresponde al nodo inicial de la transicion,
                    entonces se añade el nodo final de la transicion al subset
                    y se realiza un */
@@ -44,12 +39,21 @@ public class OpExtra {
                 {
                    if (subset.getTransiciones().get(j).getSimbolo().equals("!"))
                    {
-                       System.out.println("Se ha encontrado una transicion con epsilon");
                        /*Se añade el nodo ennconrado al subset*/
-                       subset.add(subset.getTransiciones().get(j).getNodoFinal());
+                       //subset.add(subset.getTransiciones().get(j).getNodoFinal());
                        
-                       /*Se hace un e-Closure del nodo encontrado*/
-                       //eClosure(subset.getTransiciones().get(j).getNodoFinal())
+                       if(!(subset.Nodos.contains(subset.getTransiciones().get(j).getNodoFinal())))
+                        {
+                            subset.getTransiciones().get(j).getNodoFinal();
+                        }
+                       /*Se crea un nuevo subset en base con base en el nodo 
+                         encontrado*/
+                        Subset temp = new Subset(subset.getTransiciones().
+                                get(j).getNodoFinal(),subset.getTransiciones());
+                        
+                       /*Se hace un e-Closure del nodo encontrado, y se combina 
+                        con el subset actual*/
+                       subset.combinarEClosure(eClosure(temp));
                        
                        
                        
@@ -61,6 +65,40 @@ public class OpExtra {
         return subset;
     }
     
+    
+    
+    
+    public static Subset move(Subset subset, String simbolo)
+    {
+        Subset subconjunto = new Subset();
+        
+        /*Se revisan todos los nodos del subset*/
+        for (int i =0; i<subset.Nodos.size();i++)
+        {
+            int nodo = subset.getNodos().get(i);
+            
+            /*Se revisan todas las transiciones del subset*/
+            for (int j =0;j<subset.getTransiciones().size();j++)
+            {
+                /*Se se encuentra una transicion en la que este implicado
+                  el nodo, entonces se procede a verificar si esa transicion
+                  ourre con el simbolo que se esta ingresando*/
+                if (nodo==subset.getTransiciones().get(j).getNodoInicial())
+                    {
+                       if (subset.getTransiciones().get(j).getSimbolo().equals(simbolo))
+                       {
+                           if(!(subconjunto.getNodos().contains(subset.getTransiciones().get(j).getNodoFinal())))
+                           {
+                               subconjunto.add(subset.getTransiciones().get(j).getNodoFinal());
+                           }
+                       }
+                    }
+            }
+
+        }
+        
+        return subconjunto;
+    }
     
     
 }

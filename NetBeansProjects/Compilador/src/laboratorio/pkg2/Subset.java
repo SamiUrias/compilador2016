@@ -6,6 +6,8 @@
 package laboratorio.pkg2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -39,7 +41,7 @@ public class Subset{
     {
        this.Nodos.add(nodos);
        this.transiciones = transiciones;
-        System.out.println("Se ha añadido un nodo al array de nodos");
+       
         
     }
 
@@ -65,21 +67,27 @@ public class Subset{
      */
     public void add(int nodoFinal) {
         this.Nodos.add(nodoFinal);
-        System.out.println("Se ha insertado el nodo: " + nodoFinal);
+        
     }
     
     /**
-     * Este metodo combina dos subsets, añadiendo los nodos del subset ingresado
+     * Este metodo combina dos eClosures, añadiendo los nodos del subset ingresado
      * al subset original.
      * @param subset1 
      */
-    public void combinar(Subset subset1)
+    public void combinarEClosure(Subset subset1)
     {
         
         for(int i=0;i<subset1.getNodos().size();i++)
         {
-            this.add(subset1.getNodos().get(i));
+            if(!this.Nodos.contains(subset1.getNodos().get(i)))
+            {
+                this.add(subset1.getNodos().get(i));
+            }
+            
         }
+        
+        
     }
 
     @Override
@@ -87,6 +95,21 @@ public class Subset{
         return "Subset{" + "Nodos=" + Nodos+ '}';
     }
     
+    
+    public void eliminarRepetido()
+    {
+        Map<Integer,Subset> mapEstados = new HashMap<Integer, Subset>();
+    }
+
+    
+    /**
+     * Devuelve el largo de un Subset, basado en el largo del ArrayList de 
+     * @return 
+     */
+    public int size()
+    {
+        return this.Nodos.size();
+    }
     
 
     

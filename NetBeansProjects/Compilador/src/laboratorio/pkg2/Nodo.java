@@ -22,10 +22,9 @@ public class Nodo {
     
     public Nodo()
     {
-        System.out.println("Se crea un nuevo nodo");
+       
         /*Se toma un nuevo valor de contador*/
         this.id = contador.getInstance().getContador();
-        System.out.println("El numero del nodo es: " + id);
         this.eInicial = false;
         this.eFinal = false;
         //System.out.println("El valor del contador es: " + id);

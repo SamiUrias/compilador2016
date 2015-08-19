@@ -36,7 +36,7 @@ public class Automata {
      * @param simbolo 
      */
     public Automata(String simbolo) {
-        System.out.println("Se crea un nuevo automata");
+       
         /*Se crean los nodos que tendra el automata*/
         Nodo nodoA = new Nodo(true, false); /*Se crea un nuevo nodo inicial*/
         Nodo nodoB = new Nodo(false, true); /*Se crea un nuevo nodo final*/
@@ -46,7 +46,7 @@ public class Automata {
         this.simbolo = simbolo; /*Simbolo del automata y de la transicion*/
         this.transiciones.add(new Transicion(nodoA.getId(),simbolo,nodoB.getId()));
  
-        System.out.println(transiciones.get(0).toString());
+      
         
         this.estados.add(nodoA);
         this.estados.add(nodoB);
@@ -70,14 +70,7 @@ public class Automata {
         
         /*Se recorre el primer automata*/
         while (cont<automata1.estados.size())
-            {
-                /*Debug
-                System.out.println("\nDEBUG OR\nEl tamaño del atuomata1 es: " + 
-                        automata1.transiciones.size() +  
-                        "\nLa transaccion del auomata1 es: " + "\n"+
-                        "La cantidad de transacciones del automata1 es: " +
-                        automata1.transiciones.get(0));*/
-                
+            {              
                 
                 /*Nodo provisional para nodos de los automatas*/
                 Nodo estado = automata1.estados.get(cont);
@@ -89,7 +82,7 @@ public class Automata {
                     automata.transiciones.add(new Transicion(nodoI.getId(),"!",estado.getId()));
                    
                     
-                    System.out.println(automata.transiciones.get(0).toString()); /*DEBUG*/
+                    
                     
                     estado.seteInicial(false);
                     automata1.estados.set(cont, estado);
@@ -101,7 +94,7 @@ public class Automata {
                     automata.transiciones.add(new Transicion(estado.getId(),"!",nodoF.getId()));
                      
                     
-                    System.out.println(automata.transiciones.get(1).toString()); /*DEBUG*/
+                  
                     
                     estado.seteFinal(false);
                     automata1.estados.set(cont, estado);
@@ -114,29 +107,18 @@ public class Automata {
         /*Se reinicia el contador a cero*/
         cont=0;
        
-        System.out.println("El tamaño del segundo automata es: " + automata2.estados.size());
         
         /*Se recorren los estados del segundo automata*/
         while (cont<automata2.estados.size())
             {
-                
-                /*Debug
-                System.out.println("\nDEBUG OR\nEl tamaño del atuomata2 es: " + 
-                        automata2.transiciones.size() +  
-                        "\n"+
-                        "La cantidad de transacciones del automata2 es: " +
-                        automata2.transiciones.get(0));*/
-                
+                                
                 /*Nodo provisional para nodos de los automatas*/
                 Nodo estado = automata2.estados.get(cont);
                 
                 if (estado.iseInicial() == true)
                 {
                     automata.transiciones.add(new Transicion(nodoI.getId(),"!",estado.getId()));
-                    
-                   
-                    System.out.println(automata.transiciones.get(2).toString()); /*DEBUG*/
-                    
+                  
                     estado.seteInicial(false);
                     automata2.estados.set(cont, estado);
                 }
@@ -146,7 +128,6 @@ public class Automata {
                     automata.transiciones.add(new Transicion(estado.getId(),"!",nodoF.getId()));
                     
                     
-                    System.out.println(automata.transiciones.get(3).toString()); /*DEBUG*/
                     
                     estado.seteFinal(false);
                     automata2.estados.set(cont, estado);
@@ -330,7 +311,7 @@ public class Automata {
      */
     private Automata kleene(Automata automata1)
     {
-        System.out.println("Se hacer un kleene");
+        
         Automata automata = automata1;
         
         Nodo nodoI = new Nodo(); /*Nuevo nodo inicial*/
@@ -351,7 +332,7 @@ public class Automata {
                 /*Se crea la transicion entre el nodo inicial del kleene y el 
                   nodo inicial del automata que se esta analizando*/
                 automata.transiciones.add(new Transicion(nodoI.getId(),"!",estado.getId()));
-                System.out.println(automata.transiciones.get(automata.transiciones.size()-1));
+                
                 tEstadoInicial = estado;
                 estado.seteInicial(false);
                 
@@ -362,7 +343,7 @@ public class Automata {
             if (estado.iseFinal() == true)
             {
                 automata.transiciones.add(new Transicion(estado.getId(),"!",nodoF.getId()));
-                System.out.println(automata.transiciones.get(automata.transiciones.size()-1));
+                
 
                 tEstadoFinal = estado;
                 estado.seteFinal(false);
@@ -377,12 +358,12 @@ public class Automata {
         /*Se crea una transicion entre el estado final y el estado inicial 
             del automata original*/
             automata.transiciones.add(new Transicion(tEstadoFinal.getId(),"!",tEstadoInicial.getId()));
-            System.out.println(automata.transiciones.get(automata.transiciones.size()-1));
+           
             
             /*Se agrga la transicion epsilon entre el primer nuevo estado 
             inicial y el nuevo estado final*/
             automata.transiciones.add(new Transicion(nodoI.getId(),"!",nodoF.getId()));
-            System.out.println(automata.transiciones.get(automata.transiciones.size()-1));
+           
             /*Se agregan los nuevos nodos al automata*/
             
             nodoF.seteFinal(true);
@@ -405,19 +386,18 @@ public class Automata {
     private Automata concatenar(Automata automata2, Automata automata1) {
         /*******************************************************************/
         
-        System.out.println("Se encontro una concatenacion");
+       
                
         /********************************************************************/
         
         int cont=0; /*Contador*/
-        System.out.println("El valor del contador es: " + cont);
-        System.out.println("La cantidad de estados del automata 1 es: " + automata1.estados.size());
+       
         while(cont<automata1.estados.size())
         {
           Nodo nodo = automata1.estados.get(cont);
           
           if (nodo.iseFinal()==true){
-              System.out.println("El nodo final " + nodo.getId());
+            
               /*Se recorre el otro automata para buscar su estado inicial
                  y concatenarlos*/
               for(int i =0; i<automata2.estados.size();i++){
@@ -425,11 +405,11 @@ public class Automata {
                   
                   if (nodo2.iseInicial()==true)
                   {
-                      System.out.println("El nodo inicial es: " + nodo2.getId());
+                     
                       /*Se crea una transicion entre ambos automatas */
                       nodo2.seteInicial(false);
                       automata1.transiciones.add(new Transicion(nodo.getId(),"!",nodo2.getId()));
-                      System.out.println(automata1.transiciones.get(automata1.transiciones.size()-1));
+                      
                       nodo.seteFinal(false);
                       
                       break;
