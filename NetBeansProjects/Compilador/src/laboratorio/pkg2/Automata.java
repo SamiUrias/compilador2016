@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- *
+ * Esta clase modela un automata finito no determinista
  * @author Moises Urias
  */
 public class Automata {
@@ -20,6 +20,14 @@ public class Automata {
     public ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
 
     public Stack<Automata> automatas = new Stack<Automata>();
+    
+    
+    /**
+     * Contiene el alfabeto que es utilizado een el automata
+     */
+    public ArrayList<String> alfabeto;
+    
+    
     /**
      * Constructor de la clase automata sin parametros
      */
@@ -453,6 +461,16 @@ public class Automata {
      */
     public ArrayList<Nodo> getEstados() {
         return estados;
+    }
+
+    /*Este metodo devuelve el alfabeto que es utilizado ene l automata*/
+    public ArrayList<String> getAlfabeto() {
+        return alfabeto;
+    }
+
+    /*Este metodo asigna el alfabeto que es utilizado en el automata*/
+    public void setAlfabeto(ArrayList<String> alfabeto) {
+        this.alfabeto = alfabeto;
     }
     
     
