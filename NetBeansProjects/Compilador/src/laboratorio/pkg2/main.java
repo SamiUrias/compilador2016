@@ -19,6 +19,8 @@ public class main {
      */
     public static void main(String[] args) {
         
+        /*Almacena un arraylist con el alfabeto del automata*/
+        ArrayList<String> alfabeto;
         
         // TODO code application logic here
         
@@ -41,6 +43,13 @@ public class main {
         
         System.out.println("Cadena con posfix: \n" + cadena+"\n\n\n");
          
+        
+        
+        
+        /*Imprime el alfabeto del automata ingresado */
+        System.out.println("El alfabeto del automata es:");
+        alfabeto = OpExtra.alfabeto(cadena);
+        System.out.println(alfabeto);
         
         /*Aqui se crea al tuomata*/
         int j=0; /*Contador*/
@@ -95,10 +104,14 @@ public class main {
         System.out.println("El nodo inicial a introducir en el subset es: " +nodoinicial);
        
         System.out.println("La cantidad de transiciones en el automata es: " + aut.getTransiciones().size());
-        Subset subset1 = new Subset(nodoinicial,aut.getTransiciones());
         
-        Subset moi = OpExtra.eClosure(subset1);
-        System.out.println(moi);
+        
+        
+        AFD afd = new AFD(aut); 
+        
+       
+        
+        
     }
     
    

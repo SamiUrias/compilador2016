@@ -68,7 +68,7 @@ public class OpExtra {
     
     
     
-    public static Subset move(Subset subset, String simbolo)
+    public static Subset move(Subset subset, ArrayList<String> alfabeto)
     {
         Subset subconjunto = new Subset();
         
@@ -100,5 +100,60 @@ public class OpExtra {
         return subconjunto;
     }
     
+    
+    /**
+     * Esta funcion devuelve el alfabeto que tiene el automata
+     * @param cadena
+     * @return 
+     */
+    public static ArrayList alfabeto (String cadena)
+    {
+        
+        ArrayList<String> alfabeto = new ArrayList<String>();
+        
+        int j = 0; //Contador del ciclo
+        while (j<cadena.length())
+        {
+            /*Es la subcadena */
+            String simbolo = cadena.substring(j, j+1);
+            
+           if( esAlfabeto(simbolo) == true)
+           {
+               if(!alfabeto.contains(simbolo))
+               {
+                   alfabeto.add(simbolo);
+               }
+           }
+           
+           /*Aumenta en uno el contador del ciclo*/
+           j++;
+        }
+        
+        return alfabeto;
+    }
+    
+    private static boolean esAlfabeto(String simbolo)
+    {
+        String[] operadores = {"(","|","?",".","*","+","^"};
+        boolean operador = true; /*Si se ha reconocido como operador o no*/
+        
+        
+        int i = 0; /*Contador de operadores*/
+        
+        while (i<operadores.length)
+        {
+           if (simbolo.equals(operadores[i]))
+           {
+               operador = false;
+           }
+           
+           i++; /*Aumenta uno el contador 'operador'*/
+            
+        }
+        
+        /*Devuelve el resultado de evaluar el simbolo para saber si es un 
+            operador o no*/
+        return operador;
+    }
     
 }

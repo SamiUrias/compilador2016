@@ -27,6 +27,8 @@ public class Subset{
      */
     ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
     
+    /*Bandera que se utiliza en la creacion de AFD's*/
+    boolean marcado = false;
     
     
     public Subset() {}
