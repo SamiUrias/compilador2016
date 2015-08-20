@@ -44,7 +44,6 @@ public class Subset{
     {
        this.Nodos.add(nodos);
        this.transiciones = transiciones;
-       
         
     }
 
@@ -54,6 +53,11 @@ public class Subset{
      */
     public ArrayList<Transicion> getTransiciones() {
         return transiciones;
+    }
+
+    
+    public void setNodos(ArrayList<Integer> Nodos) {
+        this.Nodos = Nodos;
     }
 
     /**

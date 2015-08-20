@@ -6,6 +6,7 @@
 package laboratorio.pkg2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -14,6 +15,11 @@ import java.util.ArrayList;
 public class AFD {
     
     private ArrayList<Subset> estados = new ArrayList<Subset>(); 
+    
+    private ArrayList<TransicionAfd> transiciones = new ArrayList<TransicionAfd>();
+    
+    
+    
     
     
     
@@ -32,12 +38,13 @@ public class AFD {
         
         for (int i=0;i<afn.getEstados().size();i++)
         {
-            
+            /*Se obtiene el nodo inicial de AFN*/
             if (afn.getEstados().get(i).iseInicial() == true){
                 System.out.println("Estado inicial CONSTRUCTOR AFD: " + afn.getEstados().get(i).getId());
                 nodoinicial = afn.getEstados().get(i).getId();
             }
         }
+        
         
         /*Una ves ya se ha encontrado el estado inicial del afn, se crea un 
           subset con ese estado*/
@@ -82,13 +89,34 @@ public class AFD {
                     
                     /*Se revista si el estado obtenido despues de realizar el 
                       move y el eclosure es un nuevo estado de la lista de
-                      estado del AFD.
+                      estado del AFD o ya existe.
                     
                     Primero se recorren todos los estados que ya posee el AFD*/
-                    for(int g = 0; g<this.estados.size();g++)
+                   for(int g = 0; g<this.estados.size();g++)
                     {
+                        /*Subset que posteriormente se añadira a los estados del
+                           AFD*/
+                        Subset sub = new Subset();
+                        
                         /*Se toma el arraylist de ese estado*/
-                        ArrayList<Integer> estado1 = this.estados.get(g);
+                        ArrayList<Integer> estado1 = this.estados.get(g).getNodos();
+                        
+                        /*Se ordena de menor a mayor*/
+                        Collections.sort(estado1);
+                        
+                        /*Compara si son iguales*/
+                        if (estadoActual.equals(estado1))
+                        {
+                            if (!estados.contains(estado1))
+                            {
+                                sub.setNodos(estado1);
+                                
+                                /*Se crea un nueva transicion*/
+                                transiciones.add(new TransicionAfd(estadoActual,alfabeto.get(i),sub));
+                            }
+                        }
+                        
+                        
                     }
                             
                 }
