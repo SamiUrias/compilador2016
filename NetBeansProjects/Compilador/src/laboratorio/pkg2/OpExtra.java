@@ -68,7 +68,7 @@ public class OpExtra {
     
     
     
-    public static Subset move(Subset subset, ArrayList<String> alfabeto)
+    public static Subset move(Subset subset, String simbolo)
     {
         Subset subconjunto = new Subset();
         
@@ -85,10 +85,15 @@ public class OpExtra {
                   ourre con el simbolo que se esta ingresando*/
                 if (nodo==subset.getTransiciones().get(j).getNodoInicial())
                     {
+                        /*Revisa si la transicion encontrada se realiza mediante
+                           el simbolo ingresado*/
                        if (subset.getTransiciones().get(j).getSimbolo().equals(simbolo))
                        {
+                           /*Si el estado final no se encuentra entre los estados
+                             del subset, entonces se agrega el estado encontrado*/
                            if(!(subconjunto.getNodos().contains(subset.getTransiciones().get(j).getNodoFinal())))
                            {
+                               /*Se añade el estado al subconjunto*/
                                subconjunto.add(subset.getTransiciones().get(j).getNodoFinal());
                            }
                        }

@@ -52,11 +52,48 @@ public class AFD {
         
         
         /*Se obtiene el alfabeto del automata*/
-        ArrayList<String> alfabeto = alfabeto = OpExtra.alfabeto(cadena);
+        ArrayList<String> alfabeto = afn.getAlfabeto();
+        
         /*Mientras haya estados no marcados, se hace eclosure y move*/
         while(hayEstadosNoMarcados == true)
         {
-            for (int i=0; i<)
+            /*Se recorren todos los estados*/
+            for (int h=0; h<estados.size();h++)
+            {
+                /*Se toma el estado actual*/
+                Subset estadoActual = estados.get(h);
+                
+                /*Como se esta revisando este esatdo, el esatado se marca como
+                  marcado*/
+                estados.get(h).setMarcado(true);
+                
+                
+                /*Se crea el AFD*/
+                for (int i=0; i<alfabeto.size(); i++)
+                {
+                    /*Se hace un move al estado actual*/
+                    estadoActual = OpExtra.move(estadoActual, alfabeto.get(i));
+                    
+                    /*Se hace eClosure al estado actual*/
+                    estadoActual = OpExtra.eClosure(estadoActual);
+                    
+                    /*Se ordena de menor a mayor el estado actual*/
+                    estadoActual.ordenar();
+                    
+                    /*Se revista si el estado obtenido despues de realizar el 
+                      move y el eclosure es un nuevo estado de la lista de
+                      estado del AFD.
+                    
+                    Primero se recorren todos los estados que ya posee el AFD*/
+                    for(int g = 0; g<this.estados.size();g++)
+                    {
+                        /*Se toma el arraylist de ese estado*/
+                        ArrayList<Integer> estado1 = this.estados.get(g);
+                    }
+                            
+                }
+            }
+            
         }
     }
     
@@ -73,10 +110,6 @@ public class AFD {
         
         //subset moi = OpExtra.move(subsetI, null);
         System.out.println(moi);
-        
-        
-        
-        
         
     }
 }

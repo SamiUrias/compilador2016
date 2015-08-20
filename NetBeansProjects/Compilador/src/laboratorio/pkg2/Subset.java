@@ -6,6 +6,7 @@
 package laboratorio.pkg2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -112,7 +113,22 @@ public class Subset{
     {
         return this.Nodos.size();
     }
-    
 
+    public boolean isMarcado() {
+        return marcado;
+    }
+
+    public void setMarcado(boolean marcado) {
+        this.marcado = marcado;
+    }
+    
+    
+    /**
+     * Ordena el subconjunto de menor a mayor
+     */
+    public void ordenar()
+    {
+        Collections.sort(Nodos);
+    }
     
 }

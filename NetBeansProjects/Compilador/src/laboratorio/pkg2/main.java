@@ -51,9 +51,14 @@ public class main {
         alfabeto = OpExtra.alfabeto(cadena);
         System.out.println(alfabeto);
         
-        /*Aqui se crea al tuomata*/
-        int j=0; /*Contador*/
+        /*Se crea el automata*/
         Automata aut = new Automata();
+        
+        /*Se le asigna al nuevo automata el alfabeto que este utilizara*/
+        aut.setAlfabeto(alfabeto);
+        
+        /*Aqui crean los nodos del automata*/
+        int j=0; /*Contador*/
         while (j<cadena.length())
         {
             aut.crearAutomata(cadena.substring(j, j+1));
