@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 21, 2015, 3:11:13 PM
+    Author     : Moises Urias
+*/
+
+/*Permite que todos los campos tengo un ancho de 20%*/
+.i{
+    width: 20%;
+    margin-right: 3%;
+}
+
+/*Esto permite añadir la fuente pacifico al html*/
+.pacifico{
+    font-family: 'Pacifico', cursive;
+}
+
+.quitar-float{
+    float: none;
+}
+
+.espacio{
+    
+}
