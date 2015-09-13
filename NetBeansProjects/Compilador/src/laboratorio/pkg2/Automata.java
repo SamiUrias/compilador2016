@@ -25,7 +25,7 @@ public class Automata {
     /**
      * Contiene el alfabeto que es utilizado een el automata
      */
-    public ArrayList<String> alfabeto;
+    public ArrayList<String> alfabeto = new ArrayList<String>();
     
     
     /**

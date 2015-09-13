@@ -7,6 +7,9 @@ package laboratorio.pkg2;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,7 +32,10 @@ public class AFD {
      */
     public AFD(Automata afn)
     {
-        /*Verifica que aun existan estados no marcados en la pila*/
+        System.out.println("\n\nDentro de constructor del afd");
+        
+        /*Verifica que aun existan estados no marcados en la pila.
+        Se empieza con true, por el primer estado de la pila*/
         boolean hayEstadosNoMarcados = true;
         
         
@@ -61,15 +67,22 @@ public class AFD {
         /*Se obtiene el alfabeto del automata*/
         ArrayList<String> alfabeto = afn.getAlfabeto();
         
+        
         /*Mientras haya estados no marcados, se hace eclosure y move*/
         while(hayEstadosNoMarcados == true)
         {
+            System.out.println("Dentro del ciclo while del afd");
+            
             /*Se recorren todos los estados*/
+            
             for (int h=0; h<estados.size();h++)
             {
                 /*Se toma el estado actual*/
                 Subset estadoActual = estados.get(h);
                 
+                
+                
+                       
                 /*Como se esta revisando este esatdo, el esatado se marca como
                   marcado*/
                 estados.get(h).setMarcado(true);
@@ -122,7 +135,22 @@ public class AFD {
                 }
             }
             
+            /*Se revisa que ya no hayan estados marcados*/
+             boolean b = false;
+            for (int g = 0; g<estados.size();g++)
+            {
+               
+                if(estados.get(g).isMarcado() == false)
+                {
+                    b = true;
+                }
+            }
+            
+            hayEstadosNoMarcados = b; 
+            
         }
+        
+        System.out.println(this.estados);
     }
     
     
