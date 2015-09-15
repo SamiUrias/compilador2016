@@ -20,7 +20,7 @@ public class Subset{
      * Un ArrayList<Integer> nodos<p>
      * Contiene un arreglo de los nododos que va a tener el subconjunto
      */
-    ArrayList<Integer> Nodos = new ArrayList<Integer>();
+    public ArrayList<Integer> Nodos = new ArrayList<Integer>();
     
     /**
      * Un ArrayList<Transicion> transiciones<p>
@@ -45,6 +45,10 @@ public class Subset{
        this.Nodos.add(nodos);
        this.transiciones = transiciones;
         
+    }
+    
+    public Subset(ArrayList<Transicion> transiciones ){
+        this.transiciones = transiciones;
     }
 
     /**

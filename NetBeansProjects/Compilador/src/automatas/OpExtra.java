@@ -40,22 +40,21 @@ public class OpExtra {
                    if (subset.getTransiciones().get(j).getSimbolo().equals("!"))
                    {
                        /*Se añade el nodo ennconrado al subset*/
-                       //subset.add(subset.getTransiciones().get(j).getNodoFinal());
-                       
+                       //subset.add(subset.getTransiciones().get(j).getNodoFinal());                      
                        if(!(subset.Nodos.contains(subset.getTransiciones().get(j).getNodoFinal())))
                         {
-                            subset.getTransiciones().get(j).getNodoFinal();
-                        }
-                       /*Se crea un nuevo subset en base con base en el nodo 
+                            subset.add(subset.getTransiciones().get(j).getNodoFinal());
+                            
+                            
+                        /*Se crea un nuevo subset en base con base en el nodo 
                          encontrado*/
                         Subset temp = new Subset(subset.getTransiciones().
                                 get(j).getNodoFinal(),subset.getTransiciones());
                         
-                       /*Se hace un e-Closure del nodo encontrado, y se combina 
-                        con el subset actual*/
-                       subset.combinarEClosure(eClosure(temp));
-                       
-                       
+                        /*Se hace un e-Closure del nodo encontrado, y se combina 
+                         con el subset actual*/
+                        subset.combinarEClosure(eClosure(temp));
+                        }
                        
                    }
                 }

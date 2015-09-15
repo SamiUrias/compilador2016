@@ -474,17 +474,10 @@ public class Automata {
     
     
     
-    public boolean simular(String cadena)
-    {
-        /*Devuelce si el automata cumple con una cadena de aceptacion*/
-        boolean estadoAceptacion = false;
-        
-        return estadoAceptacion;
-    }
+
     
     
-    
-    private int getEstadoInicial (){
+    public int getEstadoInicial (){
         
         /*Se encuetra el estado inicial y el estado final, el cual será el estado
             de acptación. Esto es necesario al realizar la simulación, saber si
@@ -522,6 +515,15 @@ public class Automata {
         }
         
         return nodofinalafn;
+    }
+    
+    
+    public boolean simular(String cadena)
+    {
+        /*Devuelce si el automata cumple con una cadena de aceptacion*/
+        boolean estadoAceptacion = false;
+        
+        return estadoAceptacion;
     }
     
 }
