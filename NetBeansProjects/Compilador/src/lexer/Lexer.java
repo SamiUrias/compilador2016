@@ -157,7 +157,7 @@ public class Lexer {
         }};
         
         for (j=0;j<cadena.length();j++) {
-            System.out.println("PC");
+            
             
             String caracter = cadena.substring(j, j+1);
             System.out.println("El caracter es: " + caracter);
@@ -341,7 +341,7 @@ public class Lexer {
         /*Se le quitan los espacios en blanco, las tabulaciones y los retornos
           de carro de a la linea ingresada*/
         int index1; //Guarda el indice donde se encuentra el signo =
-        int index2; //Guarda la ubicacion del punto.
+        int index2 = 0; //Guarda la ubicacion del punto.
         
         String ident; //Almacena el isIdent de la declaracion
         String asignacion; //Almacena la asignacion
@@ -352,13 +352,12 @@ public class Lexer {
         index1 = linea.indexOf("="); //Se asigna el indice de la ubicacion del =
         
         if (linea.endsWith(".")) {
-            
-            
-            index2 = linea.indexOf("."); //Se asigna el indice de la ubicacion del .
+            index2 = linea.length();
+            //index2 = linea.indexOf("."); //Se asigna el indice de la ubicacion del .
         }
         
         ident = linea.substring(0, index1); 
-        asignacion = linea.substring(index1,index2);
+        asignacion = linea.substring(index1+1,index2-1);
         
         System.out.println("Ident: " + ident);
         System.out.println("Asignacion: " + asignacion );
@@ -388,12 +387,19 @@ public class Lexer {
         ident = isIdent(basicSet);
         chr = isChar(basicSet);
         
+        
+       
     }
     
     
+    /**
+     * Este metodo verifica si lo que se ha ingresado es un Char
+     * @param linea
+     * @return 
+     */
     private boolean isChar(String linea)
     {
-        
+        System.out.println("IS CHAR");
         boolean isChar = false; /*Almacena si la linea es cumple con ser char o no*/
         
         if (linea.startsWith("'") && linea.endsWith("'")){
