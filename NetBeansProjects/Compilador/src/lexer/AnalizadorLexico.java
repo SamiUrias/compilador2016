@@ -72,4 +72,19 @@ public class AnalizadorLexico {
         return lineas;
     }
     
+   
+    /**
+     * Esta funcion devuelve la ultima linea encontrada en el texto
+     * @param texto
+     * @return 
+     */
+    public String devolverUltimaLinea (String texto)    
+    {
+        String [] lineas;
+        lineas = texto.split("\n");
+        
+        
+        return lineas[lineas.length-1];
+    }
+    
 }

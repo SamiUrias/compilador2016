@@ -50,6 +50,7 @@ import java.awt.dnd.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.Element;
 import lexer.*;
 
 /**
@@ -74,11 +75,12 @@ public class GUI extends JFrame {
     private JCheckBoxMenuItem thItem;
     private JMenuItem openItem; /*Added by Moises*/
     private JMenuItem verificarItem; /*Added by Moises*/
+    private JMenuItem newItem; /*Added by Moises*/
     
     private Doc documentoActual; /*Es el documento actual con el que se esta trabajando*/
 
-    /*Se crea una instancia del Lexer*/
-    private Lexer lexer = new Lexer();
+    
+    private Lexer lexer = new Lexer(); /*Se crea una instancia del Lexer*/
     
     /**
      * Esta clase se utiliza para crear los Documentos (formularios hijos) de la
@@ -89,7 +91,8 @@ public class GUI extends JFrame {
         JInternalFrame frame;
         TransferHandler th;
         JTextArea area;
-
+        
+        
         public Doc(File file) {
             this.name = file.getName();
             try {
@@ -102,16 +105,29 @@ public class GUI extends JFrame {
         public Doc(String name) {
             this.name = name;
             init(getClass().getResource(name));
+
         }
         
+       /**
+        * Este constructor se utiliza cuando se quiere crear un documento en 
+        *  blanco
+        */ 
+       public Doc(){
+           this.name  = "Nuevo documento";
+           blancDocument();
+       }
+        
         private void init(URL url) {
+            
             frame = new JInternalFrame(name);
+            //frame = new LineNumbering(name);
             frame.addInternalFrameListener(this);
             listModel.add(listModel.size(), this);
 
             area = new JTextArea();
             area.setMargin(new Insets(5, 5, 5, 5));
 
+        
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
                 String in;
@@ -125,6 +141,49 @@ public class GUI extends JFrame {
                 return;
             }
 
+            th = area.getTransferHandler();
+            area.setFont(new Font("monospaced", Font.PLAIN, 12));
+            area.setCaretPosition(0);
+            area.setDragEnabled(true);
+            area.setDropMode(DropMode.INSERT);
+            frame.getContentPane().add(new JScrollPane(area));
+            dp.add(frame);
+            frame.show();
+            if (DEMO) {
+                frame.setSize(300, 200);
+            } else {
+                frame.setSize(400, 300);
+            }
+            frame.setResizable(true);
+            frame.setClosable(true);
+            frame.setIconifiable(true);
+            frame.setMaximizable(true);
+            frame.setLocation(left, top);
+            incr();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    select();
+                }
+            });
+            nullItem.addActionListener(this);
+            setNullTH();
+            
+            
+            
+        }
+        
+        /**
+         * Crea un nuevo documento en blanco
+         */
+        private void blancDocument(){
+            
+            frame = new JInternalFrame(name);
+            frame.addInternalFrameListener(this);
+            listModel.add(listModel.size(), this);
+
+            area = new JTextArea();
+            area.setMargin(new Insets(5, 5, 5, 5));
+            
             th = area.getTransferHandler();
             area.setFont(new Font("monospaced", Font.PLAIN, 12));
             area.setCaretPosition(0);
@@ -249,7 +308,7 @@ public class GUI extends JFrame {
     public GUI() {
         super("Lexer");
         setJMenuBar(createMenuBar());
-        getContentPane().add(createDummyToolBar(), BorderLayout.NORTH);
+        //getContentPane().add(createDummyToolBar(), BorderLayout.NORTH);
 
         JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, list, dp);
         sp.setDividerLocation(120);
@@ -279,7 +338,7 @@ public class GUI extends JFrame {
         });
         
         final TransferHandler th = list.getTransferHandler();
-
+/*
         nullItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if (nullItem.isSelected()) {
@@ -297,7 +356,9 @@ public class GUI extends JFrame {
                     setTransferHandler(null);
                 }
             }
-        });
+        });*/
+        
+        
         dp.setTransferHandler(handler);
     }
 
@@ -372,18 +433,27 @@ public class GUI extends JFrame {
         JMenu ejecucion = new JMenu("Ejecucion");
         menubar.add(ejecucion);
         
-        JMenu demo = new JMenu("Demo");
-        demo.setMnemonic(KeyEvent.VK_D);
-        menubar.add(demo);
         
         
         
         openItem = new JMenuItem("Abrir"); /*Se crea una instancia de elemento de menu*/
         archivo.add(openItem); /*Se agrega el elemento open item al menu archivo*/
         
+        newItem = new JMenuItem("Nuevo");
+        newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        archivo.add(newItem);
+        
         
         verificarItem = new JMenuItem("Verificar");
+        verificarItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
         ejecucion.add(verificarItem);
+        
+        
+        
+        
+        JMenu demo = new JMenu("Demo");
+        demo.setMnemonic(KeyEvent.VK_D);
+        menubar.add(demo);
         
         thItem = new JCheckBoxMenuItem("Use Top-Level TransferHandler");
         thItem.setMnemonic(KeyEvent.VK_T);
@@ -423,6 +493,14 @@ public class GUI extends JFrame {
             }
         });
         
+        newItem.addActionListener(new java.awt.event.ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newItemActionPerformed(e);
+            }
+        });
+        
         
         return menubar;
     }
@@ -443,17 +521,34 @@ public class GUI extends JFrame {
      * @param evt 
      */
     private void verificarItemActionPerformed(ActionEvent evt){
-        System.out.println("Moi es lo maximo =D\nAqui va la opcion de verificar");
+        String documento = null; boolean existeDocumento = false;
+        //System.out.println("Moi es lo maximo =D\nAqui va la opcion de verificar");
         //System.out.println(documentoActual.area.getText());
         JOptionPane.showMessageDialog(this, "Verificar el texto ingresado");
         
-        String documento = documentoActual.area.getText();
+        
+        /*Solo si hay algun documento disponible para analizar se analiza*/
+        
         try {
-            this.lexer.analizar(documento);
-        } catch (IdentException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            documento = documentoActual.area.getText();
+            existeDocumento = true;
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("No hay documento que se pued analizar");
+            JOptionPane.showMessageDialog(this, "No hay documento para analizar","Error",JOptionPane.ERROR_MESSAGE);
+            existeDocumento = false;
+        }
+        
+        
+        if (existeDocumento == true) {
+            try {
+                this.lexer.analizar(documento);
+            } catch (IdentException ex) {
+                Logger.getLogger(GUI_borrador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI_borrador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }
@@ -477,32 +572,17 @@ public class GUI extends JFrame {
         {
             File file = fc.getSelectedFile();
             new Doc(file);
-            /*try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line;
-                while ((line = reader.readLine()) != null)
-                {
-                    records.add(line);
-                }
-            
-            } catch (IOException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        
         }
-        
-        
-        for (int i = 0;i<records.size();i++)
-        {
-            
-            texto = texto + records.get(i).toString();
-            if (i!= records.size()-1)
-                texto = texto + "\n";
+        else{
+            System.out.println("No se ha seleccionado ningun archivo para abri");
         }
-        
-         this.jTextPane1.setText(texto);*/
-        
+    
+    
     }
     
-    
+    private void newItemActionPerformed(ActionEvent evt){
+        new Doc(); /*Se crea un nuevo documento en blanco*/
+        
     }
 }
