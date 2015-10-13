@@ -21,6 +21,7 @@ public class OpExtra {
      */
     public static Subset eClosure(Subset subset)
     {  
+        System.out.println(subset.toString());
         /*Recorre todas las nodos del subset*/
         for (int i=0;i<subset.getNodos().size();i++)
         {
@@ -32,15 +33,14 @@ public class OpExtra {
             for (int j=0;j<subset.getTransiciones().size();j++)
             {
                
-                /*Si la el nodo corresponde al nodo inicial de la transicion,
+                /*Si el nodo corresponde al nodo inicial de la transicion,
                    entonces se añade el nodo final de la transicion al subset
                    y se realiza un */
                 if (nodo==subset.getTransiciones().get(j).getNodoInicial())
                 {
                    if (subset.getTransiciones().get(j).getSimbolo().equals("!"))
                    {
-                       /*Se añade el nodo ennconrado al subset*/
-                       //subset.add(subset.getTransiciones().get(j).getNodoFinal());                      
+                       /*Se añade el nodo ennconrado al subset actual*/
                        if(!(subset.Nodos.contains(subset.getTransiciones().get(j).getNodoFinal())))
                         {
                             subset.add(subset.getTransiciones().get(j).getNodoFinal());
@@ -60,16 +60,22 @@ public class OpExtra {
                 }
             }
         }
-        
+        System.out.println("eClosure: " + subset.toString());
         return subset;
     }
     
     
     
-    
-    public static Subset move(Subset subset, String simbolo)
+    /**
+     * Ete metodo se utiliza para realizar la operacion mover en la construccion
+     *  de subconjuntos.
+     * @param subset
+     * @param simbolo
+     * @return subset
+     */
+    public static Subset mover(Subset subset, String simbolo)
     {
-        Subset subconjunto = new Subset();
+        Subset subconjunto = new Subset(subset.getTransiciones());
         
         /*Se revisan todos los nodos del subset*/
         for (int i =0; i<subset.Nodos.size();i++)
@@ -101,6 +107,7 @@ public class OpExtra {
 
         }
         
+        System.out.println("Move: " + subconjunto);
         return subconjunto;
     }
     

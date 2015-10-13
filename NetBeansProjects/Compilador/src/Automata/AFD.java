@@ -68,7 +68,7 @@ public class AFD {
         ArrayList<String> alfabeto = afn.getAlfabeto();
         
         
-        /*Mientras haya estados no marcados, se hace eclosure y move*/
+        /*Mientras haya estados no marcados, se hace eclosure y mover*/
         while(hayEstadosNoMarcados == true)
         {
             System.out.println("Dentro del ciclo while del afd");
@@ -91,8 +91,8 @@ public class AFD {
                 /*Se crea el AFD*/
                 for (int i=0; i<alfabeto.size(); i++)
                 {
-                    /*Se hace un move al estado actual*/
-                    estadoActual = OpExtra.move(estadoActual, alfabeto.get(i));
+                    /*Se hace un mover al estado actual*/
+                    estadoActual = OpExtra.mover(estadoActual, alfabeto.get(i));
                     
                     /*Se hace eClosure al estado actual*/
                     estadoActual = OpExtra.eClosure(estadoActual);
@@ -101,7 +101,7 @@ public class AFD {
                     estadoActual.ordenar();
                     
                     /*Se revista si el estado obtenido despues de realizar el 
-                      move y el eclosure es un nuevo estado de la lista de
+                      mover y el eclosure es un nuevo estado de la lista de
                       estado del AFD o ya existe.
                     
                     Primero se recorren todos los estados que ya posee el AFD*/
@@ -164,7 +164,7 @@ public class AFD {
          */
         Subset moi = OpExtra.eClosure(subsetI);
         
-        //subset moi = OpExtra.move(subsetI, null);
+        //subset moi = OpExtra.mover(subsetI, null);
         System.out.println(moi);
         
     }

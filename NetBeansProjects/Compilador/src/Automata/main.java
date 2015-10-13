@@ -21,7 +21,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Moises Urias
  */
 public class main {
-
+     private static String p; /*Direccion donde se crea la imagen del automata*/
+     
+     
+     
     /**
      * @param args the command line arguments
      */
@@ -31,7 +34,7 @@ public class main {
         ArrayList<String> alfabeto;
         int nodoinicialafn = 0; /*Almacena el nodo inicial del AFN*/
         int nodofinalafn = 0; /*Almacena el nodo final del AFN*/
-        
+       
         /*Permite realizar una simulacion del AFN*/ 
        Simulador simulador;
     
@@ -40,7 +43,7 @@ public class main {
            programa*/
         long time1 = System.currentTimeMillis();
         
-        
+        System.out.println("(b | b)*abb(     a  | b ) *");
         System.out.println("Ingrese la expresion regular: ");
         
         
@@ -149,9 +152,9 @@ public class main {
         }
          
         texto = texto + "\n\nSiendo '!' lo que equivale al simbolo epsilon";
-         
-        guardar(texto);
         
+        /*Se guarda el automata*/
+        // guardar(texto);
         
         
         /*__________________________________________________________________*/
@@ -175,15 +178,20 @@ public class main {
          
         texto = texto + "rankdir=LR;\n}";
 
-        guardarImagen(texto);
-        
+        /*Guarda la imagen*/
+        //guardarImagen(texto);
+        //llamarAlGraphViz();
         
         //AFD afd = new AFD(aut);
         
         
         
-        /*Se simula el afn*/
-        simulador  = new Simulador(aut);
+                                    /*Se simula el afn*/
+        /*Se crea una nueva instancia del simulador*/
+        //simulador  = new Simulador(aut);
+        //simulador.simular(); /*Se hace la simulacion*/
+        
+        
         
 }
         
@@ -217,6 +225,7 @@ public class main {
                 if (seleccion == JFileChooser.APPROVE_OPTION){//comprueba si ha presionado el boton de aceptar
                     File JFC = fileChooser.getSelectedFile();
                     String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar
+                    p = PATH;
                     PrintWriter printwriter = new PrintWriter(JFC);
                     printwriter.print(text);//escribe en el archivo todo lo que se encuentre en el JTextArea
                     printwriter.close();//cierra el archivo
@@ -241,7 +250,7 @@ public class main {
      * @param text 
      */
     private static void guardarImagen(String text){
-   
+        
         
         if (text.matches("[[ ]*[\n]*[\t]]*")) {//compara si en el JTextArea hay texto sino muestrtra un mensaje en pantalla
             JOptionPane.showMessageDialog(null,"No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
@@ -258,10 +267,11 @@ public class main {
                     PrintWriter printwriter = new PrintWriter(JFC);
                     printwriter.print(text);//escribe en el archivo todo lo que se encuentre en el JTextArea
                     printwriter.close();//cierra el archivo
-                    
+                    p = PATH;
                     //comprobamos si a la hora de guardar obtuvo la extension y si no se la asignamos
                     if(!(PATH.endsWith(".dot"))){
                         File temp = new File(PATH+".dot");
+                        
                         JFC.renameTo(temp);//renombramos el archivo
                     }
                     
@@ -272,5 +282,42 @@ public class main {
             }
         }           
     }
+    
+    
+    
+    /**
+     * Este metodo llama al graphviz con un process builder
+     */
+    private static void llamarAlGraphViz(){
+        System.out.println("Hola Mundo");
+        try {
+      
+      String dotPath = "c:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+      
+            System.out.println(p);
+      String fileInputPath = p;
+      String fileOutputPath = p+".jpg";
+      
+      String tParam = "-Tjpg";
+      String tOParam = "-o";
+        
+      String[] cmd = new String[5];
+      cmd[0] = dotPath;
+      cmd[1] = tParam;
+      cmd[2] = fileInputPath;
+      cmd[3] = tOParam;
+      cmd[4] = fileOutputPath;
+                  
+      Runtime rt = Runtime.getRuntime();
+      
+      rt.exec( cmd );
+      
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+    }
+
+  }
+    
     
 }

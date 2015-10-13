@@ -81,6 +81,8 @@ public class Subset{
         
     }
     
+    
+    
     /**
      * Este metodo combina dos eClosures, añadiendo los nodos del subset ingresado
      * al subset original.
