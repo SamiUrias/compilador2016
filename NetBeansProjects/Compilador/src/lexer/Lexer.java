@@ -14,8 +14,10 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Automata.*;
 
 import Exception.*;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -35,8 +37,13 @@ public class Lexer {
     StringTokenizer st; /*Se declara un tokeniezer para el analisis*/
     private Hashtable<String,Integer> tabla = new Hashtable<String,Integer>();
     
-   
     
+    /*Almacena todos los automatas generados por el Lexer*/ 
+   private ArrayList<Automata> bancoAutomatas = new ArrayList<>(); 
+    
+    /*Se crea una nueva instancia de a clase analizadorLexico*/
+    private AnalizadorLexico al = new AnalizadorLexico(); 
+    Palabra palabraActual = new Palabra();
     
     /**
      * Este metodo analiza el texto ingresado
@@ -52,8 +59,7 @@ public class Lexer {
         int index;
         
         
-        /*Se crea una nueva instancia de a clase analizadorLexico*/
-        AnalizadorLexico al = new AnalizadorLexico();
+        
         
         /*Arreglo de lineas*/
         String[] lineas;
@@ -74,7 +80,7 @@ public class Lexer {
             
             /*Se reconoce que se hayan encontrado caracteres*/
             if (lineas[i].matches("CHARACTERS")){
-                System.out.println("=D Se han entrado declaraciones tipo characters: " + i);
+                System.out.println("\n\nSe han entrado declaraciones tipo characters: " + i);
                 charactersLine = i; 
                 
             }
@@ -82,7 +88,8 @@ public class Lexer {
             /*Se reconoce que se hayan econtrado keywords*/
             if (lineas[i].matches("KEYWORDS"))
             {
-                System.out.println("Se han encontrado delclaraciones tipo keywords:" + i);
+                
+                System.out.println("\n\nSe han encontrado delclaraciones tipo keywords:" + i);
                 keywordsLine = i;
             }
             
@@ -106,10 +113,10 @@ public class Lexer {
                 /*Si las delcaraciones ocurren despues de la delcaracion de keywords*/
                 else if ((i>keywordsLine) && (keywordsLine !=0)) {
                     System.out.println("Declaracion de tipo keywords");
-                    keywordDecl(lineas[1]);
+                    keywordDecl(lineas[i]);
                 }
                 else{
-                    System.out.println("Esta declaracion esta en el lugar incorrecto");
+                    System.out.println("Esta declarcion esta en el lugar incorrecto");
                 }
             }
         }
@@ -150,8 +157,6 @@ public class Lexer {
                  contador++;
              }
          } 
-        
-        
         return tokens; /*Devuelve los tokens encontrados*/
     }
        
@@ -240,6 +245,8 @@ public class Lexer {
         //System.out.println("-------->" + pertenece);
         return pertenece;
     }
+    
+    
     
     /**
      * Este metodo lo que hace 
@@ -458,8 +465,24 @@ public class Lexer {
     {
         /*Revisa si la asignacion contiene un signo +*/
         //FALTA HACER ESTA ACCION
+        int plus = 0;
+        int minus = 0;
+        String[] partes;
         
-        basicSet(asignacion);
+        /*Revisa si hay un signo mas o un signo menos*/
+        plus = asignacion.indexOf("+"); minus = asignacion.indexOf("-");
+        /*Si no tiene signo mas*/
+        if (plus == -1) {
+           basicSet(asignacion); 
+        }
+        else{
+            System.out.println("La asignacion esta separada por partes");
+            partes = asignacion.split(Pattern.quote("+"));
+            System.out.println("Las partes de la asignacion son: ");
+            
+        }
+        
+        
     }
     
     
@@ -521,12 +544,10 @@ public class Lexer {
     {       
         boolean isChar = false; /*Almacena si la linea cumple con ser char o no*/
         
-        if (linea.startsWith("'") && linea.endsWith("'")){
-            System.out.println("Se ha encontrado un char");
+        if (linea.startsWith("'") && linea.endsWith("'")){   
             isChar = true; //Se afirma que se ha encontrado un char
         }
-        else{
-            System.out.println("No se ha podido encontrar un char");
+        else{   
             isChar = false;
         }
         
@@ -534,22 +555,24 @@ public class Lexer {
         {
             isChar = true;
         }
-        
         return isChar;
     }
     
     
+    /**
+     * Este metodo reconoce si lo que esta ingresado es un String
+     * @param linea
+     * @return 
+     */
     private boolean isString(String linea){
         boolean isString = false; /*Almacena si lalinea cumple con ser String o no*/
         
         int index = linea.indexOf("\"");
         if (index != -1){
             isString = true;
-            System.out.println("Se ha encontrado un String");
         }
         else {
             isString = false;
-            System.out.println("No no se ha encontrado un String");
         }
         
         /*Devuelve si es un string o no*/
@@ -561,7 +584,8 @@ public class Lexer {
      * Si se encuentra un char, este metodo se encarga de trabajar con ello
      */
     private void Char(String linea){
-        
+        System.out.println("Metodo Char <-----------");
+       
         /*Arreglo que contendra*/
         String[] partes = null;
         
@@ -569,7 +593,7 @@ public class Lexer {
          simbolos*/
         
         know = linea.indexOf("+");
-        System.out.println(know);
+        
         
         /*Se evalua si la linea tiene mas de un caracter, y dependiendo de eso
           se procede a trabajarla*/
@@ -589,9 +613,34 @@ public class Lexer {
                 }
                 
             } else {
-                System.out.println("La linea no esta searada por partes");
+                System.out.println("La linea no esta separada por partes");
                 partes = new String[1];
                 partes[0] = linea;
+                
+                
+                if (linea.startsWith("CHR")) {
+                    /*Se tiene que sacar lo que esta dentro del chr*/
+                    int parentesis1 = 0;
+                    int parentesis2 = 0;
+                    
+                    parentesis1 = linea.indexOf("(");
+                    parentesis2 = linea.indexOf(")");
+                    
+                    String simbolo = linea.substring(parentesis1+1, parentesis2);
+                    System.out.println("El simbolo es: " + simbolo);
+                    
+                    
+                    /*Convierte el simbolo en el carater ASCII correspondiente*/
+                    int valor = Integer.valueOf(simbolo);
+                    char c =  (char)valor;
+                    System.out.println("El simbolo es:" + c);
+                    AutoChar(simbolo);
+                }
+                else{
+                    AutoChar(partes[0]);
+                }
+                
+                
             }
         }
         else{
@@ -599,19 +648,71 @@ public class Lexer {
             System.out.println("La linea solo contiene un caracter");
             String caracter =  linea.substring(1, 2);
             System.out.println("El caracter es: " + caracter);
+            AutoChar(caracter);
         }
-
     }
     
+
     
     /**
      * Este metodo maneja un keyword en caso de que se econtrase uno
      * @param linea 
      */
     private void keywordDecl (String linea) {
+        /*Al encontrar un keyword se crea un automata con base en la palabra 
+          encontrada*/
         
+        /*Se le quitan los espacios en blanco, las tabulaciones y los retornos
+          de carro de a la linea ingresada*/
+        int index1 = 0; //Guarda el indice donde se encuentra el signo =
+        int index2 = 0; //Guarda la ubicacion del punto.
+        
+        String ident; //Almacena el isIdent de la declaracion
+        String asignacion; //Almacena la asignacion
+        
+        linea = linea.replaceAll("\\s", "");
+        
+        System.out.println(linea);
+        index1 = linea.indexOf("="); //Se asigna el indice de la ubicacion del =
+        
+        if (linea.endsWith(".")) {
+            index2 = linea.length();
+            //index2 = linea.indexOf("."); //Se asigna el indice de la ubicacion del .
+        }
+        
+        ident = linea.substring(0, index1); 
+        asignacion = linea.substring(index1,index2-1);
+        
+        System.out.println("Ident: " + ident);
+        System.out.println("Asignacion: " + asignacion );
+        System.out.println("Keyword:" + asignacion);
+        
+        AutoKeyword(asignacion.substring(1, asignacion.length()-1));
     }
     
     
+    /**
+     * Crea un automata de un character.
+     * @param caracter 
+     */
+    private void AutoChar(String caracter)
+    {
+        /*Crea un automata en base a un caracter, y lo almacena en el banco de
+          automatas*/
+        AFN  afn = new AFN(caracter);
+        bancoAutomatas.add(afn.getAutomata());
+    }
     
-}
+    /**
+     * Crea un autoomata con base en un keyword
+     * @param keyword 
+     */
+    private void AutoKeyword(String keyword)
+    {
+        /*Por el momento usa el metodo AutoChar para crear el automata del 
+          keyword*/
+        AutoChar(keyword);
+    }
+    
+    
+}   

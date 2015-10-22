@@ -21,6 +21,8 @@ public class Automata {
 
     public Stack<Automata> automatas = new Stack<Automata>();
     
+    /*Este sera el nombre del automata, este se utiliza en el Lexer*/
+    private String nombre;
     
     /**
      * Contiene el alfabeto que es utilizado en el automata

@@ -10,10 +10,26 @@ package lexer;
  * @author Moi
  */
 public class Token {
-    public final int etiqueta;
+    public int tipo;
+    
+    public Token()
+    {
+        
+    }
+    
     
     public Token(int t)
     {
-        etiqueta =t;
+        tipo =t;
     }
+    
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+    
+    
 }

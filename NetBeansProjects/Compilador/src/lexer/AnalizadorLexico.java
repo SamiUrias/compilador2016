@@ -6,14 +6,21 @@ import java.io.*; import java.util.*;
 public class AnalizadorLexico {
     public int linea =1;
     private char vistazo = ' ';
-    private Hashtable palabras = new Hashtable();
     
-    void reservar (Palabra t){ palabras.put(t.lexema, t); }
+    private Hashtable palabras = new Hashtable();
+  
+    /**
+     * Este metodo resrva una palabra en el HashTable palabras
+     * @param t 
+     */
+    public void reservar (Palabra t){ 
+        palabras.put(t.nombre, t.valor); 
+    }
     
     public AnalizadorLexico()
     {
-        reservar (new Palabra(Etiqueta.TRUE, "true") );
-        reservar (new Palabra(Etiqueta.FALSE, "false") );
+        //reservar (new Palabra(Etiqueta.TRUE, "true") );
+        //reservar (new Palabra(Etiqueta.FALSE, "false") );
     }
     
     
@@ -49,7 +56,7 @@ public class AnalizadorLexico {
              String s = b.toString();
              Palabra w = (Palabra)palabras.get(s);
              if (w != null) return w;
-             w = new Palabra (Etiqueta.ID, s);
+             //w = new Palabra (Etiqueta.ID, s);
              palabras.put(s, w);
              return w;
          }
