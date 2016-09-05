@@ -27,7 +27,7 @@ public class RegexAnalyzer {
            programa*/
         long time1 = System.currentTimeMillis();
         
-        public void analizar(){
+        public void obtenerExpresionRegular(){
             System.out.println("(b | b)*abb(     a  | b ) *");
             System.out.println("Ingrese la expresion regular: ");
         
