@@ -471,8 +471,23 @@ public class Automata {
     }
     
     
+    /**
+     * Este metodo asigna un valor al atributo nombre del automata
+     * @param nombre 
+     */
+    public void setNombre(String nombre)
+    {
+       this.nombre = nombre; 
+    }
     
-    
+    /**
+     * Este metodo devuelve el nombre del automata
+     * @return nombre
+     */
+    public String getNombre()
+    {
+        return this.nombre;
+    }
     
     
     

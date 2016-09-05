@@ -186,10 +186,10 @@ public class main {
         
         
         
-                                    /*Se simula el afn*/
+        /*Se simula el afn*/
         /*Se crea una nueva instancia del simulador*/
-        //simulador  = new Simulador(aut);
-        //simulador.simular(); /*Se hace la simulacion*/
+        simulador  = new Simulador(aut);
+        /*simulador.simular();*/ /*Se hace la simulacion*/
         
         
         

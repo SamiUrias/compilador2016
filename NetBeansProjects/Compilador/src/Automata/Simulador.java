@@ -21,6 +21,7 @@ public class Simulador {
     public Simulador(Automata automata)
     {
         this.automata = automata;
+        System.out.println("Se ha creado un simulador para el afn");
     }
     
     public boolean aceptacion(Automata automata, String cadena)

@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Esta clase se cea base del main de el paquete automata.
+ * Esta clase se cea con base del main de el paquete automata.
  * 
  *  La diferencia general entre esta clase y el main, es que esta clase permite
  *  la creacion de automatas AFN en base a una expresion ingresada por el 
- *  usuario uotro metodo. Es decir que esta clase esta hecha para se instanciada
+ *  usuario u otro metodo. Es decir que esta clase esta hecha para se instanciada
  *  desde cualquier otra parte del prgroma, a diferencia del main que fue 
  *  utilizado para la primera entrega del proyecto.
  * 
@@ -24,6 +24,7 @@ public class AFN {
     /**/
     private static String p;
     private Automata automata;
+    private String nombre = ""; /*Nombre del automata*/
     
     /**
      * Constructor del AFN
@@ -39,8 +40,6 @@ public class AFN {
     {
         this.automata = crearAutomata(regex);
     }
-    
-    
     
     
     /**
@@ -150,7 +149,7 @@ public class AFN {
                    aut.getTransiciones().get(i).getSimbolo()+"\"];";
         }
          
-        texto = texto + "rankdir=LR;\n}";
+        //texto = texto + "rankdir=LR;\n}";
 
         /*Guarda la imagen*/
         //guardarImagen(texto);
@@ -165,6 +164,9 @@ public class AFN {
         //simulador  = new Simulador(aut);
         //simulador.simular(); /*Se hace la simulacion*/
      
+        /*Asigna el nombre del automata*/
+        aut.setNombre(nombre);
+        
         
         /*Devuelve el automata AFN generado por la expresion regular*/
         return aut;
@@ -174,5 +176,24 @@ public class AFN {
         return automata;
     }
     
+    
+    /**
+     * Este metodo asigna un nombre al automata que sera creado
+     * @param nombre 
+     */
+    public void setNombre(String nombre)
+    {
+        this.nombre = nombre;
+    }
+    
+    
+    /**
+     * Devuelve el nombre del automata
+     * @return 
+     */
+    public String getNombre()
+    {
+        return this.nombre;
+    }
     
 }

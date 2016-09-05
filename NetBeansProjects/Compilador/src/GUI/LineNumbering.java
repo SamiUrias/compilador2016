@@ -28,6 +28,18 @@ public class LineNumbering extends JFrame{
 		super("Line Numbering Example");
 	}
         
+        public LineNumbering(String nombre, String cadena)
+        {
+            super(nombre);
+            this.jta.setText(cadena);
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+            
+        }
+        
         public LineNumbering (String name) {
             super(name);
         }

@@ -45,6 +45,11 @@ public class Lexer {
     private AnalizadorLexico al = new AnalizadorLexico(); 
     Palabra palabraActual = new Palabra();
     
+    
+    /*Este atributo guarda el nombre del ident actual*/
+    private String identActual = "";
+    
+    
     /**
      * Este metodo analiza el texto ingresado
      * @param texto
@@ -76,7 +81,7 @@ public class Lexer {
         
         
         for(int i=0;i<lineas.length;i++){
-            System.out.println("Linea "+i+ ": "+lineas[i]);
+            System.out.println("\n\nLinea "+i+ ": "+lineas[i]);
             
             /*Se reconoce que se hayan encontrado caracteres*/
             if (lineas[i].matches("CHARACTERS")){
@@ -166,7 +171,7 @@ public class Lexer {
      * es o no un numero.
      * @param cadena 
      */
-    private boolean isIdent(String cadena){
+    public boolean isIdent(String cadena){
         boolean identValido = false;
         boolean num = false;
         int i,j,k; /*Variable para los contadores*/
@@ -235,8 +240,9 @@ public class Lexer {
              if (pertenece == false) {
                 /*Si no pertenece al alfabeto aceptado por el lenguaje, se detiene 
                  el ciclo y se muestra una alerta*/
-                System.out.println("La cadena: " + cadena + " contiene un caracter"
-                        + " no valido: \'" + caracter + "\'");
+                
+                 //System.out.println("La cadena: " + cadena + " contiene un caracter"
+                 //       + " no valido: \'" + caracter + "\'");
 
                 break; //Se sale del ciclo
                 }   
@@ -449,6 +455,8 @@ public class Lexer {
         asignacion = linea.substring(index1+1,index2-1);
         
         System.out.println("Ident: " + ident);
+        identActual = ident; /*Asigna como identActual el ident que se acaba de encontrar*/
+        System.out.println("IdentActual: " + identActual);
         System.out.println("Asignacion: " + asignacion );
         
         
@@ -461,24 +469,45 @@ public class Lexer {
         
     }
     
+    
+    
     private void set(String asignacion)
     {
         /*Revisa si la asignacion contiene un signo +*/
         //FALTA HACER ESTA ACCION
         int plus = 0;
         int minus = 0;
-        String[] partes;
+        String[] partes; /*Almacena todas las partes de la asignacion*/
         
         /*Revisa si hay un signo mas o un signo menos*/
         plus = asignacion.indexOf("+"); minus = asignacion.indexOf("-");
+        
         /*Si no tiene signo mas*/
         if (plus == -1) {
            basicSet(asignacion); 
         }
-        else{
+        else{/*Si tiene signo mas*/
             System.out.println("La asignacion esta separada por partes");
             partes = asignacion.split(Pattern.quote("+"));
             System.out.println("Las partes de la asignacion son: ");
+            
+            /*Imprime las partes de la asignación*/
+            for(int i=0;i<partes.length;i++){
+                System.out.println("* " + partes[i].toString());
+            }
+            
+            /*Rorre todas las partes de la asignacion*/
+            for (int j=0; j<partes.length;j++)
+            {
+                String parteRevisada = partes[j];
+                for(int k=0;k<bancoAutomatas.size();k++)
+                {
+                    if (parteRevisada.equals(bancoAutomatas.get(k).getNombre()))
+                    {
+                        /*Si se encontro el automata*/
+                    }
+                }
+            }
             
         }
         
@@ -494,6 +523,7 @@ public class Lexer {
      */
     private void basicSet(String basicSet)
     {
+        System.out.println("basicSet");
         boolean ident, string, chr;
         
         ident = isIdent(basicSet);
@@ -510,7 +540,7 @@ public class Lexer {
         
         /*Se trabaja el String*/
         string = isString(basicSet);
-        if (string = true)
+        if (string == true)
         {
             System.out.println("Es un String");
         }
@@ -634,10 +664,10 @@ public class Lexer {
                     int valor = Integer.valueOf(simbolo);
                     char c =  (char)valor;
                     System.out.println("El simbolo es:" + c);
-                    AutoChar(simbolo);
+                    AutoChar(simbolo); System.out.println("Autochar: " + c);
                 }
                 else{
-                    AutoChar(partes[0]);
+                    AutoChar(partes[0]); System.out.println("Autochar: " + partes[0].toString());
                 }
                 
                 
@@ -648,7 +678,7 @@ public class Lexer {
             System.out.println("La linea solo contiene un caracter");
             String caracter =  linea.substring(1, 2);
             System.out.println("El caracter es: " + caracter);
-            AutoChar(caracter);
+            AutoChar(caracter); System.out.println("Auochar: " + caracter);
         }
     }
     
@@ -700,8 +730,11 @@ public class Lexer {
         /*Crea un automata en base a un caracter, y lo almacena en el banco de
           automatas*/
         AFN  afn = new AFN(caracter);
+        afn.setNombre(this.identActual);
         bancoAutomatas.add(afn.getAutomata());
     }
+    
+    
     
     /**
      * Crea un autoomata con base en un keyword
@@ -713,6 +746,4 @@ public class Lexer {
           keyword*/
         AutoChar(keyword);
     }
-    
-    
 }   

@@ -38,7 +38,9 @@
 
 package GUI;
 
+import Automata.RegexAnalyzer;
 import Exception.IdentException;
+import Parser.Parser;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -70,17 +72,26 @@ public class GUI extends JFrame {
     private JList list = new JList(listModel);
     private static int left;
     private static int top;
-    private JCheckBoxMenuItem copyItem;
+    private JCheckBoxMenuItem lineNumberingItem;
     private JCheckBoxMenuItem nullItem;
     private JCheckBoxMenuItem thItem;
-    private JMenuItem openItem; /*Added by Moises*/
-    private JMenuItem verificarItem; /*Added by Moises*/
-    private JMenuItem newItem; /*Added by Moises*/
-    
+    private JMenuItem openItem;             /*Added by Moises*/
+    private JMenuItem verificarItem;        /*Added by Moises*/
+    private JMenuItem newItem;              /*Added by Moises*/
+    private JMenuItem parsearItem;          /*Added by Moises*/
+    private JMenuItem expresionesRegularesItem; /*Added by Moises*/
+            
     private Doc documentoActual; /*Es el documento actual con el que se esta trabajando*/
 
+    /*Se crea una instancia del Lexer*/
+    private Lexer lexer = new Lexer(); 
     
-    private Lexer lexer = new Lexer(); /*Se crea una instancia del Lexer*/
+    /*Se crea una instancia del parser*/
+    private Parser parser = new Parser(); 
+    
+    /*Se crea una instanacia del analizador de expresiones regulares*/
+    private RegexAnalyzer regexAnalyzer = new RegexAnalyzer(); 
+    
     
     /**
      * Esta clase se utiliza para crear los Documentos (formularios hijos) de la
@@ -257,7 +268,7 @@ public class GUI extends JFrame {
                 return false;
             }
 
-            if (copyItem.isSelected()) {
+            if (lineNumberingItem.isSelected()) {
                 boolean copySupported = (COPY & support.getSourceDropActions()) == COPY;
 
                 if (!copySupported) {
@@ -306,7 +317,7 @@ public class GUI extends JFrame {
      * Constructor
      */
     public GUI() {
-        super("Lexer");
+        super("...");
         setJMenuBar(createMenuBar());
         //getContentPane().add(createDummyToolBar(), BorderLayout.NORTH);
 
@@ -328,12 +339,9 @@ public class GUI extends JFrame {
                 Doc val = (Doc)list.getSelectedValue();
                 if (val != null) {
                     val.select();
-                    
                     System.out.println(val.name);
-                    
                     documentoActual = val; /*Se asigna el valor del docmento actual*/
-                }
-                
+                } 
              }
         });
         
@@ -419,13 +427,7 @@ public class GUI extends JFrame {
      */
     private JMenuBar createMenuBar() {
         JMenuBar menubar = new JMenuBar();
-        //mb.add(createDummyMenu("Archivo"));
-        //mb.add(createDummyMenu("Edit"));
-        //mb.add(createDummyMenu("Search"));
-        //mb.add(createDummyMenu("View"));
-        //mb.add(createDummyMenu("Tools"));
-        //mb.add(createDummyMenu("Help"));
-        
+          
         
         JMenu archivo = new JMenu("Archivo"); /*Crea un nuevo elemento de menu*/
         menubar.add(archivo); /*Se agrega ese elemento de menu a la barra de menu*/
@@ -444,10 +446,12 @@ public class GUI extends JFrame {
         archivo.add(newItem);
         
         
-        verificarItem = new JMenuItem("Verificar");
+        verificarItem = new JMenuItem("Analisis lexico");
         verificarItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
         ejecucion.add(verificarItem);
         
+        parsearItem = new JMenuItem("Parsear");
+        ejecucion.add(parsearItem);
         
         
         
@@ -463,9 +467,9 @@ public class GUI extends JFrame {
         nullItem.setMnemonic(KeyEvent.VK_R);
         demo.add(nullItem);
 
-        copyItem = new JCheckBoxMenuItem("Use COPY Action");
-        copyItem.setMnemonic(KeyEvent.VK_C);
-        demo.add(copyItem);
+        lineNumberingItem = new JCheckBoxMenuItem("LineNumbering");
+        lineNumberingItem.setMnemonic(KeyEvent.VK_C);
+        demo.add(lineNumberingItem);
         
         
                     /*Se agregan los action listeners*/
@@ -482,6 +486,15 @@ public class GUI extends JFrame {
             }
         });
         
+        
+        parsearItem.addActionListener(new java.awt.event.ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parsearItemActionPerformed(e);
+            }
+        });
+       
         
         /*Se agrega el action listener de openItem
             este action listenner llama al metodo openItemActionPerformed*/
@@ -553,10 +566,41 @@ public class GUI extends JFrame {
         
     }
     
+    
+    private void parsearItemActionPerformed(ActionEvent evt){
+         String documento = null; boolean existeDocumento = false;
+        //System.out.println("Moi es lo maximo =D\nAqui va la opcion de verificar");
+        //System.out.println(documentoActual.area.getText());
+        JOptionPane.showMessageDialog(this, "Verificar el texto ingresado");
+        
+        
+        /*Solo si hay algun documento disponible para analizar se analiza*/
+        
+        try {
+            documento = documentoActual.area.getText();
+            existeDocumento = true;
+        }
+        catch (NullPointerException ex)
+        {
+            System.out.println("No hay documento que se pued analizar");
+            JOptionPane.showMessageDialog(this, "No hay documento para analizar","Error",JOptionPane.ERROR_MESSAGE);
+            existeDocumento = false;
+        }
+        
+        
+        if (existeDocumento == true) {
+            this.parser = new Parser(documento);
+        }
+    }
+    
+    
+    
     private void openItemActionPerformed(ActionEvent evt) {
         abrirArchivo();
     }
     
+    
+   
     
     /*Este metodo abre un archivo de texto*/
     private void abrirArchivo() {
