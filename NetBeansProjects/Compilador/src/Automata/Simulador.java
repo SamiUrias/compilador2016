@@ -5,6 +5,8 @@
  */
 package Automata;
 
+import java.util.Scanner;
+
 /**
  * Esta clase realiza la simulacion de un AFN
  * @author Moises Urias
@@ -29,7 +31,13 @@ public class Simulador {
         this.automata = automata;
         return cadenaAceptada;
     }
-    
+    public void hacerSimulacion(){
+        System.out.println("Ingrese la cadena que se va a simular:");
+        Scanner scaner = new Scanner(System.in);
+        String cadena = scaner.nextLine();
+        System.out.print("La cadena ingresada es: " + cadena + "\n");
+        this.simular(cadena);
+    }
     /**
      * Este metodo hace la simulacion del AFN
      */
