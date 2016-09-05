@@ -28,14 +28,29 @@ public class Subset{
      */
     ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
     
-    /*Bandera que se utiliza en la creacion de AFD's*/
+    /**
+     * Bandera que se utiliza en la creacion de AFD's
+     * */
     boolean marcado = false;
-    
-    
+
+    /**
+     * Este atributo se utiliza en la construccion de AFD para ponerle nombre a cada subset.
+     * Debido a que no se sabe cuantos estados pueda llegar a tener el AFD, entonces los 'nombres' se hacen con una
+     * numeracion.
+     */
+    private int nombre_subset = 0;
+
+
+
+    /**
+     * Constructor vacio.
+     * Este constructor no hace nada
+     */
+
     public Subset() {}
     
     /**
-     * Este contructor recibe como argumentos una lista de nodos y una lista
+     * Este contructor recibe como argumentos un nodo y una lista
      *  de transiciones.
      * @param nodos
      * @param transiciones 
@@ -71,6 +86,7 @@ public class Subset{
     public ArrayList<Integer> getNodos() {
         return Nodos;
     }
+
 
     /**
      * Añade un nuevo nodo al arrelgo de nodos del subset
@@ -116,7 +132,7 @@ public class Subset{
 
     
     /**
-     * Devuelve el largo de un Subset, basado en el largo del ArrayList de 
+     * Devuelve el largo de un Subset, basado en el largo del ArrayList de nodos
      * @return 
      */
     public int size()
@@ -124,10 +140,17 @@ public class Subset{
         return this.Nodos.size();
     }
 
+    /**
+     * Este metdo devuelve el atributo marcado del subset
+     * @return boolean marcado
+     */
     public boolean isMarcado() {
         return marcado;
     }
 
+    /**
+     * Este metodo marca este subset como que ya esta marcado
+     */
     public void setMarcado(boolean marcado) {
         this.marcado = marcado;
     }
@@ -136,9 +159,39 @@ public class Subset{
     /**
      * Ordena el subconjunto de menor a mayor
      */
-    public void ordenar()
-    {
+    public void ordenar() {
         Collections.sort(Nodos);
     }
-    
+
+
+    public int getNombre_subset() {
+        return nombre_subset;
+    }
+
+    public void setNombre_subset(int nombre_subset) {
+        this.nombre_subset = nombre_subset;
+    }
+
+
+    /**
+     * Override el metodo equals.
+     * Se comparan los subsets con base a los nodos que tenga.
+     * */
+    public boolean equals(Object obj){
+        //Aquí se almacena la respuesta de si los objetos son iguales
+        boolean sameObjects = false;
+        if (obj instanceof Subset){
+            Subset tmpSubset = (Subset)obj;
+            tmpSubset.ordenar(); //Se ordenan los nodos que se van a comparar
+            this.ordenar(); //Se ordenan los nodos actuales antes de compararlos
+            if (this.Nodos.equals (tmpSubset.getNodos())){
+                sameObjects = true;
+            }
+            else{
+                sameObjects = false;
+            }
+        }
+
+        return sameObjects;
+    }
 }

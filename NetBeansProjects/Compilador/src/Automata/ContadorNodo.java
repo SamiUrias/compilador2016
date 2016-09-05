@@ -14,7 +14,9 @@ public class ContadorNodo {
     private static ContadorNodo contadornodo = null;
     
     private ContadorNodo(){}
-   
+
+
+    /*Este metodo se ejecuta cuando se crea una nueva instancia, y 'crea' una nueva instancia*/
     public static synchronized ContadorNodo getInstance(){
         contador++; /*Aumenta en uno el contado de nodos*/
         
@@ -28,5 +30,12 @@ public class ContadorNodo {
     
     public static int getContador(){
         return ContadorNodo.contador;
+    }
+
+    /**
+     * Regresa el valor del contador de nodos a cero
+     * */
+    public static void reset(){
+        contador = 0;
     }
 }

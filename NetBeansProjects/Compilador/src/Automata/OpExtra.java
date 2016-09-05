@@ -166,5 +166,15 @@ public class OpExtra {
             operador o no*/
         return operador;
     }
+
+
+    /**
+     * Este metodo permite debugear variables
+     * */
+    public static void debug(Object variable){
+        System.out.println("****************************** DEBUG ********************************");
+        System.out.print(variable.toString());
+        System.exit(0);
+    }
     
 }

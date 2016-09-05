@@ -21,6 +21,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Moises Urias
  */
 public class main {
+
+
      private static String p; /*Direccion donde se crea la imagen del automata*/
      
      
@@ -29,7 +31,10 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        /*Variables globales*/
+        boolean printAFN = false;
+        boolean simularAFN = false;
+
         /*Almacena un arraylist con el alfabeto del automata*/
         ArrayList<String> alfabeto;
         int nodoinicialafn = 0; /*Almacena el nodo inicial del AFN*/
@@ -63,7 +68,7 @@ public class main {
         System.out.println("Cadena con posfix: \n" + cadena+"\n\n\n");
          
         
-        
+
         
         /*Imprime el alfabeto del automata ingresado */
         System.out.println("El alfabeto del automata es:");
@@ -93,9 +98,6 @@ public class main {
         /*AUTOMATA CREADO*/
         aut = aut.automatas.pop(); 
 
-        
-        
-         
         System.out.println("\nCantidad de transiciones: " + aut.transiciones.size()+"\n");
         
         ArrayList<Nodo> arnodo = aut.getEstados();
@@ -179,19 +181,25 @@ public class main {
         texto = texto + "rankdir=LR;\n}";
 
         /*Guarda la imagen*/
-        //guardarImagen(texto);
-        //llamarAlGraphViz();
-        
-        //AFD afd = new AFD(aut);
+        if (printAFN==true){
+            guardarImagen(texto);
+            llamarAlGraphViz();
+
+        }
+
         
         
         
         /*Se simula el afn*/
-        /*Se crea una nueva instancia del simulador*/
+        /*Se crea una nueva instancia del simulador y se hace la simulacion*/
         simulador  = new Simulador(aut);
-       simulador.hacerSimulacion(); 
-        /*Se hace la simulacion*/
-        
+
+        if(simularAFN==true) {
+            simulador.hacerSimulacion();
+        }
+
+       /*Se crea un automata finito deterministico utilizando la construccion por subconjuntos*/
+        AFD afd = new AFD(aut);
         
         
 }
@@ -217,7 +225,7 @@ public class main {
         if (text.matches("[[ ]*[\n]*[\t]]*")) {//compara si en el JTextArea hay texto sino muestrtra un mensaje en pantalla
             JOptionPane.showMessageDialog(null,"No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            
+
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.txt", "txt"));//filtro para ver solo archivos txt
             fileChooser.setSelectedFile(new File("AFN.txt"));
@@ -251,12 +259,13 @@ public class main {
      * @param text 
      */
     private static void guardarImagen(String text){
-        
+        System.out.println("Dentro del metodo Guardar Imagen");
+
         
         if (text.matches("[[ ]*[\n]*[\t]]*")) {//compara si en el JTextArea hay texto sino muestrtra un mensaje en pantalla
             JOptionPane.showMessageDialog(null,"No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            
+            System.out.println("Dentro del else");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.dot", "dot"));//filtro para ver solo archivos txt
             fileChooser.setSelectedFile(new File("AFNimagen.dot"));
@@ -290,10 +299,10 @@ public class main {
      * Este metodo llama al graphviz con un process builder
      */
     private static void llamarAlGraphViz(){
-        System.out.println("Hola Mundo");
+//        System.out.println("Hola Mundo");
         try {
       
-      String dotPath = "c:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+      String dotPath = "d:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
       
             System.out.println(p);
       String fileInputPath = p;

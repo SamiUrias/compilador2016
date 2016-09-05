@@ -56,14 +56,14 @@ public class Simulador {
         /*Se le realiza un eclosure al subset*/
         System.out.println("Se hace el eClosure");
         subset = OpExtra.eClosure(subset);
-        String c = cadena.substring(0,1);
+        String c = cadena.substring(0,1); //SiguienteCaracter
         
         for (int i = 1; i<=cadena.length();i++   ) {
             System.out.println("C = " + c);
             subset = OpExtra.mover(subset, c);
             subset = OpExtra.eClosure(subset);
             if (i < cadena.length())
-                c = cadena.substring(i,i+1);
+                c = cadena.substring(i,i+1); //SiguienteCaracter
         }
         
         if (subset.Nodos.contains(estadoAceptacion))

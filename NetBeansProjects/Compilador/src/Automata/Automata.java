@@ -255,12 +255,14 @@ public class Automata {
                automatas.push(this.OR(automata1, automata2));
                
            }
+           /*Si se encuentra un clean*/
            else if(simbolo.equals("*"))
            {
                Automata automata1 = automatas.pop();
                automatas.push(this.kleene(automata1));
                
            }
+           /*Si se encuentra una concatenacion*/
            else if(simbolo.equals("."))
            {
                Automata automata1 = automatas.pop();
@@ -329,7 +331,7 @@ public class Automata {
         
         int cont=0; /*Contador*/
         
-        /*Se crean tempralmente estados iniciales y finales*/
+        /*Se crean temporalmente estados iniciales y finales*/
         Nodo tEstadoInicial = null; 
         Nodo tEstadoFinal = null;
         
@@ -349,7 +351,9 @@ public class Automata {
                 /*Se le quita la propiedad de estado inicial*/
                 automata.estados.set(cont, estado);
             }
-            
+
+             /*Se crea la transicion entre el nodo final del kleene y el
+                  nodo final del automata que se esta analizando*/
             if (estado.iseFinal() == true)
             {
                 automata.transiciones.add(new Transicion(estado.getId(),"!",nodoF.getId()));
