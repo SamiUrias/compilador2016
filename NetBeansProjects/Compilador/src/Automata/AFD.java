@@ -5,23 +5,28 @@
  */
 package Automata;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
-import java.util.StringJoiner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Moises Urias
  */
 public class AFD {
-    /*
+    private static String p; /*Direccion donde se crea la imagen del automata*/
+    /**
     * Si esta variable es true, entonces se ejecutan toas las lineas que se utilizan para hacer debug.
     * */
-    private boolean debugAFD = true;
+    private boolean debugAFD = false;
 
+    /**
+     * Si esta variable es true, entonces de va a dibujar el AFD
+     */
+    private boolean printAFD = true;
 
     /**
      * Estos son los estados del AFD
@@ -32,10 +37,8 @@ public class AFD {
     /**
      * Estas son las transiciones entre los estados del AFD
      * */
-    private ArrayList<TransicionAfd> transiciones = new ArrayList<TransicionAfd>();
-
-
-    private ArrayList<Transicion> tranciciones2 = new ArrayList<Transicion>();
+    private ArrayList<Transicion> tranciciones = new ArrayList<Transicion>();
+    
     /**
      * Este es el contador de nodos del AFD.
      * Se utiliza el mismo contador de nodos que se utilizo para el AFN.
@@ -43,7 +46,12 @@ public class AFD {
     private ContadorNodo contador; /*Contador del numero de nodos*/
 
 
+    /**
+     * Este es el estado de aceptacion del AFN
+     */
+    private int estado_de_aceptacion_AFN = 0;
 
+    ArrayList<Integer>estados_de_aceptacion = new ArrayList<>();
     /**
      * Constructor de un AFD con base en un automata
      * @param afn
@@ -61,15 +69,22 @@ public class AFD {
         /*Se busca el estado inicial del afn*/
         int nodoinicial =0;
 
-        for (int i=0;i<afn.getEstados().size();i++)
-        {
-            /*Se obtiene el nodo inicial de AFN*/
-            if (afn.getEstados().get(i).iseInicial() == true){
-                System.out.println("Estado inicial CONSTRUCTOR AFD: " + afn.getEstados().get(i).getId());
-                nodoinicial = afn.getEstados().get(i).getId();
-            }
-        }
-        
+//        for (int i=0;i<afn.getEstados().size();i++)
+//        {
+//            /*Se obtiene el nodo inicial de AFN*/
+//            if (afn.getEstados().get(i).iseInicial() == true){
+//                System.out.println("Estado inicial CONSTRUCTOR AFD: " + afn.getEstados().get(i).getId());
+//                nodoinicial = afn.getEstados().get(i).getId();
+//            }
+//        }
+
+        /*Se busca el estado de aceptacion del AFN*/
+        nodoinicial = afn.getEstadoInicial();
+        this.estado_de_aceptacion_AFN = afn.getEstadoFinal();
+        System.out.println("...Estado inicial del AFN: " + nodoinicial);
+        System.out.println("...Estado final del AFN: " + this.estado_de_aceptacion_AFN);
+        OpExtra.leerPantalla();
+
         
         /*Una ves ya se ha encontrado el estado inicial del afn, se crea un 
           subset con ese estado*/
@@ -133,7 +148,7 @@ public class AFD {
 
                 /*Como se esta revisando este esatdo, el esatado se marca como
                   marcado*/
-                estadoActual.setMarcado(true);
+                estadoActualAnterior.setMarcado(true);
                 
                 
                 /*Se crea el nuevo estado del AFD*/
@@ -232,12 +247,12 @@ public class AFD {
                                 estadoActual.getNombre_subset());
 
 
-                        tranciciones2.add(nuevaTransicion);
+                        tranciciones.add(nuevaTransicion);
                         System.out.println(nuevaTransicion.toString());
 
                         estados.add(estadoActual);
                         System.out.println(estados);
-                        System.out.println("tranciciones: " + tranciciones2.toString());
+                        System.out.println("tranciciones: " + tranciciones.toString());
                         System.out.println("----------  DEBUG (END): CREACION DE ESTADO -----------------");
                     }
                     else{
@@ -252,12 +267,16 @@ public class AFD {
 
                         //Si el estado existe, es necesario crear una transicion, pero no se agrega el estado.
                         System.out.println("----------  DEBUG: CREACION DE TRANSICION -----------------");
-                        tranciciones2.add(new Transicion(estadoActualAnterior.getNombre_subset(),alfabeto.get(i),
+                        tranciciones.add(new Transicion(estadoActualAnterior.getNombre_subset(),alfabeto.get(i),
                                 nombre_del_estado_existente));
                         System.out.println(new Transicion(estadoActualAnterior.getNombre_subset(),alfabeto.get(i),
                                 nombre_del_estado_existente).toString());
                         System.out.println("----------  DEBUG (END): CREACION DE TRANSICION -----------------");
-                        OpExtra.leerPantalla();
+
+                        if (debugAFD == true){
+                            OpExtra.leerPantalla();
+                        }
+
                     }
 
                     //DEBUG
@@ -273,55 +292,209 @@ public class AFD {
 
             /*Se imprimeen todas las transiciones que se generaron en el proceso*/
             System.out.println("Estas son todas las transiciones del automata");
-            for (int k=0; k<tranciciones2.size(); k++){
+            for (int k=0; k<tranciciones.size(); k++){
                 String t = "Transicion { nodo_Inicial: ";
-                t = t + OpExtra.reemplazarNumerosPorLetras(tranciciones2.get(k).getNodoInicial());
+                t = t + OpExtra.reemplazarNumerosPorLetras(tranciciones.get(k).getNodoInicial());
                 t = t + ", simbolo = ";
-                t = t + tranciciones2.get(k).getSimbolo();
-                t = t + ", nodo_Final: " + OpExtra.reemplazarNumerosPorLetras(tranciciones2.get(k).getNodoFinal());
+                t = t + tranciciones.get(k).getSimbolo();
+                t = t + ", nodo_Final: " + OpExtra.reemplazarNumerosPorLetras(tranciciones.get(k).getNodoFinal());
                 System.out.print(t);
-                System.out.println("\t\t\t" + tranciciones2.get(k).toString());
+                System.out.println("\t\t\t" + tranciciones.get(k).toString());
             }
-            System.exit(0);
-            
-            /*Se revisa que ya no hayan estados marcados*/
-            boolean b = false;
-            for (int g = 0; g<estados.size();g++)
-            {
 
-                if(estados.get(g).isMarcado() == false)
-                {
-                    b = true;
+
+            /*Se revisa si hay o no estados no marcados. Esto se hace para salir del ciclo infinito del while */
+            boolean faltantes = false;
+            for (int m=0; m<estados.size();m++){
+                if (estados.get(m).isMarcado() == false){
+                    faltantes = true;
+                    break;
                 }
             }
 
-            hayEstadosNoMarcados = b;
+            if (faltantes == true){
+                hayEstadosNoMarcados = true;
+            }
+            else {
+                hayEstadosNoMarcados = false;
+            }
 
         }
 
         System.out.println(this.estados);
+        System.out.println("Los estados de aceptacion son:");
+
+        /*Se revisan todos los estados del AFN.
+        ** Se les asigna su propiedad de estado de acepatacion o no (estado normal)
+        **/
+        for (int o = 0; o<estados.size();o++){
+            if (estados.get(o).getNodos().contains(estado_de_aceptacion_AFN)){
+                estados.get(o).setEstado_de_aceptacion(true);
+                this.estados_de_aceptacion.add(estados.get(o).getNombre_subset());
+            }
+            else{
+                estados.get(o).setEstado_de_aceptacion(false);
+            }
+        }
+
+        System.out.println(estados_de_aceptacion);
+        OpExtra.leerPantalla();
+
+        //Se dibuja el AFD
+        if (printAFD == true){
+            this.dibujarAFD();
+        }
+    }
+
+
+   private void dibujarAFD(){
+       /*Texto*/
+       String texto = "";
+
+       texto = texto + "digraph G\n";
+       texto = texto +"{\n";
+       texto = texto + "node [shape=circle];";
+       texto = texto + "node [style=filled];";
+       texto = texto + "node [fillcolor=\"#EEEEEE\"];";
+       texto = texto + "edge [color=\"#31CEF0\"];";
+
+       //Los estados de aceptacion se vizualizan de una manera diferente
+       for (int p =0;p<estados_de_aceptacion.size();p++){
+           texto = texto + estados_de_aceptacion.get(p) + " [fillcolor=\"yellow\" shape=doublecircle];";
+       }
+
+       for (int l =0; l<tranciciones.size();l++){
+
+           texto = (
+                   texto + tranciciones.get(l).getNodoInicial() + " -> " +
+                   tranciciones.get(l).getNodoFinal() + "[label=\""+
+                   tranciciones.get(l).getSimbolo()+"\"];"
+           );
+
+       }
+
+       texto = texto + "rankdir=LR;\n}";
+
+       System.out.println(texto);
+       OpExtra.leerPantalla();
+       this.guardarImagen(texto);
+       llamarAlGraphViz();
+   }
+
+    /**Este códifo fue tomado de:
+     http://jconnexion.blogspot.com/2011/12/jfilechooser-para-abrir-yo-guardar.html
+     el 20 de agosto del 2015
+
+     Se utiliza para guardar el afn generado*/
+    private static void guardar(String text){
+
+
+        if (text.matches("[[ ]*[\n]*[\t]]*")) {//compara si en el JTextArea hay texto sino muestrtra un mensaje en pantalla
+            JOptionPane.showMessageDialog(null,"No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.txt", "txt"));//filtro para ver solo archivos txt
+            fileChooser.setSelectedFile(new File("AFN.txt"));
+            int seleccion = fileChooser.showSaveDialog(null);
+            try{
+                if (seleccion == JFileChooser.APPROVE_OPTION){//comprueba si ha presionado el boton de aceptar
+                    File JFC = fileChooser.getSelectedFile();
+                    String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar
+                    p = PATH;
+                    PrintWriter printwriter = new PrintWriter(JFC);
+                    printwriter.print(text);//escribe en el archivo  lo que se encuentre en el JTextArea
+                    printwriter.close();//cierra el archivo
+
+                    //comprobamos si a la hora de guardar obtuvo la extension y si no se la asignamos
+                    if(!(PATH.endsWith(".txt"))){
+                        File temp = new File(PATH+".txt");
+                        JFC.renameTo(temp);//renombramos el archivo
+                    }
+
+                    JOptionPane.showMessageDialog(null,"Guardado exitoso!", "Guardado exitoso!", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }catch (Exception e){//por alguna excepcion salta un mensaje de error
+                JOptionPane.showMessageDialog(null,"Error al guardar el archivo!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+
+    /**
+     * Se utiliza para guardar la imagen(.dot)
+     * @param text
+     */
+    private static void guardarImagen(String text){
+        System.out.println("Dentro del metodo Guardar Imagen");
+
+
+        if (text.matches("[[ ]*[\n]*[\t]]*")) {//compara si en el JTextArea hay texto sino muestrtra un mensaje en pantalla
+            JOptionPane.showMessageDialog(null,"No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            System.out.println("Dentro del else");
+            System.out.println("Se abrio el cuadro de dialogo");
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.dot", "dot"));//filtro para ver solo archivos txt
+            fileChooser.setSelectedFile(new File("AFNimagen.dot"));
+            int seleccion = fileChooser.showSaveDialog(null);
+            try{
+                if (seleccion == JFileChooser.APPROVE_OPTION){//comprueba si ha presionado el boton de aceptar
+                    File JFC = fileChooser.getSelectedFile();
+                    String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar
+                    PrintWriter printwriter = new PrintWriter(JFC);
+                    printwriter.print(text);//escribe en el archivo  lo que se encuentre en el JTextArea
+                    printwriter.close();//cierra el archivo
+                    p = PATH;
+                    //comprobamos si a la hora de guardar obtuvo la extension y si no se la asignamos
+                    if(!(PATH.endsWith(".dot"))){
+                        File temp = new File(PATH+".dot");
+
+                        JFC.renameTo(temp);//renombramos el archivo
+                    }
+
+                    JOptionPane.showMessageDialog(null,"Guardado exitoso!", "Guardado exitoso!", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }catch (Exception e){//por alguna excepcion salta un mensaje de error
+                JOptionPane.showMessageDialog(null,"Error al guardar el archivo!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
 
 
+    /**
+     * Este metodo llama al graphviz con un process builder
+     */
+    private static void llamarAlGraphViz(){
+//        System.out.println("Hola Mundo");
+        try {
 
-    public AFD(Subset subsetI, ArrayList<String> alfabeto)
-    {
+            String dotPath = "d:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 
-        /**
-         * Se hace un eClosure con el estado inicial del afn
-         */
-        Subset moi = OpExtra.eClosure(subsetI);
+            System.out.println(p);
+            String fileInputPath = p;
+            String fileOutputPath = p+".jpg";
 
-        //subset moi = OpExtra.mover(subsetI, null);
-        System.out.println(moi);
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+
+            Runtime rt = Runtime.getRuntime();
+
+            rt.exec( cmd );
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        }
 
     }
-
-
-    public void construccionPorSubconjuntos(Automata afn){
-
-    }
-
 
 }

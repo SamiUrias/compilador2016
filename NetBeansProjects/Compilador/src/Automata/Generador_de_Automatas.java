@@ -124,5 +124,8 @@ public class Generador_de_Automatas {
          
          
         return aut; /*Se devuelve el automata generado*/
-}
+    }
+
+
+
 }

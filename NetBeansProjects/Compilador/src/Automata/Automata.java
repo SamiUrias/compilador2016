@@ -14,7 +14,7 @@ import java.util.Stack;
  */
 public class Automata {
     
-    private ArrayList<Nodo> estados = new ArrayList<Nodo>(); 
+    private ArrayList<Nodo> estados = new ArrayList<Nodo>();
     
     private String simbolo;
     public ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
@@ -332,7 +332,7 @@ public class Automata {
         int cont=0; /*Contador*/
         
         /*Se crean temporalmente estados iniciales y finales*/
-        Nodo tEstadoInicial = null; 
+        Nodo tEstadoInicial = null;
         Nodo tEstadoFinal = null;
         
         /*Se recorre el automata para encontrar el estado inicial*/
@@ -511,7 +511,7 @@ public class Automata {
         {
             
             if (arnodo.get(i).iseInicial() == true){
-                System.out.println("Estado inicial: " + arnodo.get(i).getId());
+                //System.out.println("Estado inicial: " + arnodo.get(i).getId());
                 nodoinicial = arnodo.get(i).getId();
                 nodoinicialafn = arnodo.get(i).getId();
             }
@@ -530,7 +530,7 @@ public class Automata {
         for (int i=0; i<arnodo.size();i++)
         {
             if (arnodo.get(i).iseFinal() == true){
-                System.out.println("Estado final: " + arnodo.get(i).getId());
+                //System.out.println("Estado final: " + arnodo.get(i).getId());
                 nodofinalafn = arnodo.get(i).getId();
             }
         }

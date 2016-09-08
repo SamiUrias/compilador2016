@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Subset que se utiliza en el eClosure
+ * Subset que se utiliza en el eClosure.
+ * Esta clase tambien se utiliza en la creacion del AFN.
  * @author Moises Urias
  */
 public class Subset{
@@ -32,6 +33,30 @@ public class Subset{
      * Bandera que se utiliza en la creacion de AFD's
      * */
     boolean marcado = false;
+
+
+    /**
+     * En la construccion del AFD es necesario saber si un estado es o no un estado de aceptacion.
+     * Esta variable indica si el estado es o no un estado de aceptacion
+     * */
+    boolean estado_de_aceptacion = false;
+
+
+    /**
+     * Devuelve si es o no un estado de aceptacion
+     * @return
+     */
+    public boolean isEstado_de_aceptacion() {
+        return estado_de_aceptacion;
+    }
+
+    /**
+     * Asigna el valor de este estado como estado de aceptación o no.
+     * @param estado_de_aceptacion
+     */
+    public void setEstado_de_aceptacion(boolean estado_de_aceptacion) {
+        this.estado_de_aceptacion = estado_de_aceptacion;
+    }
 
     /**
      * Este atributo se utiliza en la construccion de AFD para ponerle nombre a cada subset.
@@ -76,7 +101,11 @@ public class Subset{
         return transiciones;
     }
 
-    
+
+    /**
+     * Asigna todos los nodos del subset
+     * @param ArrayList<Integer> Nodos
+     */
     public void setNodos(ArrayList<Integer> Nodos) {
         this.Nodos = Nodos;
     }
