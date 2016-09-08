@@ -8,6 +8,7 @@ package Automata;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.StringJoiner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +17,12 @@ import java.util.logging.Logger;
  * @author Moises Urias
  */
 public class AFD {
+    /*
+    * Si esta variable es true, entonces se ejecutan toas las lineas que se utilizan para hacer debug.
+    * */
+    private boolean debugAFD = true;
+
+
     /**
      * Estos son los estados del AFD
      */
@@ -43,6 +50,7 @@ public class AFD {
      */
     public AFD(Automata afn)
     {
+        Scanner scaner = new Scanner(System.in);
         System.out.println("\n\nDentro de constructor del AFD");
         
         /*Verifica que aun existan estados no marcados en la pila.
@@ -67,6 +75,13 @@ public class AFD {
           subset con ese estado*/
         Subset subset1 = new Subset(nodoinicial, afn.getTransiciones());
 
+        //DEBUG
+        if (debugAFD == true){
+            System.out.println("Antes del e-closure");
+           OpExtra.leerPantalla();
+        }
+
+
         /*Se hace un eClosure de ese estado*/
         subset1 = OpExtra.eClosure(subset1);
 
@@ -75,7 +90,7 @@ public class AFD {
         System.out.println("Primer e-closure del AFD: " + subset1);
         subset1.ordenar();
         System.out.println("Subset 1 ordenado: " + subset1);
-
+        scaner.nextLine();
         /*Se le pone nombre al primer estado del AFD*/
         //El nombre del primer estado del AFD por defecto es 1.
         //Como ya se creo el AFN, se renicia el contador de nodos
@@ -84,7 +99,11 @@ public class AFD {
         System.out.println("Contador de nodos: " + primer_id_del_subset);
         subset1.setNombre_subset(primer_id_del_subset);
         System.out.println("El nombre asignado al subset1 es: " + subset1.getNombre_subset());
-        
+
+        //DEBUG
+        if (debugAFD == true){
+            OpExtra.leerPantalla();
+        }
         /*Se agrega el subconjunto inicial a una lista de estados iniciales*/
         estados.add(subset1);
         
@@ -120,8 +139,13 @@ public class AFD {
                 /*Se crea el nuevo estado del AFD*/
                 for (int i=0; i<alfabeto.size(); i++) {
                     /*Se aplica la operacion 'mover' al estado actual*/
-                    estadoActual = OpExtra.mover(estadoActual, alfabeto.get(i));
+                    estadoActual= OpExtra.mover(estadoActualAnterior, alfabeto.get(i));
+                    System.out.println("Este es el move de estado " + estadoActualAnterior.getNombre_subset() + " con el simbolo " + alfabeto.get(i)  + ": "
+                            + estadoActual);
 
+                    if (debugAFD == true){
+                        OpExtra.leerPantalla();
+                    }
                     Subset estadoMove = estadoActual;
 
 //                    System.out.println("El primer move del AFD (estado move): " + estadoMove);
@@ -135,16 +159,31 @@ public class AFD {
 
                     /*Se ordena de menor a mayor el estado actual*/
                     estadoActual.ordenar();
-                    System.out.println("Estado actual ordenado: " + estadoActual);  //Nuevo estado del AFD
+                    System.out.println("E-closure del estado actual ordenado: " + estadoActual);  //Nuevo estado del AFD
 
 
                     /*Se revista si el estado obtenido despues de realizar el 
                       mover y el eclosure es un nuevo estado de la lista de
                       estados del AFD o ya existe.*/
                     boolean estadoExistente = false;
+                    int nombre_del_estado_existente = 0;
+
+                    //DEBUG
+                    if (debugAFD == true){
+                        OpExtra.imprirLinea();
+                    }
+
+                    System.out.println("Se compara el estado actual con todos los estados que hay actualmente en la " +
+                            "lista de estados");
+
+                    //DEBUG
+                    if (debugAFD == true){
+                        OpExtra.leerPantalla();
+                    }
+
 
                     for(int g = 0; g<this.estados.size();g++){ //Todos los estados del AFD
-
+                        ;
                             /*Subset que posteriormente se añadira a los estados del
                                AFD*/
                         Subset sub = new Subset(); //Subset vacio
@@ -155,7 +194,7 @@ public class AFD {
 
                             /*Se ordena de menor a mayor los nodos del estado actual del ciclo*/
                         estado1.ordenar();
-                        System.out.println("Estado 1: " + estado1);
+                        System.out.println("Estado " + String.valueOf(estado1.getNombre_subset()) +": " + estado1);
                         System.out.println("---------------------");
 
                             /*Compara si son iguales*/
@@ -164,14 +203,16 @@ public class AFD {
                             System.out.println("Estado 1: " + estado1);
                             System.out.println("Estado Actual: " + estadoActual);
                             System.out.println("Lo estados son iguales");
+                            System.out.println("El estado actual es igual al estado: " + estado1.getNombre_subset());
                             estadoExistente = true;
+                            nombre_del_estado_existente = estado1.getNombre_subset();
                             //
                         }
                         else{
                             System.out.println("Estado 1: " + estado1);
                             System.out.println("Estado Actual: " + estadoActual);
                             System.out.println("Los estados no son iguales");
-                            System.out.println("Como no son iguales, se agrega el nuevo estado al conjunto de estados");
+                            //System.out.println("Como no son iguales, se agrega el nuevo estado al conjunto de estados");
 
                         }
 
@@ -185,17 +226,62 @@ public class AFD {
                         estadoActual.setNombre_subset(contador.getInstance().getContador());
                         System.out.println("Estado Actual.nombre = " + estadoActual.getNombre_subset());
                         System.out.println("Se crea la nueva transicion");
-                        tranciciones2.add(new Transicion(estadoActualAnterior.getNombre_subset(),alfabeto.get(i),
-                                estadoActual.getNombre_subset()));
+
+                        /*Se crea una instancia de uns transicion*/
+                        Transicion nuevaTransicion = new Transicion(estadoActualAnterior.getNombre_subset(),alfabeto.get(i),
+                                estadoActual.getNombre_subset());
+
+
+                        tranciciones2.add(nuevaTransicion);
+                        System.out.println(nuevaTransicion.toString());
+
                         estados.add(estadoActual);
                         System.out.println(estados);
                         System.out.println("tranciciones: " + tranciciones2.toString());
+                        System.out.println("----------  DEBUG (END): CREACION DE ESTADO -----------------");
+                    }
+                    else{
+                        OpExtra.imprirLineaCorta();
+                        System.out.println("\n");
+                        System.out.println("El resultado del analisis detemrino que el esatdo ya existia,\n" +
+                                "por lo tanto no se agregara a la lista de esados");
+                        if(debugAFD == true){
+                            OpExtra.leerPantalla();
+                        }
 
+
+                        //Si el estado existe, es necesario crear una transicion, pero no se agrega el estado.
+                        System.out.println("----------  DEBUG: CREACION DE TRANSICION -----------------");
+                        tranciciones2.add(new Transicion(estadoActualAnterior.getNombre_subset(),alfabeto.get(i),
+                                nombre_del_estado_existente));
+                        System.out.println(new Transicion(estadoActualAnterior.getNombre_subset(),alfabeto.get(i),
+                                nombre_del_estado_existente).toString());
+                        System.out.println("----------  DEBUG (END): CREACION DE TRANSICION -----------------");
+                        OpExtra.leerPantalla();
+                    }
+
+                    //DEBUG
+                    if (debugAFD == true){
+                        OpExtra.leerPantalla();
                     }
 
                 }
             }
 
+
+
+
+            /*Se imprimeen todas las transiciones que se generaron en el proceso*/
+            System.out.println("Estas son todas las transiciones del automata");
+            for (int k=0; k<tranciciones2.size(); k++){
+                String t = "Transicion { nodo_Inicial: ";
+                t = t + OpExtra.reemplazarNumerosPorLetras(tranciciones2.get(k).getNodoInicial());
+                t = t + ", simbolo = ";
+                t = t + tranciciones2.get(k).getSimbolo();
+                t = t + ", nodo_Final: " + OpExtra.reemplazarNumerosPorLetras(tranciciones2.get(k).getNodoFinal());
+                System.out.print(t);
+                System.out.println("\t\t\t" + tranciciones2.get(k).toString());
+            }
             System.exit(0);
             
             /*Se revisa que ya no hayan estados marcados*/
@@ -236,4 +322,6 @@ public class AFD {
     public void construccionPorSubconjuntos(Automata afn){
 
     }
+
+
 }

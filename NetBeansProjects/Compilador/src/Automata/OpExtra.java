@@ -6,6 +6,7 @@
 package Automata;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Esta clase tiene operaciones adicionales que son de utilidad al programa
@@ -21,7 +22,9 @@ public class OpExtra {
      */
     public static Subset eClosure(Subset subset)
     {  
-        System.out.println(subset.toString());
+       // System.out.println(subset.toString());   //DEBUG
+
+
         /*Recorre todas las nodos del subset*/
         for (int i=0;i<subset.getNodos().size();i++)
         {
@@ -60,7 +63,7 @@ public class OpExtra {
                 }
             }
         }
-        System.out.println("eClosure: " + subset.toString());
+//        System.out.println("eClosure: " + subset.toString());
         return subset;
     }
     
@@ -107,7 +110,7 @@ public class OpExtra {
 
         }
         
-        System.out.println("Move: " + subconjunto);
+//        System.out.println("Move: " + subconjunto);
         return subconjunto;
     }
     
@@ -147,22 +150,22 @@ public class OpExtra {
     {
         String[] operadores = {"(","|","?",".","*","+","^"};
         boolean operador = true; /*Si se ha reconocido como operador o no*/
-        
-        
+
+
         int i = 0; /*Contador de operadores*/
-        
+
         while (i<operadores.length)
         {
            if (simbolo.equals(operadores[i]))
            {
                operador = false;
            }
-           
+
            i++; /*Aumenta uno el contador 'operador'*/
-            
+
         }
-        
-        /*Devuelve el resultado de evaluar el simbolo para saber si es un 
+
+        /*Devuelve el resultado de evaluar el simbolo para saber si es un
             operador o no*/
         return operador;
     }
@@ -176,5 +179,29 @@ public class OpExtra {
         System.out.print(variable.toString());
         System.exit(0);
     }
-    
+
+
+    /**
+     * Este metodo se utiliza para leer en pantalla
+     * */
+    public static void leerPantalla(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("\n--> Presione una tecla para continuar...");
+        scan.nextLine();
+    }
+
+    public static void imprirLinea(){
+        System.out.println("---------------------------------------------------------------------------------");
+    }
+
+    public static void imprirLineaCorta(){
+        System.out.println("---------------------");
+    }
+
+
+    public static String reemplazarNumerosPorLetras(int numero){
+        int nuevo_numero = numero + 64;
+        return Character.toString((char)nuevo_numero);
+
+    }
 }

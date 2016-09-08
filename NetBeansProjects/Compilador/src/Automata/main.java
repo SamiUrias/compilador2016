@@ -31,6 +31,13 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        /***
+         * Si esta variable es verdadera, entonces se ejecutan todas las instrucciones que se utilian para debugear
+         * los AFN
+         */
+        boolean debugAFN = true;
+
         /*Variables globales*/
         boolean printAFN = false;
         boolean simularAFN = false;
@@ -48,12 +55,26 @@ public class main {
            programa*/
         long time1 = System.currentTimeMillis();
         
-        System.out.println("(b | b)*abb(     a  | b ) *");
-        System.out.println("Ingrese la expresion regular: ");
+//        System.out.println("(b | b)*abb(     a  | b ) *");
+//        System.out.println("Ingrese la expresion regular: ");
+
+        /*Expresion regular que se va a analizar*/
+        String cadena = "";
+        if (debugAFN == true){
+            System.out.println("Se esta en modo DEBUG, la expresion regular a analizar es: ");
+            cadena = "(a|b)*(abba*|(ab) *ba";
+            System.out.println(cadena);
+
+            OpExtra.leerPantalla();
+        }
+        else{
+            System.out.println("(b | b)*abb(     a  | b ) *");
+            System.out.println("Ingrese la expresion regular: ");
+            Scanner scaner = new Scanner(System.in);
+            cadena = scaner.nextLine();
+        }
         
-        
-        Scanner scaner = new Scanner(System.in);
-        String cadena = scaner.nextLine();
+
         
         //String cadena = "(b | b)*abb(     a  | b ) * ";
         
@@ -266,6 +287,7 @@ public class main {
             JOptionPane.showMessageDialog(null,"No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
         }else{
             System.out.println("Dentro del else");
+            System.out.println("Se abrio el cuadro de dialogo");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.dot", "dot"));//filtro para ver solo archivos txt
             fileChooser.setSelectedFile(new File("AFNimagen.dot"));

@@ -9,7 +9,7 @@ package Automata;
  * Clase que modela una transicion entre estados
  * @author Moises Samuel Urias Moreno
  */
-class Transicion {
+public class Transicion {
     private int nodoInicial; /*Nodo inicial*/
     private int nodoFinal;   /*Nodo final*/
     private String simbolo;  /*Simbolo de la transicion*/
