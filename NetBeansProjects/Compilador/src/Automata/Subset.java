@@ -43,20 +43,10 @@ public class Subset{
 
 
     /**
-     * Devuelve si es o no un estado de aceptacion
-     * @return
+     * En la construccion del AFD es necesario saber si un estado es o no un estado inicial.
+     * Este atributo modela si el subset (estado) es o no un estado inicial.
      */
-    public boolean isEstado_de_aceptacion() {
-        return estado_de_aceptacion;
-    }
-
-    /**
-     * Asigna el valor de este estado como estado de aceptación o no.
-     * @param estado_de_aceptacion
-     */
-    public void setEstado_de_aceptacion(boolean estado_de_aceptacion) {
-        this.estado_de_aceptacion = estado_de_aceptacion;
-    }
+   boolean estado_inicial = false;
 
     /**
      * Este atributo se utiliza en la construccion de AFD para ponerle nombre a cada subset.
@@ -94,82 +84,67 @@ public class Subset{
     }
 
     /**
-     * Devuele un ArrayList con todas las transiciones del subset
-     * @return 
-     */
-    public ArrayList<Transicion> getTransiciones() {
-        return transiciones;
-    }
-
-
-    /**
-     * Asigna todos los nodos del subset
-     * @param ArrayList<Integer> Nodos
-     */
-    public void setNodos(ArrayList<Integer> Nodos) {
-        this.Nodos = Nodos;
-    }
-
-    /**
      * Devuelve un ArrayList<Integer> de los nodos del subset
-     * @return 
+     * @return
      */
     public ArrayList<Integer> getNodos() {
         return Nodos;
     }
 
-
     /**
      * Añade un nuevo nodo al arrelgo de nodos del subset
-     * @param nodoFinal 
+     * @param nodoFinal
      */
     public void add(int nodoFinal) {
         this.Nodos.add(nodoFinal);
-        
     }
-    
-    
-    
+
+
     /**
      * Este metodo combina dos eClosures, añadiendo los nodos del subset ingresado
      * al subset original.
-     * @param subset1 
+     * @param subset1
      */
     public void combinarEClosure(Subset subset1)
     {
-        
+
         for(int i=0;i<subset1.getNodos().size();i++)
         {
             if(!this.Nodos.contains(subset1.getNodos().get(i)))
             {
                 this.add(subset1.getNodos().get(i));
             }
-            
+
         }
-        
-        
+
     }
 
-    @Override
-    public String toString() {
-        return "Subset{" + "Nodos=" + Nodos+ '}';
-    }
-    
-    
+
+
     public void eliminarRepetido()
     {
         Map<Integer,Subset> mapEstados = new HashMap<Integer, Subset>();
     }
 
-    
     /**
      * Devuelve el largo de un Subset, basado en el largo del ArrayList de nodos
-     * @return 
+     * @return
      */
     public int size()
     {
         return this.Nodos.size();
     }
+
+
+    /**
+     * Ordena el subconjunto de menor a mayor
+     */
+    public void ordenar() {
+        Collections.sort(Nodos);
+    }
+
+
+    /*************************** GETTERS Y SETTERS **************************************************/
 
     /**
      * Este metdo devuelve el atributo marcado del subset
@@ -180,30 +155,90 @@ public class Subset{
     }
 
     /**
+     * Devuele un ArrayList con todas las transiciones del subset
+     * @return
+     */
+    public ArrayList<Transicion> getTransiciones() {
+        return transiciones;
+    }
+
+
+    /**
+     * Asigna todos los nodos del subset
+     * @param  Nodos
+     */
+    public void setNodos(ArrayList<Integer> Nodos) {
+        this.Nodos = Nodos;
+    }
+
+
+    /**
      * Este metodo marca este subset como que ya esta marcado
      */
     public void setMarcado(boolean marcado) {
         this.marcado = marcado;
     }
-    
-    
-    /**
-     * Ordena el subconjunto de menor a mayor
-     */
-    public void ordenar() {
-        Collections.sort(Nodos);
-    }
-
 
     public int getNombre_subset() {
         return nombre_subset;
     }
+
 
     public void setNombre_subset(int nombre_subset) {
         this.nombre_subset = nombre_subset;
     }
 
 
+    /**
+     * Devuelve si es o no un estado de aceptacion
+     * @return
+     */
+    public boolean isEstado_de_aceptacion() {
+        return estado_de_aceptacion;
+    }
+
+    /**
+     * Asigna el valor de este estado como estado de aceptación o no.
+     * @param estado_de_aceptacion
+     */
+    public void setEstado_de_aceptacion(boolean estado_de_aceptacion) {
+        this.estado_de_aceptacion = estado_de_aceptacion;
+    }
+
+
+    /**
+     * Devuelve si el estado actual es o no un estado inicial.
+     * @return
+     */
+    public boolean isEstado_inicial() {
+        return estado_inicial;
+    }
+
+    /**
+     * Asigna el valor de estado como estado inicial o no.
+     * @return
+     */
+    public void setEstado_inicial(boolean estado_inicial) {
+        this.estado_inicial = estado_inicial;
+    }
+
+    /**
+     * Eete metodo asigna las transiciones al subset.
+     * Este metodo se utiliza en la simulacion del AFD
+     * @param transiciones
+     */
+    public void setTransiciones(ArrayList<Transicion> transiciones) {
+        this.transiciones = transiciones;
+    }
+
+    /********************************** TO-STRING *****************************************************/
+    @Override
+    public String toString() {
+        return "Subset{" + "Nodos=" + Nodos+ '}';
+    }
+
+
+    /*********************************** EQUALS ******************************************************/
     /**
      * Override el metodo equals.
      * Se comparan los subsets con base a los nodos que tenga.

@@ -76,15 +76,20 @@ public class OpExtra {
      * @param simbolo
      * @return subset
      */
+
     public static Subset mover(Subset subset, String simbolo)
     {
+        /*Se obtienen las transiciones del subset*/
         Subset subconjunto = new Subset(subset.getTransiciones());
         
         /*Se revisan todos los nodos del subset*/
         for (int i =0; i<subset.Nodos.size();i++)
         {
             int nodo = subset.getNodos().get(i);
-            
+            //Se imprimen todas las transiciones del automata
+            //System.out.println("Dentro del move\nTodas las transiciones del subset");
+            System.out.println(subset.getNombre_subset());
+            System.out.println(subset.getTransiciones());
             /*Se revisan todas las transiciones del subset*/
             for (int j =0;j<subset.getTransiciones().size();j++)
             {
@@ -103,6 +108,9 @@ public class OpExtra {
                            {
                                /*Se añade el estado al subconjunto*/
                                subconjunto.add(subset.getTransiciones().get(j).getNodoFinal());
+
+                               System.out.println("TRansicio encontrada: ");
+                               System.out.println(subset.getTransiciones().get(j));
                            }
                        }
                     }
@@ -110,10 +118,18 @@ public class OpExtra {
 
         }
         
-//        System.out.println("Move: " + subconjunto);
+       // System.out.println("Move: " + subconjunto);
         return subconjunto;
     }
-    
+
+
+
+    /**
+     * Este metodo se utiliza en la simulacion del AFD, ya que el move para la simulacion del AFN se basa en los
+     * */
+    public static void moverAFD(){
+
+    }
     
     /**
      * Esta funcion devuelve el alfabeto que tiene el automata

@@ -17,7 +17,7 @@ import java.util.Scanner;
  * @author Moises Urias
  */
 public class AFD {
-    private static String p; /*Direccion donde se crea la imagen del automata*/
+   /** **************************************** DEBUG ************************************************/
     /**
     * Si esta variable es true, entonces se ejecutan toas las lineas que se utilizan para hacer debug.
     * */
@@ -26,7 +26,16 @@ public class AFD {
     /**
      * Si esta variable es true, entonces de va a dibujar el AFD
      */
-    private boolean printAFD = true;
+    private boolean printAFD = false;
+
+    /**
+     * Si esta variable es true, entonces se simula el automata
+     */
+    private boolean simularAFD = true;
+    /** **************************************** DEBUG (END)************************************************/
+
+
+    private static String p; /*Direccion donde se crea la imagen del automata*/
 
     /**
      * Estos son los estados del AFD
@@ -51,7 +60,17 @@ public class AFD {
      */
     private int estado_de_aceptacion_AFN = 0;
 
-    ArrayList<Integer>estados_de_aceptacion = new ArrayList<>();
+
+    /**
+     * Este atributo almacena el estado inicial del AFN.
+     */
+    private int nodoInicial = 0;
+
+
+    /**
+     * Estados de aceptacion del AFD
+     * */
+    private ArrayList<Integer>estados_de_aceptacion = new ArrayList<>();
     /**
      * Constructor de un AFD con base en un automata
      * @param afn
@@ -67,28 +86,23 @@ public class AFD {
 
         
         /*Se busca el estado inicial del afn*/
-        int nodoinicial =0;
+        this.nodoInicial =0;
 
-//        for (int i=0;i<afn.getEstados().size();i++)
-//        {
-//            /*Se obtiene el nodo inicial de AFN*/
-//            if (afn.getEstados().get(i).iseInicial() == true){
-//                System.out.println("Estado inicial CONSTRUCTOR AFD: " + afn.getEstados().get(i).getId());
-//                nodoinicial = afn.getEstados().get(i).getId();
-//            }
-//        }
 
         /*Se busca el estado de aceptacion del AFN*/
-        nodoinicial = afn.getEstadoInicial();
+        this.nodoInicial = afn.getEstadoInicial();
         this.estado_de_aceptacion_AFN = afn.getEstadoFinal();
-        System.out.println("...Estado inicial del AFN: " + nodoinicial);
+        System.out.println("...Estado inicial del AFN: " + this.nodoInicial);
         System.out.println("...Estado final del AFN: " + this.estado_de_aceptacion_AFN);
         OpExtra.leerPantalla();
 
         
         /*Una ves ya se ha encontrado el estado inicial del afn, se crea un 
-          subset con ese estado*/
-        Subset subset1 = new Subset(nodoinicial, afn.getTransiciones());
+          subset con ese estado. Este va a ser el estado inicial del AFD*/
+        Subset subset1 = new Subset(this.nodoInicial, afn.getTransiciones());
+
+
+
 
         //DEBUG
         if (debugAFD == true){
@@ -114,6 +128,11 @@ public class AFD {
         System.out.println("Contador de nodos: " + primer_id_del_subset);
         subset1.setNombre_subset(primer_id_del_subset);
         System.out.println("El nombre asignado al subset1 es: " + subset1.getNombre_subset());
+
+        //Se asgina el subset1 como etado inicial del AFD
+        subset1.setEstado_inicial(true);
+        System.out.printf("Se ha asignado este estado como estado inicil");
+        OpExtra.leerPantalla();
 
         //DEBUG
         if (debugAFD == true){
@@ -163,11 +182,6 @@ public class AFD {
                     }
                     Subset estadoMove = estadoActual;
 
-//                    System.out.println("El primer move del AFD (estado move): " + estadoMove);
-//                    Subset estadoEClosure_move = OpExtra.eClosure(estadoMove);
-//                    estadoEClosure_move.ordenar();
-//                    System.out.println("estado eEclosure_move: " + estadoEClosure_move);
-//                    System.exit(0);
 
                     /*Se hace eClosure al estado actual*/
                     estadoActual = OpExtra.eClosure(estadoActual);
@@ -184,7 +198,7 @@ public class AFD {
                     int nombre_del_estado_existente = 0;
 
                     //DEBUG
-                    if (debugAFD == true){
+                    if (debugAFD){
                         OpExtra.imprirLinea();
                     }
 
@@ -192,7 +206,7 @@ public class AFD {
                             "lista de estados");
 
                     //DEBUG
-                    if (debugAFD == true){
+                    if (debugAFD){
                         OpExtra.leerPantalla();
                     }
 
@@ -344,10 +358,81 @@ public class AFD {
         if (printAFD == true){
             this.dibujarAFD();
         }
+
+
     }
 
 
-   private void dibujarAFD(){
+
+    /**
+     * Este metodo devuelve los estados de aceptacion del AFD
+     * */
+    public ArrayList<Integer> getEstados_de_aceptacion() {
+        return estados_de_aceptacion;
+    }
+
+
+    /**
+     * Este metodo permite recibir estados de aceptacion del AFD.
+     * @param estados_de_aceptacion
+     */
+    public void setEstados_de_aceptacion(ArrayList<Integer> estados_de_aceptacion) {
+        this.estados_de_aceptacion = estados_de_aceptacion;
+    }
+
+
+
+    /**
+     * Este metodo devuelve el estado inicial del del automata
+     * */
+    public Subset getEstadoInicial(){
+        //Estado inicial del Automata Finito Determinista
+        Subset estadoInicial = null;
+
+        for (int r =0;r<estados.size(); r++){
+            if (estados.get(r).isEstado_inicial() == true){
+                estadoInicial = estados.get(r);
+            }
+        }
+
+        return estadoInicial;
+    }
+
+
+    /**
+     * Este metodo devuelve los estados del automata
+     * */
+    public ArrayList<Subset> getEstados() {
+        return estados;
+    }
+
+
+    /**
+     * ESte metodo asigna los estados del automata
+     * @param estados
+     */
+    public void setEstados(ArrayList<Subset> estados) {
+        this.estados = estados;
+    }
+
+    /**
+     * Este metodo devuelve el nodo inicial del AFD.
+     * */
+    public int getNodoInicial() {
+        return nodoInicial;
+    }
+
+    /**
+     * Este metodo permite asignar el nodo incial del AFD.
+     */
+    public void setNodoInicial(int nodoInicial) {
+        this.nodoInicial = nodoInicial;
+    }
+
+    /**
+     * Este metodo devuelve el estado inicial del AFN.
+     */
+    private void dibujarAFD(){
        /*Texto*/
        String texto = "";
 
@@ -497,4 +582,20 @@ public class AFD {
 
     }
 
+
+    /**
+     * Este metodo devuelve las transiciones del automata
+     * @return
+     */
+    public ArrayList<Transicion> getTranciciones() {
+        return tranciciones;
+    }
+
+    /**
+     * Este metodo permite asignar las transiciones al automata
+     * @param tranciciones
+     */
+    public void setTranciciones(ArrayList<Transicion> tranciciones) {
+        this.tranciciones = tranciciones;
+    }
 }

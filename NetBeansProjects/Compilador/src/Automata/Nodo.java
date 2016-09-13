@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Moises Urias
  */
-public class Nodo {
+public class  Nodo {
     private ContadorNodo contador; /*Contador del numero de nodos*/
     
     private int id; /*Identificador*/

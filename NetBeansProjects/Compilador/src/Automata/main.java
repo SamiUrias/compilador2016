@@ -36,11 +36,11 @@ public class main {
          * Si esta variable es verdadera, entonces se ejecutan todas las instrucciones que se utilian para debugear
          * los AFN
          */
-        boolean debugAFN = true;
+        boolean debugAFN = false;
 
         /*Variables globales*/
         boolean printAFN = false;
-        boolean simularAFN = false;
+        boolean simularAFN = true;
 
         /*Almacena un arraylist con el alfabeto del automata*/
         ArrayList<String> alfabeto;
@@ -62,7 +62,7 @@ public class main {
         String cadena = "";
         if (debugAFN == true){
             System.out.println("Se esta en modo DEBUG, la expresion regular a analizar es: ");
-            cadena = "(a|b)*(abba*|(ab) *ba";
+            cadena = "(a|b)*(abba*|(ab) *ba)";
             System.out.println(cadena);
 
             OpExtra.leerPantalla();
@@ -221,9 +221,28 @@ public class main {
 
        /*Se crea un automata finito deterministico utilizando la construccion por subconjuntos*/
         AFD afd = new AFD(aut);
-        
-        
-}
+
+
+        /*Simulacion del AFD*/
+        Scanner scanner2 = new Scanner(System.in);
+        System.out.println("De nuevo se esta en el main");
+        OpExtra.leerPantalla();
+        SimuladorAFD simulador_de_AFD = new SimuladorAFD(afd);
+        String cadena_para_simular = "";
+        System.out.println("INGRESE LA CADENA QUE SE VA A SIMULAR: ");
+        cadena_para_simular = scanner2.nextLine();
+
+
+        boolean la_cadena_del_afd_es_aceptada;
+        if (simulador_de_AFD.SimularAFD(cadena_para_simular)) la_cadena_del_afd_es_aceptada = true;
+        else la_cadena_del_afd_es_aceptada = false;
+
+        if (la_cadena_del_afd_es_aceptada)
+            System.out.println("La cadena es aceptada por el Automata finito determinista");
+        else
+            System.out.println("La cadena no es aceptada por el Automata finoto determinista");
+
+    }
         
         
         
