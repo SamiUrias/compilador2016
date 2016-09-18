@@ -6,6 +6,8 @@
 package Automata;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -88,8 +90,9 @@ public class OpExtra {
             int nodo = subset.getNodos().get(i);
             //Se imprimen todas las transiciones del automata
             //System.out.println("Dentro del move\nTodas las transiciones del subset");
-            System.out.println(subset.getNombre_subset());
-            System.out.println(subset.getTransiciones());
+//            System.out.println(subset.getNombre_subset());
+//            System.out.println(subset.getTransiciones());
+
             /*Se revisan todas las transiciones del subset*/
             for (int j =0;j<subset.getTransiciones().size();j++)
             {
@@ -109,8 +112,8 @@ public class OpExtra {
                                /*Se añade el estado al subconjunto*/
                                subconjunto.add(subset.getTransiciones().get(j).getNodoFinal());
 
-                               System.out.println("TRansicio encontrada: ");
-                               System.out.println(subset.getTransiciones().get(j));
+//                               System.out.println("TRansicio encontrada: ");
+//                               System.out.println(subset.getTransiciones().get(j));
                            }
                        }
                     }
@@ -158,7 +161,8 @@ public class OpExtra {
            /*Aumenta en uno el contador del ciclo*/
            j++;
         }
-        
+
+        Collections.sort(alfabeto);  //Devuelve el alfabeto en orden alfabetico
         return alfabeto;
     }
     

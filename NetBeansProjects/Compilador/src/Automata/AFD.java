@@ -172,6 +172,7 @@ public class AFD {
                 
                 /*Se crea el nuevo estado del AFD*/
                 for (int i=0; i<alfabeto.size(); i++) {
+
                     /*Se aplica la operacion 'mover' al estado actual*/
                     estadoActual= OpExtra.mover(estadoActualAnterior, alfabeto.get(i));
                     System.out.println("Este es el move de estado " + estadoActualAnterior.getNombre_subset() + " con el simbolo " + alfabeto.get(i)  + ": "
@@ -189,6 +190,17 @@ public class AFD {
                     /*Se ordena de menor a mayor el estado actual*/
                     estadoActual.ordenar();
                     System.out.println("E-closure del estado actual ordenado: " + estadoActual);  //Nuevo estado del AFD
+
+
+                    //Si el e-closure devuelve vacio, entonces se salta un bucle for
+                    if (estadoActual.getNodos().size() == 0){
+                        System.out.println("---> El estado actual no tiene nodos!!!");
+                        System.out.println("Se saltara este ciclo de creacion de estados");
+                        if (debugAFD){
+                            OpExtra.leerPantalla();
+                        }
+                        continue;
+                    }
 
 
                     /*Se revista si el estado obtenido despues de realizar el 

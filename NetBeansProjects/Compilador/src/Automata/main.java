@@ -40,7 +40,7 @@ public class main {
 
         /*Variables globales*/
         boolean printAFN = false;
-        boolean simularAFN = true;
+        boolean simularAFN = false;
 
         /*Almacena un arraylist con el alfabeto del automata*/
         ArrayList<String> alfabeto;
@@ -62,13 +62,13 @@ public class main {
         String cadena = "";
         if (debugAFN == true){
             System.out.println("Se esta en modo DEBUG, la expresion regular a analizar es: ");
-            cadena = "(a|b)*(abba*|(ab) *ba)";
+            cadena = "(b|b)*abb(a|b)*";
             System.out.println(cadena);
 
             OpExtra.leerPantalla();
         }
         else{
-            System.out.println("(b | b)*abb(     a  | b ) *");
+            System.out.println("(b|b)*abb(a|b)*");
             System.out.println("Ingrese la expresion regular: ");
             Scanner scaner = new Scanner(System.in);
             cadena = scaner.nextLine();

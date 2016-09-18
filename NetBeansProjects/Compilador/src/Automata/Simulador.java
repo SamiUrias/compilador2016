@@ -72,7 +72,7 @@ public class Simulador {
             aceptada = true;
         }
         else{
-            System.out.println("La cadena nno es aceptada por el automata");
+            System.out.println("La cadena no es aceptada por el automata");
             aceptada = false;
         }
         

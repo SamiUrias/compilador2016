@@ -121,13 +121,48 @@ public class SimuladorAFD {
         for (int s=0; s<automataTemporal.getEstados().size();s++){
             automataTemporal.getEstados().get(s).setTransiciones(automata.getTranciciones());
         }
-        System.out.println("Todos los subset del Automata temporal se la ha asignados todas las transiciones del " +
-                "automata");
+        System.out.println("A todos los subset del Automata temporal se la han asignados todas las transiciones del " +
+                "automata Finito Determinista");
 
         System.out.println(".............................................." );
         System.out.println(automata.getTranciciones());
         System.out.println("..............................................");
         OpExtra.leerPantalla();
+
+
+        /*******************************************
+         * *****************************************     mega debug
+         * ****************************************
+         */
+
+
+        /*Se le asigna a subset el estado inicial del automata temporal*/
+        subset = automataTemporal.getEstadoInicial();
+
+
+        System.out.println(subset.getTransiciones());
+        System.out.println("+++++++++ Aqui se le pasa a subset el estado inicial del automata temporal +++++++++");
+        for (int by = 0; by<subset.getTransiciones().size(); by++){
+            System.out.println(subset.getTransiciones().get(by));
+        }
+        OpExtra.leerPantalla();
+
+
+        System.out.println("+++++++++ Aqui se le asigna el nombre del subset como nodo al automata temporal +++++++++");
+        /*A los subset del automata temrporal se le cambian los valores de estos por el nombre del subset.
+        * De esta manera al hacer el move, para hacer la simulacion del AFD, este move depende del nombre del subset,
+        * ya que para saber si una cadena es aceptada o no, el move debe devolver el 'nombre' de un estado de acetpacion*/
+
+        /*Los nodos del subset se modelan con un ArrayList de enteros entonces se crea un ArrayList que contiene
+        * unicamente el nombre del subset, y es ese ArrayListe el que se asigna a los nodos del subset*/
+        ArrayList<Integer> nuevoNodo = new ArrayList<>();
+        nuevoNodo.add(subset.getNombre_subset());
+        subset.setNodos(nuevoNodo);
+        OpExtra.leerPantalla();
+        /*******************************************
+         * *****************************************     mega debug
+         * ****************************************
+         */
 
         int contador = 0; //Contador del ciclo
         if(_debug){
