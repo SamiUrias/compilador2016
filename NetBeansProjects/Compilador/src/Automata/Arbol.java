@@ -12,4 +12,14 @@ public class Arbol {
     * Nodo <string> padre
     * Caena
     * */
+
+    /*Este atributo contiene la cadena en postfix*/
+    private String cadena_postfix = "";
+
+    /**
+     * Constructor del Arbol
+     * */
+    public Arbol(String cadena){
+
+    }
 }

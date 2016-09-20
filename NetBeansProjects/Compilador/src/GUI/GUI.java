@@ -90,7 +90,7 @@ public class GUI extends JFrame {
     private Parser parser = new Parser(); 
     
     /*Se crea una instanacia del analizador de expresiones regulares*/
-    private RegexAnalyzer regexAnalyzer = new RegexAnalyzer(); 
+    private RegexAnalyzer regexAnalyzer;
     
     
     /**

@@ -7,6 +7,7 @@ package Automata;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.StringJoiner;
 
 /**
  * Esta clase modela un automata finito no determinista
@@ -33,12 +34,18 @@ public class Automata {
     /**
      * Constructor de la clase automata sin parametros
      */
-    public Automata(){
-        
-       
-        
+    public Automata(){}
+
+
+    /**
+     * Constructor de la clase automata con el alfabeto.
+     * Este constructor inicializa el automata con un alfabeto.
+     */
+    public Automata(ArrayList<String> alfabeto){
+        this.setAlfabeto(alfabeto);
     }
-    
+
+
     /**
      * Constructor de la clase automata.<p>
      * Crea un automata sencillo basado en el simbolo del automata.<p>

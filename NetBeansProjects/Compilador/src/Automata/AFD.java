@@ -26,8 +26,9 @@ public class AFD {
     /**
      * Si esta variable es true, entonces de va a dibujar el AFD
      */
-    private boolean printAFD = false;
+    private boolean printAFD = true;
 
+    private boolean printTextAFD = true;
     /**
      * Si esta variable es true, entonces se simula el automata
      */
@@ -94,7 +95,10 @@ public class AFD {
         this.estado_de_aceptacion_AFN = afn.getEstadoFinal();
         System.out.println("...Estado inicial del AFN: " + this.nodoInicial);
         System.out.println("...Estado final del AFN: " + this.estado_de_aceptacion_AFN);
-        OpExtra.leerPantalla();
+
+        if(debugAFD) {
+            OpExtra.leerPantalla();
+        }
 
         
         /*Una ves ya se ha encontrado el estado inicial del afn, se crea un 
@@ -132,7 +136,10 @@ public class AFD {
         //Se asgina el subset1 como etado inicial del AFD
         subset1.setEstado_inicial(true);
         System.out.printf("Se ha asignado este estado como estado inicil");
-        OpExtra.leerPantalla();
+
+        if (debugAFD) {
+            OpExtra.leerPantalla();
+        }
 
         //DEBUG
         if (debugAFD == true){
@@ -363,11 +370,32 @@ public class AFD {
             }
         }
 
+
+        String texto = ""; /*Texto que en el que se almacen al informacino a guardar*/
+        texto = texto + "El estado inicial del AFD es: " + String.valueOf(this.getEstadoInicial().getNombre_subset()) + "\r\n";
+        texto = texto +"Los estados de aceptacion del AFD es: " + String.valueOf(this.getEstados_de_aceptacion()) + "\r\n";
+        texto = texto + "El alfabeto del AFD es: " + alfabeto + "\r\n\r\n";
+//      texto = texto + "El tiempo total de la simulacion del afn es: "+(System.currentTimeMillis()-time1)+"\n\n";
+        texto = texto + "Las transiciones del afd son:\r\n";
+        for (int textoTransiciones = 0; textoTransiciones<this.getTranciciones().size();textoTransiciones++){
+            texto = texto + this.getTranciciones().get(textoTransiciones) + "\r\n";
+        }
+//        texto = texto + this.getTranciciones();
+
+        /*Se guarda el automata*/
+        if (printTextAFD){
+            System.out.println(texto);
+           guardar(texto);
+        }
+
+
         System.out.println(estados_de_aceptacion);
-        OpExtra.leerPantalla();
+        if (debugAFD){
+            OpExtra.leerPantalla();
+        }
 
         //Se dibuja el AFD
-        if (printAFD == true){
+        if (printAFD){
             this.dibujarAFD();
         }
 
@@ -473,7 +501,10 @@ public class AFD {
        texto = texto + "rankdir=LR;\n}";
 
        System.out.println(texto);
-       OpExtra.leerPantalla();
+        if(debugAFD) {
+            OpExtra.leerPantalla();
+        }
+
        this.guardarImagen(texto);
        llamarAlGraphViz();
    }
@@ -492,7 +523,7 @@ public class AFD {
 
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.txt", "txt"));//filtro para ver solo archivos txt
-            fileChooser.setSelectedFile(new File("AFN.txt"));
+            fileChooser.setSelectedFile(new File("AFD.txt"));
             int seleccion = fileChooser.showSaveDialog(null);
             try{
                 if (seleccion == JFileChooser.APPROVE_OPTION){//comprueba si ha presionado el boton de aceptar
@@ -533,7 +564,7 @@ public class AFD {
             System.out.println("Se abrio el cuadro de dialogo");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.dot", "dot"));//filtro para ver solo archivos txt
-            fileChooser.setSelectedFile(new File("AFNimagen.dot"));
+            fileChooser.setSelectedFile(new File("AFDimagen.dot"));
             int seleccion = fileChooser.showSaveDialog(null);
             try{
                 if (seleccion == JFileChooser.APPROVE_OPTION){//comprueba si ha presionado el boton de aceptar

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Automata</OriginalElement>
+  <nodes>
+    <node x="-732.3333333333333" y="90.66666666666674">Automata.main</node>
+    <node x="1132.0" y="-339.9999999999999">Automata.Subset</node>
+    <node x="-986.6666666666666" y="465.66666666666663">Automata.RegexAnalyzer</node>
+    <node x="-396.6666666666665" y="-243.33333333333323">Automata.Nodo</node>
+    <node x="476.66666666666697" y="374.0000000000001">Automata.AFN</node>
+    <node x="146.50000000000023" y="-281.66666666666663">Automata.ContadorNodo</node>
+    <node x="666.6666666666665" y="155.66666666666663">Automata.Transicion</node>
+    <node x="-158.33333333333326" y="166.6666666666667">Automata.Automata</node>
+    <node x="631.6666666666663" y="-339.9999999999999">Automata.AFD</node>
+    <node x="-961.6666666666664" y="1299.9999999999998">Automata.RegexConverter</node>
+    <node x="944.3333333333335" y="1230.0">Automata.SimuladorAFD</node>
+    <node x="1166.6666666666667" y="606.6666666666666">Automata.OpExtra</node>
+    <node x="-41.333333333333485" y="1278.3333333333333">Automata.Simulador</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Automata.RegexAnalyzer" target="Automata.Simulador">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.Subset" target="Automata.Transicion">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.Nodo" target="Automata.ContadorNodo">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.Automata" target="Automata.Transicion">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.main" target="Automata.AFD">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.AFN" target="Automata.Automata">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.Simulador" target="Automata.Automata">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.OpExtra" target="Automata.Subset">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.Automata" target="Automata.Nodo">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.AFD" target="Automata.Transicion">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.AFD" target="Automata.ContadorNodo">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.main" target="Automata.Simulador">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.main" target="Automata.Automata">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.Simulador" target="Automata.Subset">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Automata.AFD" target="Automata.Subset">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="224.83333333333303" y="961.8333333333333" />
+  <SelectedNodes>
+    <node>Automata.Automata</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

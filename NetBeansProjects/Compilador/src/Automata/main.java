@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -23,7 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class main {
 
 
-     private static String p; /*Direccion donde se crea la imagen del automata*/
+     private static String p = ""; /*Direccion donde se crea la imagen del automata*/
      
      
      
@@ -36,11 +37,14 @@ public class main {
          * Si esta variable es verdadera, entonces se ejecutan todas las instrucciones que se utilian para debugear
          * los AFN
          */
-        boolean debugAFN = false;
+
 
         /*Variables globales*/
-        boolean printAFN = false;
-        boolean simularAFN = false;
+        boolean debugAFN = false;
+        boolean printAFN = true;
+        boolean printTextAFN = true;
+        boolean simularAFN = true;
+
 
         /*Almacena un arraylist con el alfabeto del automata*/
         ArrayList<String> alfabeto;
@@ -163,22 +167,25 @@ public class main {
         
         /*Se genera el archivo con al AFN*/
         String texto = ""; /*Texto que en el que se almacen al informacino a guardar*/
-        texto = texto + "El nodo inicial del AFN es: " + String.valueOf(nodoinicialafn) + "\n";
+        texto = texto + "El nodo inicial del AFN es: " + String.valueOf(nodoinicialafn) + "\r\n";
         texto = texto +"El nodo final del AFN es: " + String.valueOf(nodofinalafn) + "\n";
-        texto = texto + "El alfabeto del AFN es: " + alfabeto + "\n\n";
-        texto = texto + "El tiempo total de la simulacion del afn es: "+(System.currentTimeMillis()-time1)+"\n\n";
-        texto = texto + "Las transiciones del afn son:\n ";
+        texto = texto + "El alfabeto del AFN es: " + alfabeto + "\r\n";
+        texto = texto + "El tiempo total de la simulacion del afn es: "+(System.currentTimeMillis()-time1)+"\r\n";
+        texto = texto + "Las transiciones del afn son:\r\n ";
          for (int i=0; i<aut.transiciones.size();i++)
         {   
             
-            texto = texto + i +": "+ aut.transiciones.get(i)+"\n";
+            texto = texto + i +": "+ aut.transiciones.get(i)+"\r\n";
         }
          
-        texto = texto + "\n\nSiendo '!' lo que equivale al simbolo epsilon";
+        texto = texto + "\r\n\r\nSiendo '!' lo que equivale al simbolo epsilon";
         
         /*Se guarda el automata*/
-        // guardar(texto);
-        
+        if (printTextAFN){
+            System.out.println(texto);
+            guardar(texto);
+        }
+
         
         /*__________________________________________________________________*/
         /*Se grafica el grafo*/
@@ -226,7 +233,7 @@ public class main {
         /*Simulacion del AFD*/
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("De nuevo se esta en el main");
-        OpExtra.leerPantalla();
+//        OpExtra.leerPantalla();
         SimuladorAFD simulador_de_AFD = new SimuladorAFD(afd);
         String cadena_para_simular = "";
         System.out.println("INGRESE LA CADENA QUE SE VA A SIMULAR: ");
@@ -237,10 +244,12 @@ public class main {
         if (simulador_de_AFD.SimularAFD(cadena_para_simular)) la_cadena_del_afd_es_aceptada = true;
         else la_cadena_del_afd_es_aceptada = false;
 
-        if (la_cadena_del_afd_es_aceptada)
-            System.out.println("La cadena es aceptada por el Automata finito determinista");
+        if (la_cadena_del_afd_es_aceptada){
+            System.out.println("LA CADENA ES ACEPTADA POR EL AUTOMATA FINITO DETERMINISTA");
+            OpExtra.imprirLinea();
+        }
         else
-            System.out.println("La cadena no es aceptada por el Automata finoto determinista");
+            System.out.println("LA CADENA NO ES ACEPTADA POR EL AUTOMATA FINITO DETERMINISTA");
 
     }
         
@@ -260,8 +269,7 @@ public class main {
     
     Se utiliza para guardar el afn generado*/
     private static void guardar(String text){
-   
-        
+        System.out.println("Se ha abierto un cuadro de dialogo");
         if (text.matches("[[ ]*[\n]*[\t]]*")) {//compara si en el JTextArea hay texto sino muestrtra un mensaje en pantalla
             JOptionPane.showMessageDialog(null,"No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
         }else{
@@ -292,8 +300,8 @@ public class main {
             }
         }           
     }
-   
-    
+
+
     /**
      * Se utiliza para guardar la imagen(.dot)
      * @param text 
