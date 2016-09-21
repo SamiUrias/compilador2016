@@ -192,6 +192,94 @@ public class OpExtra {
 
 
     /**
+     * Este metodo arregla una cadena para que la cerradura positiva sea acepatada
+     * @param cadenaRegex
+     * @return
+     */
+    public static  String convertirCerraduraPositiva(String cadenaRegex) {
+
+        for (int i = 0; i < cadenaRegex.length(); i++) {
+            Character c_actual = cadenaRegex.charAt(i);
+
+            if (c_actual == '+') {
+                Character c_anterior = cadenaRegex.charAt(i - 1);
+
+                if (c_anterior != ')') {
+                    cadenaRegex = insertCharAt(cadenaRegex, i, c_anterior + "*");
+                }
+
+                if (c_anterior == ')') {
+                    int index = i - 1;
+                    int contadorParentecisApertura = 0;
+                    int contadorParentecisCierre = 0;
+
+                    while (index != -1) {
+                        if (cadenaRegex.charAt(index) == ')') {
+                            contadorParentecisCierre++;
+                        }
+                        if (cadenaRegex.charAt(index) == '(') {
+                            contadorParentecisApertura++;
+                        }
+
+                        if (contadorParentecisCierre == contadorParentecisApertura) {
+                            break;
+                        }
+                        index--;
+                    }
+                    cadenaRegex = insertCharAt(cadenaRegex, i, cadenaRegex.substring(index, i) + "*");
+                }
+            }
+
+        }
+        return cadenaRegex;
+    }
+
+    /**
+     * Este metodo arregla una cadena para que el signo de interrogación sea aceptado
+     * */
+    public static String convertirSignoInterrogacion(String cadenaRegex) {
+
+        for (int i = 0; i < cadenaRegex.length(); i++) {
+            Character c_actual = cadenaRegex.charAt(i);
+
+            if (c_actual == '?') {
+                Character c_anterior = cadenaRegex.charAt(i - 1);
+
+                if (c_anterior != ')') {
+                    cadenaRegex = insertCharAt(cadenaRegex, i, "|" + "!");
+                }
+
+                if (c_anterior == ')') {
+                    int index = i - 1;
+                    int contadorParentecisApertura = 0;
+                    int contadorParentecisCierre = 0;
+
+                    while (index != -1) {
+                        if (cadenaRegex.charAt(index) == ')') {
+                            contadorParentecisCierre++;
+                        }
+                        if (cadenaRegex.charAt(index) == '(') {
+                            contadorParentecisApertura++;
+                        }
+
+                        if (contadorParentecisCierre == contadorParentecisApertura) {
+                            break;
+                        }
+                        index--;
+                    }
+                    cadenaRegex = insertCharAt(cadenaRegex, i, "|" + "!");
+                }
+            }
+
+        }
+        return cadenaRegex;
+    }
+
+    private static String insertCharAt(String cadena, int posicion, Object caracterIngreso) {
+        return cadena.substring(0, posicion) + caracterIngreso + cadena.substring(posicion + 1);
+    }
+
+    /**
      * Este metodo permite debugear variables
      * */
     public static void debug(Object variable){

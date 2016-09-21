@@ -68,7 +68,6 @@ public class main {
             System.out.println("Se esta en modo DEBUG, la expresion regular a analizar es: ");
             cadena = "(b|b)*abb(a|b)*";
             System.out.println(cadena);
-
             OpExtra.leerPantalla();
         }
         else{
@@ -79,19 +78,22 @@ public class main {
         }
         
 
-        
-        //String cadena = "(b | b)*abb(     a  | b ) * ";
-        
-        
-        
-        
+
         cadena = cadena.trim();
         cadena = cadena.replace(" ", "");
-        
+
+        cadena = OpExtra.convertirCerraduraPositiva(cadena);
+        System.out.println(cadena);
+        OpExtra.leerPantalla();
+        cadena = OpExtra.convertirSignoInterrogacion(cadena);
+        System.out.println(cadena);
+        OpExtra.leerPantalla();
+
         cadena = (RegexConverter.infixToPostfix(cadena));
         
         System.out.println("Cadena con posfix: \n" + cadena+"\n\n\n");
-         
+
+
         
 
         
