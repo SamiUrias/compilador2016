@@ -83,8 +83,8 @@ public class GUI extends JFrame {
             
     private Doc documentoActual; /*Es el documento actual con el que se esta trabajando*/
 
-    /*Se crea una instancia del Lexer*/
-    private Lexer lexer = new Lexer(); 
+    /*Se crea una instancia del Lexer2*/
+    private Lexer2 lexer = new Lexer2(); 
     
     /*Se crea una instancia del parser*/
     private Parser parser = new Parser(); 
@@ -555,14 +555,8 @@ public class GUI extends JFrame {
         
         
         if (existeDocumento == true) {
-            try {
-                this.lexer.analizar(documento);
-            } catch (IdentException ex) {
-                Logger.getLogger(GUI_borrador.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(GUI_borrador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+            this.lexer.analizar(documento);
+        }   
         
     }
     
