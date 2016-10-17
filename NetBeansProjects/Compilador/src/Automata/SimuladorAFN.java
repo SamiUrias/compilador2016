@@ -5,6 +5,7 @@ import java.util.Scanner;
 /**
  * Created by Samuel on 18/09/2016.
  * Esta clase simulador AFN esta basada en la anterior clase simulador para tener un codigo más ordenado y limpio.
+ * Esta clase es la que se va a utilzar para la fase del lexer.
  * @version 2
  */
 public class SimuladorAFN {
@@ -89,4 +90,14 @@ public class SimuladorAFN {
     public void setCadenaAceptada(boolean cadenaAceptada) {
         this.cadenaAceptada = cadenaAceptada;
     }
+
+    public Automata getAutomata() {
+        return automata;
+    }
+
+    public void setAutomata(Automata automata) {
+        this.automata = automata;
+    }
+    
+    
 }

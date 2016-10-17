@@ -80,7 +80,10 @@ public class GUI extends JFrame {
     private JMenuItem newItem;              /*Added by Moises*/
     private JMenuItem parsearItem;          /*Added by Moises*/
     private JMenuItem expresionesRegularesItem; /*Added by Moises*/
-            
+    
+    /*This should be the consoele of the GUI*/
+    private JTextArea text_console;
+    
     private Doc documentoActual; /*Es el documento actual con el que se esta trabajando*/
 
     /*Se crea una instancia del Lexer2*/

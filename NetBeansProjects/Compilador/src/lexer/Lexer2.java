@@ -1,5 +1,5 @@
 package lexer;
-import Automata.Automata;
+import Automata.*;
 import java.util.ArrayList;
 /**
  * Esta clase Lexer2 es la clase que se utiliza para hacer el analisis lexico 
@@ -13,7 +13,8 @@ public class Lexer2 {
     
     /*Almacena los automatas básicos*/
     private ArrayList<Automata> basicAuthomatas;
-     
+    
+    
     
     /**
      * Constructor del Lexer2
@@ -33,6 +34,7 @@ public class Lexer2 {
     public void analizar (String documento){
         System.out.println(documento);
         this.separarLineas(documento);
+        this.createBaseAutomatas();
     }
     
     private void separarLineas(String documento){
@@ -42,8 +44,16 @@ public class Lexer2 {
         };
     }
     
-    private void createBaseAuthomatas (){
-        /*Ident*/
-        
+    
+    /**
+     * Este metodo crea todos los automatas basicos
+     */
+    private void createBaseAutomatas (){
+      
+      
     }
+    
+   
+    
+    
 }

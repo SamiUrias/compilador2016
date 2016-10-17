@@ -16,7 +16,7 @@ import java.util.StringJoiner;
 public class Automata {
     
     private ArrayList<Nodo> estados = new ArrayList<Nodo>();
-    
+   
     private String simbolo;
     public ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
 
@@ -552,6 +552,10 @@ public class Automata {
         boolean estadoAceptacion = false;
         
         return estadoAceptacion;
+    }
+    
+    public void setEstados(ArrayList<Nodo> estados) {
+     this.estados = estados;
     }
     
 }
