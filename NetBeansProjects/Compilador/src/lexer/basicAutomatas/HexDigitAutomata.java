@@ -25,6 +25,9 @@ public class HexDigitAutomata {
         Automata automataDigit = generador.createAutomata(digit);
         Automata automataHexLetters = generador.createAutomata(hexLetters);
         Automata automataHexDigit = BasicAutomataUtilities.concatAuthomatas(automataDigit, automataHexLetters);
+        
+        automataHexDigit.setNombre("hexdigit");
+        
         this.automata = automataHexDigit;
     }
 
