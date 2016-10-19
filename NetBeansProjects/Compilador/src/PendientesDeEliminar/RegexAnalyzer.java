@@ -1,6 +1,12 @@
 
-package Automata;
+package PendientesDeEliminar;
 
+import Automata.Automata;
+import Automata.ContadorNodo;
+import Automata.Nodo;
+import Automata.OpExtra;
+import Automata.RegexConverter;
+import Automata.SimuladorAFN;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;

@@ -7,7 +7,6 @@ package lexer.BasicAutomatas;
 
 import Automata.Automata;
 import Automata.SimuladorAFN;
-import lexer.basicAutomatas.DigitAutomata;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

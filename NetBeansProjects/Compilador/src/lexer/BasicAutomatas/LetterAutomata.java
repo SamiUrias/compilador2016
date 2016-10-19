@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lexer.basicAutomatas;
+package lexer.BasicAutomatas;
 
 import Automata.Automata;
 import Automata.Generador_de_Automatas;

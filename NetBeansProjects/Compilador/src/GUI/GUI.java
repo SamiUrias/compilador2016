@@ -38,7 +38,7 @@
 
 package GUI;
 
-import Automata.RegexAnalyzer;
+import PendientesDeEliminar.RegexAnalyzer;
 import Exception.IdentException;
 import Parser.Parser;
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package lexer.basicAutomatas;
+package lexer.BasicAutomatas;
 
 import Automata.Automata;
 import Automata.Generador_de_Automatas;

@@ -1,5 +1,7 @@
-package Automata;
+package PendientesDeEliminar;
 
+import Automata.OpExtra;
+import PendientesDeEliminar.RegexAnalyzer;
 import java.util.Scanner;
 
 /**

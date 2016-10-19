@@ -15,7 +15,7 @@ import java.util.StringJoiner;
  */
 public class Automata {
     
-    private ArrayList<Nodo> estados = new ArrayList<Nodo>();
+    public ArrayList<Nodo> estados = new ArrayList<Nodo>();
    
     private String simbolo;
     public ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
@@ -558,6 +558,14 @@ public class Automata {
      this.estados = estados;
     }
     
+    /**
+     * Debido a que el ArrayList de estado es de tipo privado, este método 
+     * permite agregar estados a este arreglo
+     * @param estado 
+     */
+    public void agregarEstado(Nodo estado){
+        this.estados.add(estado);
+    }
 }
             
     

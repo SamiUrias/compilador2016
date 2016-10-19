@@ -36,20 +36,20 @@ public class Generador_de_Automatas {
         
         /*Se agrega la funcion de cerradura positiva*/
         cadena = OpExtra.convertirCerraduraPositiva(cadena);
-        System.out.println(cadena);
+//        System.out.println(cadena);
         
         /*Se convirte de infix a postfix*/
         cadena = (RegexConverter.infixToPostfix(cadena));
 
-        System.out.println("Cadena con posfix: \n" + cadena+"\n\n\n");
+//        System.out.println("Cadena con posfix: \n" + cadena+"\n\n\n");
 
 
 
 
         /*Imprime el alfabeto del automata ingresado */
-        System.out.println("El alfabeto del automata es:");
+//        System.out.println("El alfabeto del automata es:");
         alfabeto = OpExtra.alfabeto(cadena);
-        System.out.println(alfabeto);
+//        System.out.println(alfabeto);
 
         /*Se crea el automata*/
         Automata aut = new Automata();
@@ -66,15 +66,15 @@ public class Generador_de_Automatas {
         }
 
 
-        System.out.println("\nLa cantidad de estados es: " +
-                ContadorNodo.getContador()+"\n");
+//        System.out.println("\nLa cantidad de estados es: " +
+//                ContadorNodo.getContador()+"\n");
 
         aut = aut.automatas.pop();
 
 
 
 
-        System.out.println("\nCantidad de transiciones: " + aut.transiciones.size()+"\n");
+//        System.out.println("\nCantidad de transiciones: " + aut.transiciones.size()+"\n");
 
         ArrayList<Nodo> arnodo = aut.getEstados();
         int nodoinicial =0;
@@ -82,13 +82,13 @@ public class Generador_de_Automatas {
         {
 
             if (arnodo.get(i).iseInicial() == true){
-                System.out.println("Estado inicial: " + arnodo.get(i).getId());
+//                System.out.println("Estado inicial: " + arnodo.get(i).getId());
                 nodoinicial = arnodo.get(i).getId();
                 nodoinicialafn = arnodo.get(i).getId();
             }
 
             if (arnodo.get(i).iseFinal() == true){
-                System.out.println("Estado final: " + arnodo.get(i).getId());
+//                System.out.println("Estado final: " + arnodo.get(i).getId());
                 nodofinalafn = arnodo.get(i).getId();
             }
         }
@@ -97,21 +97,21 @@ public class Generador_de_Automatas {
           /*Se resta el tiempo actual del sistema con el tiempo de inicio y ese
            es tiempo total de la ejecucion*/
        long time = System.currentTimeMillis()-time1;
-        System.out.println("\nEl tiempo total del programa es: " + time + " milisegundos\n");
+//        System.out.println("\nEl tiempo total del programa es: " + time + " milisegundos\n");
 
 
 
         /*Crea un subset*/
-        System.out.println("El nodo inicial a introducir en el subset es: " +nodoinicial);
+//        System.out.println("El nodo inicial a introducir en el subset es: " +nodoinicial);
 
-        System.out.println("La cantidad de transiciones en el automata es: " + aut.getTransiciones().size());
+//        System.out.println("La cantidad de transiciones en el automata es: " + aut.getTransiciones().size());
 
 
 
-        System.out.println(aut.getAlfabeto() + "ALFABETO");
-        System.out.println(alfabeto);
+//        System.out.println(aut.getAlfabeto() + "ALFABETO");
+//        System.out.println(alfabeto);
         aut.setAlfabeto(alfabeto);
-        System.out.println("El afabeto que posee el automata es: " + aut.getAlfabeto());
+//        System.out.println("El afabeto que posee el automata es: " + aut.getAlfabeto());
 
 
 

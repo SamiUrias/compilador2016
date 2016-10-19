@@ -48,6 +48,7 @@ public class OpExtra {
                        /*Se añade el nodo ennconrado al subset actual*/
                        if(!(subset.Nodos.contains(subset.getTransiciones().get(j).getNodoFinal())))
                         {
+                            System.out.println("Si contiene la transicion: " + subset.getTransiciones().get(j));
                             subset.add(subset.getTransiciones().get(j).getNodoFinal());
                             
                             
@@ -59,6 +60,7 @@ public class OpExtra {
                         /*Se hace un e-Closure del nodo encontrado, y se combina 
                          con el subset actual*/
                         subset.combinarEClosure(eClosure(temp));
+                            System.out.println("Combinando eclosure");
                         }
                        
                    }

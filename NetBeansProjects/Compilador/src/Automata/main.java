@@ -41,8 +41,8 @@ public class main {
 
         /*Variables globales*/
         boolean debugAFN = false;
-        boolean printAFN = true;
-        boolean printTextAFN = true;
+        boolean printAFN = false;
+        boolean printTextAFN = false;
         boolean simularAFN = true;
 
 
