@@ -50,7 +50,7 @@ public class DigitAutomataTest {
      */
     @Test
     public void digitAutomataTest1() {
-        System.out.println("DigitAutomata");
+        System.out.println("Digit Automata test 1");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.digitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1234641987321656467");
@@ -64,7 +64,7 @@ public class DigitAutomataTest {
      */
     @Test
     public void digitAutomataTest2() {
-        System.out.println("DigitAutomata");
+        System.out.println("Digit Automata test 2");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.digitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1");
@@ -78,7 +78,7 @@ public class DigitAutomataTest {
      */
     @Test
     public void digitAutomataTest3() {
-        System.out.println("DigitAutomata");
+        System.out.println("Digit Automata test 3");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.digitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("20");
@@ -91,7 +91,7 @@ public class DigitAutomataTest {
      */
     @Test
     public void digitAutomataTest4() {
-        System.out.println("DigitAutomata");
+        System.out.println("Digit Automata test 4");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.digitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1234641987");
@@ -104,7 +104,7 @@ public class DigitAutomataTest {
      */
     @Test
     public void digitAutomataTest5() {
-        System.out.println("DigitAutomata");
+        System.out.println("Digit Automata test 5");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.digitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("12346419d87321656467m");
@@ -116,7 +116,7 @@ public class DigitAutomataTest {
      */
     @Test
     public void digitAutomataTest6() {
-        System.out.println("DigitAutomata");
+        System.out.println("Digit Automata test 6");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.digitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1234641987321656467m");

@@ -22,6 +22,11 @@ public class Subset{
      * Contiene un arreglo de los nododos que va a tener el subconjunto
      */
     public ArrayList<Integer> Nodos = new ArrayList<Integer>();
+    public boolean loop_found = false;
+    
+    /*Este array list se utiliza para alamacenar los nodos ya recorridos
+        durante el e-clusure*/
+    public ArrayList<Integer> nodos_recorridos = new ArrayList<Integer>();
     
     /**
      * Un ArrayList<Transicion> transiciones<p>
@@ -107,16 +112,13 @@ public class Subset{
      */
     public void combinarEClosure(Subset subset1)
     {
-
         for(int i=0;i<subset1.getNodos().size();i++)
         {
             if(!this.Nodos.contains(subset1.getNodos().get(i)))
             {
                 this.add(subset1.getNodos().get(i));
             }
-
         }
-
     }
 
 

@@ -44,7 +44,7 @@ public class main {
         boolean printAFN = false;
         boolean printTextAFN = false;
         boolean simularAFN = true;
-
+        boolean exitAfterAFN = true;
 
         /*Almacena un arraylist con el alfabeto del automata*/
         ArrayList<String> alfabeto;
@@ -228,6 +228,10 @@ public class main {
             simulador.hacerSimulacion();
         }
 
+        /*Se termina el programa despues de simular el AFN*/
+        if (exitAfterAFN == true){
+            System.exit(0);
+        }   
        /*Se crea un automata finito deterministico utilizando la construccion por subconjuntos*/
         AFD afd = new AFD(aut);
 

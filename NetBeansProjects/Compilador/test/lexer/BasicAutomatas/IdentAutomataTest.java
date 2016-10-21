@@ -30,13 +30,25 @@ public class IdentAutomataTest {
 
     @Test
     public void identAutomataTest1() {
-        System.out.println("Ident Automata");
-        System.out.println("---------------");
-        
-        for(int i = 0; i < identAutomata.getEstados().size(); i++){
-            System.out.println(identAutomata.getTransiciones().get(i).toString());
-        }
-        
+        System.out.println("Ident Automata test 1");
+        boolean expResult = true;
+        SimuladorAFN simuladorAfn = new SimuladorAFN(this.identAutomata);
+        boolean result = simuladorAfn.hacerSimulacion("1");
+        assertEquals(expResult, result);
+    }
+    
+     @Test
+    public void identAutomataTest2() {
+        System.out.println("Ident Automata test 2");
+        boolean expResult = true;
+        SimuladorAFN simuladorAfn = new SimuladorAFN(this.identAutomata);
+        boolean result = simuladorAfn.hacerSimulacion("1");
+        assertEquals(expResult, result);
+    }
+    
+     @Test
+    public void identAutomataTest3() {
+        System.out.println("Ident Automata test 3");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.identAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1");
@@ -46,25 +58,22 @@ public class IdentAutomataTest {
     /**
      * Test of getAutomata method, of class IdentAutomata.
      */
-//    @Test
-//    public void testGetAutomata() {
-//        IdentAutomata instance = new IdentAutomata();
-//        Automata automata  = instance.getAutomata();
-//        
-//        boolean expResult = true;
-//        boolean result;
-//        
-//        if (automata != null){
-//            result = true;
-//            System.out.println("Transciones del test");
-//            System.out.println("------------------");
-//            System.out.println(automata.getTransiciones());
-//        }
-//        else
-//            result = false;
-//        
-//        assertEquals(expResult, result);
-//    }
+    @Test
+    public void testGetAutomata() {
+        IdentAutomata instance = new IdentAutomata();
+        Automata automata  = instance.getAutomata();
+        
+        boolean expResult = true;
+        boolean result;
+        
+        if (automata != null){
+            result = true;
+        }
+        else
+            result = false;
+        
+        assertEquals(expResult, result);
+    }
 
    
 }

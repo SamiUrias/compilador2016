@@ -24,14 +24,20 @@ public class OpExtra {
      */
     public static Subset eClosure(Subset subset)
     {  
-       // System.out.println(subset.toString());   //DEBUG
-
-
+//        System.out.println("La cantidad de nodos en el subset es: " + subset.getNodos().size());
+        
         /*Recorre todas las nodos del subset*/
         for (int i=0;i<subset.getNodos().size();i++)
-        {
+        {   
+//            System.out.println("Siguiente iteracion");
+            
             /*Toma el nodo actual del ciclo*/
             int nodo = subset.getNodos().get(i);
+//            System.out.println("El nodo actual es: " + nodo);
+            
+            /*Se agregan los nodos recorridos para evitar ciclos infinitos*/
+            subset.nodos_recorridos.add(nodo);
+            
             
             /*Se recorren todas las transiciones del subset para saber si alguna
                de esas transiciones corresponde al nodo seleccionado*/
@@ -43,26 +49,51 @@ public class OpExtra {
                    y se realiza un */
                 if (nodo==subset.getTransiciones().get(j).getNodoInicial())
                 {
+//                    System.out.println("Si contiene el nodo inicial: " + subset.getTransiciones().get(j).getNodoInicial());
                    if (subset.getTransiciones().get(j).getSimbolo().equals("!"))
                    {
-                       /*Se añade el nodo ennconrado al subset actual*/
+//                       System.out.println("Se encontro una transicion con epsilon");
+                       
+                       /*Se añade el nodo enconrado al subset actual*/
                        if(!(subset.Nodos.contains(subset.getTransiciones().get(j).getNodoFinal())))
                         {
-                            System.out.println("Si contiene la transicion: " + subset.getTransiciones().get(j));
-                            subset.add(subset.getTransiciones().get(j).getNodoFinal());
+//                            System.out.println("Si contiene la transicion: " + subset.getTransiciones().get(j));
+                            
+                            /*Se compra con los nodos encontrados. 
+                            Si no existe el nodo encotrado, entonces se agrega
+                            al subset*/
+                            if (!subset.nodos_recorridos.contains(subset.getTransiciones().get(j).getNodoFinal())){
+//                                System.out.println("El nodo: " + subset.getTransiciones().get(j).getNodoFinal());
+                                subset.add(subset.getTransiciones().get(j).getNodoFinal());
+                            }
+                            else{
+//                                System.out.println("El nodo encontrado: " +  
+//                                        subset.getTransiciones().get(j).getNodoFinal()+
+//                                        " Ya se encuentra entre los nodos recorridos");
+//                                System.out.println(subset.nodos_recorridos);
+                                subset.loop_found = true;
+//                                OpExtra.leerPantalla();
+                               
+                            }
+                           
                             
                             
                         /*Se crea un nuevo subset en base con base en el nodo 
                          encontrado*/
-                        Subset temp = new Subset(subset.getTransiciones().
+                        if (subset.loop_found == false){
+                            Subset temp = new Subset(subset.getTransiciones().
                                 get(j).getNodoFinal(),subset.getTransiciones());
+                        
+                        temp.nodos_recorridos = subset.nodos_recorridos;
                         
                         /*Se hace un e-Closure del nodo encontrado, y se combina 
                          con el subset actual*/
+//                            System.out.println("E-closure del nodo final encontrado");
                         subset.combinarEClosure(eClosure(temp));
-                            System.out.println("Combinando eclosure");
+//                        System.out.println("Combinando eclosure");
                         }
-                       
+                        
+                        }
                    }
                 }
             }

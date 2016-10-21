@@ -35,7 +35,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest1() {
-        System.out.println("Letter Automata 1");
+        System.out.println("Letter Automata test 1");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("a");
@@ -48,7 +48,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest2() {
-        System.out.println("Letter Automata 2");
+        System.out.println("Letter Automata test 2");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("casa");
@@ -61,7 +61,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest3() {
-        System.out.println("Letter Automata 3");
+        System.out.println("Letter Automata test 3");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("CASA");
@@ -75,7 +75,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest4() {
-        System.out.println("Letter Automata 4");
+        System.out.println("Letter Automata test 4");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("CaSa");
@@ -88,7 +88,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest5() {
-        System.out.println("Letter Automata 5");
+        System.out.println("Letter Automata test 5");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("abc");
@@ -102,7 +102,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest6() {
-        System.out.println("Letter Automata 5");
+        System.out.println("Letter Automata test 6");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("120");
@@ -116,7 +116,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest7() {
-        System.out.println("Letter Automata 5");
+        System.out.println("Letter Automata test 7");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("0");
@@ -129,7 +129,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest8() {
-        System.out.println("Letter Automata 5");
+        System.out.println("Letter Automata test 8");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("012554654");
@@ -143,7 +143,7 @@ public class LetterAutomataTest {
      */
     @Test
     public void digitAutomataTest9() {
-        System.out.println("Letter Automata 5");
+        System.out.println("Letter Automata test 9");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.automata);
         boolean result = simuladorAfn.hacerSimulacion("01255fasdf4654");

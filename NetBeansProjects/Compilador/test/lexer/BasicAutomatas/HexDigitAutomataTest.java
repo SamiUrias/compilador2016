@@ -33,7 +33,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata1(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 1");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1A");
@@ -45,7 +45,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata2(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 2");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1B");
@@ -57,7 +57,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata3(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 3");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1C");
@@ -69,7 +69,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata4(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 4");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1D");
@@ -81,7 +81,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata5(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 5");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1E");
@@ -93,7 +93,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata6(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 6");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("1F");
@@ -105,7 +105,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata7(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 7");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("10A");
@@ -118,7 +118,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata8(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 8");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("10AB");
@@ -130,7 +130,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata9(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 9");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("10ABCDEF");
@@ -143,7 +143,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata10(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 10");
         boolean expResult = true;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("10ADEF");
@@ -156,7 +156,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata11(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 11");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("10");
@@ -168,7 +168,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata12(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 12");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("467467");
@@ -180,7 +180,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata13(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 13");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("adfa");
@@ -192,7 +192,7 @@ public class HexDigitAutomataTest {
      */
     @Test
     public void testHexDigitAutomata14(){
-        System.out.println("HexDigit Automata");
+        System.out.println("HexDigit Automata test 14");
         boolean expResult = false;
         SimuladorAFN simuladorAfn = new SimuladorAFN(this.hexDigitAutomata);
         boolean result = simuladorAfn.hacerSimulacion("ABCDEF");
