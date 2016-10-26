@@ -29,6 +29,8 @@ public class IdentAutomata {
         
         Automata temp1 = BasicAutomataUtilities.ORAutomata(digitAutomata, letterAutomata);
         identAutomata = BasicAutomataUtilities.kleeneAutomata(temp1);
+        identAutomata.setNombre("ident");
+        
         this.automata = identAutomata;
     }
 

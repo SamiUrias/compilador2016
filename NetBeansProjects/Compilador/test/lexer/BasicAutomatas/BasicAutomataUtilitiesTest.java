@@ -457,30 +457,20 @@ public class BasicAutomataUtilitiesTest {
         assertEquals(expResult, result);   
     }
     
-//     @Test
-//    public void testOrAutomata9x() {
-//        
-//         /*ident*/
-//        Automata orAutomata;
-//        
-//        /*digit*/
-//        Automata digitAutomata = new DigitAutomata().getAutomata();
-//        
-//        /*letter*/
-//        Automata letterAutomata = new LetterAutomata().getAutomata();
-//        
-//        Automata temp1 = BasicAutomataUtilities.ORAutomata(digitAutomata, letterAutomata);
-//        
-//        orAutomata = BasicAutomataUtilities.kleeneAutomata(temp1);
-//          for(int i = 0; i < orAutomata.getEstados().size(); i++){
-//            System.out.println(orAutomata.getTransiciones().get(i).toString());
-//        }
-//          
-//         System.out.println("La cantidad de transiciones es: " + orAutomata.getTransiciones().size());
-//         System.out.println("La cantidad de nodos es: " + orAutomata.getEstados().size());
-//        boolean expResult = true;
-//        SimuladorAFN simuladorAfn = new SimuladorAFN(orAutomata);
-//        boolean result = simuladorAfn.hacerSimulacion("123");
-//        assertEquals(expResult, result);
-//    } 
+//    @Test
+//    public void testCombineAlphabets1(){
+//        System.out.println("Combiene Alfabets test 1");
+//         Automata digit = new DigitAutomata().getAutomata();
+//         Automata letter = new LetterAutomata().getAutomata();
+//         
+//         System.out.println(digit.getAlfabeto());
+//         System.out.println(letter.getAlfabeto());
+//         
+//         System.out.println(BasicAutomataUtilities.combineAlphabets(digit, letter));
+//         ArrayList<String> expArrayList = new ArrayList<String>(){{
+//          add(0);
+//         }};
+//         ArrayList<String> resultArrayList;
+//         assertEquals(, resultArrayList);
+//    }
 }

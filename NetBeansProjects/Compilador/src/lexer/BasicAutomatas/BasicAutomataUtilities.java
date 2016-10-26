@@ -2,6 +2,7 @@ package lexer.BasicAutomatas;
 
 import Automata.Automata;
 import Automata.Nodo;
+import Automata.SimuladorAFN;
 import Automata.Transicion;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class BasicAutomataUtilities {
         basicAutomataArrayList.add(new DigitAutomata().getAutomata());
         basicAutomataArrayList.add(new LetterAutomata().getAutomata()); 
         basicAutomataArrayList.add(new HexDigitAutomata().getAutomata());
+        basicAutomataArrayList.add(new IdentAutomata().getAutomata());
         
         return basicAutomataArrayList;
     }
@@ -429,4 +431,28 @@ public class BasicAutomataUtilities {
         return automata;
     }
 
+    /*Este metodo combina los alfabetos de dos automatas.
+        Se utiliza en el lexer*/
+    public static ArrayList<String> combineAlphabets(Automata automata1, Automata automata2){
+        ArrayList<String> alfabeto1 = automata1.getAlfabeto();
+        ArrayList<String> alfabeto2 = automata2.getAlfabeto();
+        
+        ArrayList<String> alfabeto_resultante = new ArrayList<>();
+        alfabeto_resultante.addAll(alfabeto1);
+        alfabeto_resultante.addAll(alfabeto2);
+        
+        return alfabeto_resultante;
+    }
+    
+    /**
+     * This method ties a String line on an indent Automata 
+     * @param String linea
+     */
+    public static boolean simulateIdent(String linea){
+        boolean ident = false;
+        Automata identAutomata = new IdentAutomata().getAutomata();
+        SimuladorAFN simulador = new SimuladorAFN(identAutomata);
+        ident = simulador.simular(linea);
+        return ident;
+    }
 }

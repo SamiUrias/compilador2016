@@ -81,6 +81,10 @@ public class GUI extends JFrame {
     private JMenuItem parsearItem;          /*Added by Moises*/
     private JMenuItem expresionesRegularesItem; /*Added by Moises*/
     
+    //Permite que el dialogo de abrir archivo se abra en el escritorio
+    private static boolean debugOpenDialog = true;
+    
+    
     /*This should be the consoele of the GUI*/
     private JTextArea text_console;
     
@@ -540,7 +544,7 @@ public class GUI extends JFrame {
         String documento = null; boolean existeDocumento = false;
         //System.out.println("Moi es lo maximo =D\nAqui va la opcion de verificar");
         //System.out.println(documentoActual.area.getText());
-        JOptionPane.showMessageDialog(this, "Verificar el texto ingresado");
+        //JOptionPane.showMessageDialog(this, "Verificar el texto ingresado");
         
         
         /*Solo si hay algun documento disponible para analizar se analiza*/
@@ -568,7 +572,7 @@ public class GUI extends JFrame {
          String documento = null; boolean existeDocumento = false;
         //System.out.println("Moi es lo maximo =D\nAqui va la opcion de verificar");
         //System.out.println(documentoActual.area.getText());
-        JOptionPane.showMessageDialog(this, "Verificar el texto ingresado");
+        //JOptionPane.showMessageDialog(this, "Verificar el texto ingresado");
         
         
         /*Solo si hay algun documento disponible para analizar se analiza*/
@@ -604,9 +608,20 @@ public class GUI extends JFrame {
         
         String texto = "";
         /*Se crea un file chooser*/
-        final JFileChooser fc = new JFileChooser();
+        String userhome = System.getProperty("user.home");
+        JFileChooser fc;
+        if (debugOpenDialog == true){
+             fc = new JFileChooser(userhome +"\\Desktop");
+        }
+        else{
+            fc = new JFileChooser();
+        }
+            
+        int returnVal= fc.showOpenDialog(fc);
         
-        int returnVal = fc.showOpenDialog(this);
+        
+        
+        //int returnVal = fc.showOpenDialog(this);
         
         /*Si el usuario acepta abrir el archivo*/
         if (returnVal == JFileChooser.APPROVE_OPTION)
