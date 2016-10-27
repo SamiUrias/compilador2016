@@ -23,6 +23,9 @@ public class Lexer2 {
     
     /*Nombre del compilador*/
     private String compiler_name = "";
+
+    /*Almacena el resultado si hubo algun erro en la primera linea*/
+    private boolean firstLineError = false;
     
     /**
      * Constructor del Lexer2
@@ -37,15 +40,84 @@ public class Lexer2 {
         char = '\'' anyButApostrophe '\''. 
     */
 
-    
- 
+
+
     public void analizar (String documento){
         this.documento =  documento;
         //System.out.println(this.documento);
         this.separarLineas(this.documento);
         createBaseAutomatas();
-        verify_correct_starting_and_ending_point(this.documento);
-        this.createBaseAutomatas();
+        firstLineError = verify_correct_starting_and_ending_point(this.documento);
+        charactersAnalyzer();
+
+    }
+
+    /**
+     * This method analyze the 'CHARACTER' section of the document.
+     */
+    private void charactersAnalyzer(){
+        System.out.println("CharactersAnalyzer");
+        OpExtra.imprirLinea();
+        /*If there's no error*/
+        if (characterWordFinder() != -1){
+
+            /*Analiza todo el documento en busca de 'characters'*/
+            for (int i = characterWordFinder() + 1; i<lines.length; i++){
+                //System.out.println(lines[i]);
+                /*Remove the end line point*/
+                String line =  lines[i].substring(0, lines[i].length()-1);
+                System.out.println(line);
+
+                //Crear un nuevo metodo
+                int equalPosition = equalPositionFinder(line);
+                if (equalPosition != -1){
+                    String characterName = line.substring(0, equalPosition -1);
+                    System.out.println("Character name: " + characterName);
+                    String lexema = line.substring(equalPosition +1,line.length());
+                    System.out.println("Lexema: " + lexema);
+                    SSCharacter character = new SSCharacter(lexema);
+                }
+            }
+
+        }
+
+    }
+
+    /**
+     * Este metodo verifica si existe un punto al final de la linea.
+     */
+    private void endPointFinder(){
+
+    }
+
+    /*This method finds the equal position*/
+    private int equalPositionFinder(String cadena){
+        return cadena.indexOf("=");
+    }
+
+
+    /**
+     * This method finds the 'CHARACTERS' line
+     * @return
+     */
+    private int characterWordFinder(){
+        /*Aqui se almacena la linea en donde se encuentra la palabra
+            'CHARACTERS'. De no se encontrada devolvera -1*/
+        int characterLine =  -1;
+
+
+        /*Find characters line*/
+        for (int i = 0; i<lines.length; i++){
+            String actualLine = lines[i];
+
+            if (actualLine.equals("CHARACTERS")){
+                // System.out.println("Characters found =D");
+                characterLine = i;
+                break; //Termina el ciclo for
+            }
+        }
+
+        return characterLine;
     }
     
     private void separarLineas(String documento){

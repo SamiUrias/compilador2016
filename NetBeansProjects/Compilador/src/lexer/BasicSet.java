@@ -11,6 +11,10 @@ package lexer;
  */
 public class BasicSet {
 
+    private boolean isString;
+    private boolean isIdent;
+    private boolean isChar;
+
     /**
      * Constructor vacio.
      */
@@ -23,16 +27,22 @@ public class BasicSet {
      * @param cadena
      */
     public BasicSet(String cadena){
-
+        stringVerifier(cadena);
     }
 
     private void stringVerifier(String cadena){
+        cadena = cadena.trim(); //Elimina espacios en blanco al principio y al final de la linea.
         String firstCharacter, lastCharacter;
 
-        firstCharacter=cadena.substring(0,1);
-        lastCharacter=cadena.substring(cadena.length()-1, cadena.length());
+        firstCharacter=String.valueOf(cadena.charAt(0));
+        lastCharacter=String.valueOf(cadena.charAt(cadena.length()-1));
 
         System.out.println("FC: " + firstCharacter);
-        System.out.println("LC: " + firstCharacter);
+        System.out.println("LC: " + lastCharacter);
+
+
+        if ((firstCharacter.equals("\"")) && (lastCharacter.equals("\""))){
+
+        }
     }
 }
