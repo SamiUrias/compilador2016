@@ -98,8 +98,11 @@ public class GUI extends JFrame {
     
     /*Se crea una instanacia del analizador de expresiones regulares*/
     private RegexAnalyzer regexAnalyzer;
-    
-    
+
+    private static boolean debugLexer =  true;
+    private static String debugLexerUrl = "C:\\Users\\Samuel\\Desktop\\lexer2-test.txt";
+
+
     /**
      * Esta clase se utiliza para crear los Documentos (formularios hijos) de la
      * interfaz grafica
@@ -393,6 +396,23 @@ public class GUI extends JFrame {
         test.setLocationRelativeTo(null);
         test.setVisible(true);
         test.list.requestFocus();
+
+
+        if (debugLexer){
+
+            try{
+                File file = new File(debugLexerUrl);
+                test.abrirArchivo(file);
+                test.setState(Frame.ICONIFIED);
+                test.verificarItemActionPerformed(null);
+            }
+            catch(Exception e){
+                System.out.println("No se pudo abrir el archivo para debug");
+                System.out.println(e);
+            }
+
+        }
+
     }
     
     public static void main(final String[] args) {
@@ -636,7 +656,11 @@ public class GUI extends JFrame {
     
     
     }
-    
+    /*Este metodo abre un archivo de texto con base a un File*/
+    private void abrirArchivo(File fileToOpen) {
+        new Doc(fileToOpen);
+    }
+
     private void newItemActionPerformed(ActionEvent evt){
         new Doc(); /*Se crea un nuevo documento en blanco*/
         
