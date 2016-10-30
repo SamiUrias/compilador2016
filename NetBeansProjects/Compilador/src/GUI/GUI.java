@@ -82,7 +82,7 @@ public class GUI extends JFrame {
     private JMenuItem expresionesRegularesItem; /*Added by Moises*/
     
     //Permite que el dialogo de abrir archivo se abra en el escritorio
-    private static boolean debugOpenDialog = true;
+    private static boolean debugOpenDialog = false;
     
     
     /*This should be the consoele of the GUI*/

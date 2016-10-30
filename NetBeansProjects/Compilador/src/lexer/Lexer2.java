@@ -1,10 +1,8 @@
 package lexer;
 import Automata.*;
 import java.util.ArrayList;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
+
 import lexer.BasicAutomatas.BasicAutomataUtilities;
-import sun.nio.ch.WindowsAsynchronousChannelProvider;
 
 /**
  * Esta clase Lexer2 es la clase que se utiliza para hacer el analisis lexico 
@@ -24,9 +22,24 @@ public class Lexer2 {
     /*Nombre del compilador*/
     private String compiler_name = "";
 
-    /*Almacena el resultado si hubo algun erro en la primera linea*/
+    /*Almacena los charactersArraylist creados*/
+    private ArrayList<SSCharacter> charactersArraylist;
+
+    //************************************* ERRORES *****************************************//
+
+    /*Almacena el resultado si hubo algun error en la primera linea*/
     private boolean firstLineError = false;
-    
+
+    /*Esta variable almacena la ubicacion o estado actual del escanner para determinar lo que se debe hacer:
+    * 0: Verificacion del nombre del archivo
+    *
+    * 1: Verificacion de caracterres
+    *
+    * 2: Verificacion de keywords
+    *
+    * 3: Verificacion de tokens
+    * */
+    private int analisis_actual = 0;
     /**
      * Constructor del Lexer2
      */
@@ -44,10 +57,9 @@ public class Lexer2 {
 
     public void analizar (String documento){
         this.documento =  documento;
-        //System.out.println(this.documento);
-        this.separarLineas(this.documento);
+        separarLineas(this.documento); //Separa el archivo en lineas
         createBaseAutomatas();
-        firstLineError = verify_correct_starting_and_ending_point(this.documento);
+        firstLineError = verify_correct_starting_and_ending_point(this.documento); //FIX
         charactersAnalyzer();
 
     }
@@ -56,18 +68,33 @@ public class Lexer2 {
      * This method analyze the 'CHARACTER' section of the document.
      */
     private void charactersAnalyzer(){
+        /*Se inicializa el arreglo de characters*/
+        charactersArraylist = new ArrayList<>();
+
+
+        /*Cambia el estado del proyecto a analisis de caracteres*/
+        analisis_actual = 1;
         System.out.println("CharactersAnalyzer");
-        OpExtra.imprirLinea();
-        /*If there's no error*/
+        //OpExtra.imprirLinea();
+
+
+        /*If there's no error.
+        * Se busca en el documento si existe la palabra 'charactersArraylist'. Si esta existe, entonces se analiza el codigo
+        * en busca de 'charactersArraylist'. Se asume que el resto de lo que se encuentra en el proyecto son charactersArraylist hasta
+        * que se */
         if (characterWordFinder() != -1){
 
-            /*Analiza todo el documento en busca de 'characters'*/
+            /*Analiza todo el documento en busca de 'charactersArraylist'*/
             for (int i = characterWordFinder() + 1; i<lines.length; i++){
                 //System.out.println(lines[i]);
+
                 /*Remove the end line point*/
                 String line =  lines[i].substring(0, lines[i].length()-1);
                 System.out.println(line);
 
+
+                //Verificador de caracter. Esto se deberia de ejecutar si el estado actual del proyecto se encuentra
+                // en verificacion de caracteres
                 //Crear un nuevo metodo
                 int equalPosition = equalPositionFinder(line);
                 if (equalPosition != -1){
@@ -75,7 +102,8 @@ public class Lexer2 {
                     System.out.println("Character name: " + characterName);
                     String lexema = line.substring(equalPosition +1,line.length());
                     System.out.println("Lexema: " + lexema);
-                    SSCharacter character = new SSCharacter(lexema);
+
+                    charactersArraylist.add(new SSCharacter(charactersArraylist, characterName, lexema));
                 }
             }
 
@@ -88,6 +116,20 @@ public class Lexer2 {
      */
     private void endPointFinder(){
 
+    }
+
+
+    /**
+     * Este metodo revisa si se ha llegado al punto de keywords
+     * @param cadena
+     * @return
+     */
+    private boolean checkForKeyword(String cadena){
+        boolean isKeyword = false;
+        if (cadena.trim().equals("KEYWORDS"))
+            isKeyword = true;
+
+        return isKeyword;
     }
 
     /*This method finds the equal position*/
@@ -106,7 +148,7 @@ public class Lexer2 {
         int characterLine =  -1;
 
 
-        /*Find characters line*/
+        /*Find charactersArraylist line*/
         for (int i = 0; i<lines.length; i++){
             String actualLine = lines[i];
 

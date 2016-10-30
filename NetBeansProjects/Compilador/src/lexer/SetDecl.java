@@ -5,6 +5,8 @@
  */
 package lexer;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Samuel
@@ -23,9 +25,11 @@ public class SetDecl {
      * Constructor con base a una cadena.
      * @param cadena
      */
-    public SetDecl(String cadena) {
-        set = new Set(cadena);
+    public SetDecl(ArrayList<SSCharacter> charactersArraylist, String ident, String cadena) {
+        set = new Set(charactersArraylist, ident, cadena);
     }
 
-
+    public Set getSet() {
+        return set;
+    }
 }

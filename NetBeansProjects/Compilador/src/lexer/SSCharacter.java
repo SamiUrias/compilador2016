@@ -9,6 +9,9 @@ package lexer;
  *
  * @author Samuel
  */
+
+import java.util.ArrayList;
+
 /**
  *
  * @author Samuel
@@ -29,7 +32,18 @@ public class SSCharacter {
      * Constructor con base a una cadena. 
      * @param cadena
      */
-    public SSCharacter(String cadena){
-        lexema = new SetDecl(cadena);
+    public SSCharacter(ArrayList<SSCharacter> charactersArraylist, String ident, String cadena){
+        lexema = new SetDecl(charactersArraylist, ident, cadena);
+        token = ident.trim();
+    }
+
+
+    /*Getter de token name*/
+    public String getToken() {
+        return token;
+    }
+
+    public SetDecl getLexema() {
+        return lexema;
     }
 }
