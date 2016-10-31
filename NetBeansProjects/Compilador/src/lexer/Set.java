@@ -10,10 +10,11 @@ import Automata.OpExtra;
 import java.util.ArrayList;
 
 /**
- *
+ * Esta clase modela un set
  * @author Samuel
  */
 public class Set {
+    /*Almacena basic sets*/
     ArrayList<BasicSet> basicSets;
 
     //Este arreglo almacena todos los simbolos '+' o '-' encontrados en la cadena.
@@ -21,16 +22,21 @@ public class Set {
 
     //Este arreglo almacena todos los basicSets generados con base en las partes separadas de la cadena.
     ArrayList<BasicSet> basicSetArray = new ArrayList<BasicSet>();
+
+    //Este arreglo amacena todos los 'SSCharactrs' creados previamente
     ArrayList<SSCharacter> charactersArray = new ArrayList<SSCharacter>();
+
+    boolean pre_Analisis = false;               //Sirve para hacer el postAnalisis de las expresiones regulares
+    String pre_Analisis_simbolo = "";           //Simbolo que se utilizo en el preAnalisis
+
 
     //Almacena una expresion regular
     private String regularExpression = "";
     String nombre = "";
 
     Set(ArrayList<SSCharacter> charactersArraylist, String ident,  String cadena) {
-        /*Asigna el nombre del set*/
-        this.nombre = ident;
-        this.charactersArray = charactersArraylist;
+        this.nombre = ident;/*Asigna el nombre del set*/
+        this.charactersArray = charactersArraylist;/*Asigna los SScharacters creados previamente*/
 
         cadena = cadena.trim();
 
@@ -61,12 +67,60 @@ public class Set {
         OpExtra.leerPantalla();
 
         //Se crean las expresiones regulares con base al tipo de basic set
-
         for (int i=0; i<basicSetArray.size();i++){
+            /*Si se hace mas de una vuelta, significa que hay varias partes que analizar, entonces se procede a
+            * hacer ese analisis*/
+            if (i>0){
+                analizarSimbolos(i);
+            }
+
+            System.out.println("Ciclo vuelta " + i);
             createRegularExpression(basicSetArray.get(i));          //Crea una expresin regular de la cadena ingresada
+            System.out.println("RX: " + regularExpression);
         }
+
+        System.out.println("For the \'"+nombre+"\'");
+        System.out.println("The final regular expression created was: " + regularExpression);
+        System.out.println();
+        OpExtra.leerPantalla();
     }
 
+    /**
+     * Esta funcion altera la expresion regular que se encuentra actualmente en el sistema, dependiendo del simbolo
+     * que se haya ingresado.
+     * @param simbolo
+     */
+    private void analizarSimbolos(int simbolo){
+        pre_Analisis = true;
+        String simboloActual =  simbolos.get(simbolo - 1);
+        System.out.println("We are in the symbolanalyzer");
+        System.out.println("The symbol that we are analyzing is: " + simboloActual);
+
+        //Analizar el signo +
+        if (simboloActual.equals("+")){
+            System.out.println("Se analizara el signo +");
+
+            /*A la expresion regular actual se le agregan parentesis*/
+            String nueva_expresion_regular = "(" + this.regularExpression + ")*";
+            System.out.println(nueva_expresion_regular);
+
+            //Se almacena la nueva expresion regular generada
+            regularExpression =nueva_expresion_regular;
+
+            //Se asigna como simbolo de preanalisis el simbolo encontrado
+            pre_Analisis_simbolo="+";
+        }
+        OpExtra.leerPantalla();
+        System.out.println("Se termino de analizar los simbolos");
+
+    }
+
+
+    /**
+     * Esta funcion devuelve un basicSet con base en una cadena ingresada.
+     * @param cadena
+     * @return
+     */
     private BasicSet basicSetAnalyzer(String cadena){
         System.out.println("We are in the basic set analyzer");
         BasicSet basicSet = new BasicSet(cadena);
@@ -82,16 +136,47 @@ public class Set {
 
         //Si la expresion regular es un String
         if (basicSet.isString() == true){
-            regex = stringRegex(basicSet.getCadena());
+           regex += stringRegex(basicSet.getCadena());
         }
         //Si la expresion regular es un ident
         else if(basicSet.isIdent()){
-            regex = identRegex(basicSet.getCadena());  //La cadena es el nombre que se debe buscar en el
+            regex += identRegex(basicSet.getCadena());  //La cadena es el nombre que se debe buscar en el
                                                         // arraylist de characters
         }
 
         System.out.println("Created regex: " + regex);
-        this.regularExpression = regex;
+
+        /*Si es necesario hacer un postAnalisis, este metodo se encargara de hacer la correspondiente
+        * modificacion de la expreion regular creada previamente para poder*/
+        if (pre_Analisis){
+            regex=postAnalisis(regex);
+        }
+
+        this.regularExpression += regex;
+    }
+
+    /**
+     * El postAnalisis se hace cada vez que se crea una nueva expresion regular.
+     * Esto se hace dependiendo si anteriormente hubo un preAnalisis o no, de ser asi. Se adapta la nueva expresion
+     * regular de tal manera que esta se adapte a la expresion regular tratada previamente por el preAnalisis.
+     *
+     * Esto se hace ccn el fin de que con ayuda del preAnalisis la expresion regular resultante se adapte a lo esta
+     * descrito por la correspondiente asignacion de Characters.
+     * @param generatedRegex
+     * @return
+     */
+    private String postAnalisis(String generatedRegex){
+        String new_regex = "";
+        System.out.println("Estamos en el post analisis");
+        System.out.println("El regex en el post analisis es: " + generatedRegex);
+
+        /*Se hace el postAnalisis si el simbolo del preAnalisis es un signo + */
+        if (pre_Analisis_simbolo.equals("+")){
+            /*Se agregan parentes tipo kleene a la segunda expresion generada*/
+            new_regex = "(" + generatedRegex+")*";
+        }
+
+        return new_regex;
     }
 
     /**
@@ -123,6 +208,7 @@ public class Set {
     }
 
     private String identRegex(String ident){
+        String regex = "";
         System.out.println("We are in the identRegex");
         System.out.println("Ident: " + ident);
         OpExtra.leerPantalla();
@@ -138,9 +224,9 @@ public class Set {
             System.out.println("Si se encontro el ident: \'" +ident +
                     "\' dentro de la lista de Characters generados previamente");
 
-            regularExpression = charactersArray.get(posicion).getLexema().getSet().getRegularExpression();
+            regex += charactersArray.get(posicion).getLexema().getSet().getRegularExpression();
             System.out.println("Regex del ident: ");
-            System.out.println(regularExpression + "\n\n");
+            System.out.println(regex + "\n\n");
 
         }
         else{
@@ -148,7 +234,7 @@ public class Set {
                     " dentro de la lista de Characters generados previamente");
             System.exit(0);
         }
-        return "";
+        return regex;
     }
 
     public String getNombre() {
