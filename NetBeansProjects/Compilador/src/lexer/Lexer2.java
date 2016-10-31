@@ -84,12 +84,15 @@ public class Lexer2 {
         * que se */
         if (characterWordFinder() != -1){
 
-            /*Analiza todo el documento en busca de 'charactersArraylist'*/
+            /*Analiza todo el documento en busca de 'characters'*/
             for (int i = characterWordFinder() + 1; i<lines.length; i++){
                 //System.out.println(lines[i]);
 
-                /*Remove the end line point*/
-                String line =  lines[i].substring(0, lines[i].length()-1);
+                /*Se remueve el punto al final de la linea*/
+                /*Verifica si hay error en la escritura de la linea si no encuentra un punto
+                    al final de la misma*/
+                String line =  endPointFinder(lines[i], i);
+                //String line =  lines[i].substring(0, lines[i].length()-1);
                 System.out.println(line);
 
 
@@ -114,8 +117,19 @@ public class Lexer2 {
     /**
      * Este metodo verifica si existe un punto al final de la linea.
      */
-    private void endPointFinder(){
+    private String endPointFinder(String line, int line_number){
+        String line_without_point ="";
 
+        if (line.substring(line.length()-1, line.length()).equals(".")){
+            line_without_point = line.substring(0, line.length()-1);
+        }
+        else{
+            System.out.println("ERROR!\nEn la linea " + line_number + " no se encontro un punto '.' al final." );
+            System.exit(0);
+        }
+
+
+        return line_without_point;
     }
 
 
