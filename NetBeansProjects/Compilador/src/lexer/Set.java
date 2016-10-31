@@ -26,8 +26,11 @@ public class Set {
     //Este arreglo amacena todos los 'SSCharactrs' creados previamente
     ArrayList<SSCharacter> charactersArray = new ArrayList<SSCharacter>();
 
-    boolean pre_Analisis = false;               //Sirve para hacer el postAnalisis de las expresiones regulares
-    String pre_Analisis_simbolo = "";           //Simbolo que se utilizo en el preAnalisis
+    //Sirve para hacer el postAnalisis de las expresiones regulares
+    boolean pre_Analisis = false;
+
+    //Simbolo que se utilizo en el preAnalisis
+    String pre_Analisis_simbolo = "";
 
 
     //Almacena una expresion regular
@@ -143,6 +146,9 @@ public class Set {
             regex += identRegex(basicSet.getCadena());  //La cadena es el nombre que se debe buscar en el
                                                         // arraylist de characters
         }
+        else if(basicSet.isChar() == true){
+            regex += charRegex(basicSet);
+        }
 
         System.out.println("Created regex: " + regex);
 
@@ -153,6 +159,26 @@ public class Set {
         }
 
         this.regularExpression += regex;
+    }
+
+
+    /**
+     * Este metodo crea un expresion regular para un basicSet de tipo Char
+     * @param basicSet
+     * @return
+     */
+    private String charRegex(BasicSet basicSet) {
+        String regex = "";
+        System.out.println("We are in the char regex");
+        System.out.println("Cadena: " + basicSet.getCadena());
+
+        /*Se verifica si el basicSet tiene algun numero*/
+        if (basicSet.getCharNumber() >= 0){
+            regex = String.valueOf(basicSet.getCharNumber());
+        }
+
+        OpExtra.leerPantalla();
+        return regex;
     }
 
     /**
