@@ -455,4 +455,48 @@ public class BasicAutomataUtilities {
         ident = simulador.simular(linea);
         return ident;
     }
+
+
+    //    Este metodo revisa si la cadena ingresada es un String
+    public static boolean stringVerifier(String cadena){
+        boolean isString = false;
+        cadena = cadena.trim(); //Elimina espacios en blanco al principio y al final de la linea.
+        String firstCharacter, lastCharacter;
+
+        firstCharacter=String.valueOf(cadena.charAt(0));
+        lastCharacter=String.valueOf(cadena.charAt(cadena.length()-1));
+
+//        System.out.println("FC: " + firstCharacter);
+//        System.out.println("LC: " + lastCharacter);
+
+
+        if ((firstCharacter.equals("\"")) && (lastCharacter.equals("\""))){
+//            System.out.println("This lexema is an String");
+            isString = true;
+        }
+
+        return isString;
+    }
+
+    public static String stringRegex(String cadenaIngresada){
+        System.out.println("STRING REGEX");
+        String cadena = cadenaIngresada.trim();
+        String cadenaOr = "";  //Una cadena con or
+
+        //Quita las comillas
+        cadena = cadena.substring(1,cadena.length()-1);
+        System.out.println(cadena);
+
+        for (int i = 0; i<cadena.length(); i++){
+            cadenaOr += cadena.substring(i,i+1);
+            cadenaOr += "|";
+        }
+
+        System.out.println(cadenaOr);
+        //Quita el ultimo signo de or agregado por el ciclo for
+        cadenaOr = cadenaOr.substring(0,cadenaOr.length()-1);
+        System.out.println(cadenaOr);
+
+        return cadenaOr;
+    }
 }

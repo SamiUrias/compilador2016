@@ -16,6 +16,7 @@ import Automata.*;
  * @author Samuel
  */
 public class BasicSet {
+    private boolean basicSetDebug = false;
 
     private String cadena;
     private boolean isString;               //Si el BasicSet es un String
@@ -36,8 +37,12 @@ public class BasicSet {
      * @param cadena
      */
     public BasicSet(String cadena){
-        System.out.println("We are in Basic Set");
-        OpExtra.leerPantalla();
+
+        if(basicSetDebug) {
+            System.out.println("We are in Basic Set");
+            OpExtra.leerPantalla();
+        }
+
         /*Guarda la cadena*/
         this.cadena = cadena;
 

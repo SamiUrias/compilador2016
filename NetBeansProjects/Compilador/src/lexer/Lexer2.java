@@ -3,6 +3,7 @@ import Automata.*;
 import java.util.ArrayList;
 
 import lexer.BasicAutomatas.BasicAutomataUtilities;
+import lexer.BasicAutomatas.Keyword;
 
 /**
  * Esta clase Lexer2 es la clase que se utiliza para hacer el analisis lexico 
@@ -25,6 +26,12 @@ public class Lexer2 {
     /*Almacena los charactersArraylist creados*/
     private ArrayList<SSCharacter> charactersArraylist;
 
+    /*Almacena los keywords creados*/
+    private ArrayList<Keyword> keywordArrayList;
+
+
+    /*Esta es la linea que actualmente se eta recorriendo del archivo*/
+    private int linea_actual = 0;
     //************************************* ERRORES *****************************************//
 
     /*Almacena el resultado si hubo algun error en la primera linea*/
@@ -86,6 +93,15 @@ public class Lexer2 {
 
             /*Analiza todo el documento en busca de 'characters'*/
             for (int i = characterWordFinder() + 1; i<lines.length; i++){
+                //Se asigna como linea actual la linea que actualmente esta recorriendo el ciclo for
+                linea_actual = i;
+
+
+                if(checkForKeyword(lines[i])){
+                    System.out.println("KEYWORDS FOUND");
+                    analisis_actual = 2;
+                    break;
+                }
                 //System.out.println(lines[i]);
 
                 /*Se remueve el punto al final de la linea*/
@@ -110,6 +126,69 @@ public class Lexer2 {
                 }
             }
 
+
+        }
+
+        /*Una vez terminado el analisis de 'Characters' se procede a analizar las 'Keywords'.
+        * Para poder analizar las keywords se espera que en el analisis de characters de haya detectado
+        * la linea que contiene la palabra 'KEYWORDS' y  se haya cambiado el estado del programa para leer keywords.
+        *
+        * Si no se cambio el estado del programa para leer keywords, entonces es porque no se encontro una linea
+        * cuya totalidad fuera la palabra 'KEYWORDS'
+        * */
+
+        /*Modo Keywords*/
+        if (analisis_actual==2){
+            lexerKeywordAnalisis();
+        }
+    }
+
+    /**
+     * Este metodo se encarga de hacer el analisis para las keywords encontradas en el texto
+     */
+    private void lexerKeywordAnalisis(){
+        /*Se inicializa el arraylist*/
+        keywordArrayList = new ArrayList<>();
+
+        System.out.println("Estamos en el 'lexerKeywordAnalisis' ");
+        System.out.println(lines[linea_actual]);
+
+        /*La linea actual con la que se supone que se entra a este metodo es la linea en la que se encuentra
+        * la palabra 'KEYWORDS'. Debido a esto se le suma uno (1) al contador de linea actual antes de entrar al
+        * ciclo que analiza las keywords*/
+
+        //Se le suma uno a la linea actual
+        linea_actual++;
+
+        /*Se analiza el documento en busca de keywords*/
+        for(int i = linea_actual; i<lines.length; i++){
+
+            //Se asigna como linea actual la linea el contador del ciclo actual
+            linea_actual = i;
+
+            if (checkForTokens(lines[i])){
+                System.out.println("TOKENS FOUND");
+                analisis_actual = 3;
+                break;
+            }
+
+            /*Se remueve el punto al final de la linea*/
+                /*Verifica si hay error en la escritura de la linea si no encuentra un punto
+                    al final de la misma*/
+            String line =  endPointFinder(lines[i], i);
+            //String line =  lines[i].substring(0, lines[i].length()-1);
+            System.out.println(line);
+
+            int equalPosition = equalPositionFinder(line);
+            if (equalPosition != -1){
+                String name = line.substring(0, equalPosition -1);
+                System.out.println("Name: " + name);
+                String lexema = line.substring(equalPosition +1,line.length());
+                System.out.println("Lexema: " + lexema);
+
+                keywordArrayList.add(new Keyword(name,lexema));
+
+            }
         }
 
     }
@@ -133,6 +212,7 @@ public class Lexer2 {
     }
 
 
+
     /**
      * Este metodo revisa si se ha llegado al punto de keywords
      * @param cadena
@@ -146,6 +226,18 @@ public class Lexer2 {
         return isKeyword;
     }
 
+    /**
+     * Este metodo revisa si se ha llegado al punto de tokens
+     * @param cadena
+     * @return
+     */
+    private boolean checkForTokens(String cadena){
+        boolean isToken = false;
+        if(cadena.trim().equals("TOKENS"))
+            isToken = true;
+
+        return isToken;
+    }
     /*This method finds the equal position*/
     private int equalPositionFinder(String cadena){
         return cadena.indexOf("=");

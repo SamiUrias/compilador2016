@@ -14,6 +14,9 @@ import java.util.ArrayList;
  * @author Samuel
  */
 public class Set {
+    /*Debug variable*/
+    boolean setDebug = false;
+
     /*Almacena basic sets*/
     ArrayList<BasicSet> basicSets;
 
@@ -61,13 +64,20 @@ public class Set {
             System.out.println(partes[i]);
         }
 
-        OpExtra.leerPantalla();
+        //DEBUG
+        if(setDebug)
+            OpExtra.leerPantalla();
+
+
         for (int i = 0; i<partes.length;i++){
             basicSetArray.add(basicSetAnalyzer(partes[i]));
         }
 
         System.out.println("Se termino de crear basic sets para todoas las pares de la linea");
-        OpExtra.leerPantalla();
+
+        //DEBUG
+        if(setDebug)
+            OpExtra.leerPantalla();
 
         //Se crean las expresiones regulares con base al tipo de basic set
         for (int i=0; i<basicSetArray.size();i++){
@@ -84,8 +94,12 @@ public class Set {
 
         System.out.println("For the \'"+nombre+"\'");
         System.out.println("The final regular expression created was: " + regularExpression);
-        System.out.println();
-        OpExtra.leerPantalla();
+
+        //DEBUG
+        if(setDebug) {
+            OpExtra.leerPantalla();
+            System.out.println();
+        }
     }
 
     /**
@@ -113,7 +127,12 @@ public class Set {
             //Se asigna como simbolo de preanalisis el simbolo encontrado
             pre_Analisis_simbolo="+";
         }
-        OpExtra.leerPantalla();
+
+        //DEBUG
+        if(setDebug)
+            OpExtra.leerPantalla();
+
+
         System.out.println("Se termino de analizar los simbolos");
 
     }
@@ -177,7 +196,10 @@ public class Set {
             regex = String.valueOf(basicSet.getCharNumber());
         }
 
-        OpExtra.leerPantalla();
+        //DEBUG
+        if(setDebug)
+            OpExtra.leerPantalla();
+
         return regex;
     }
 
@@ -228,7 +250,9 @@ public class Set {
         cadenaOr = cadenaOr.substring(0,cadenaOr.length()-1);
         System.out.println(cadenaOr);
 
-        OpExtra.leerPantalla();
+        //DEBUG
+        if(setDebug)
+            OpExtra.leerPantalla();
 
         return cadenaOr;
     }
@@ -237,7 +261,11 @@ public class Set {
         String regex = "";
         System.out.println("We are in the identRegex");
         System.out.println("Ident: " + ident);
-        OpExtra.leerPantalla();
+
+
+        //DEBUG
+        if(setDebug)
+            OpExtra.leerPantalla();
 
         /*Encuentra si existe algun elemento en el array que contenga algun character con el nombre que tiene el ident*/
         int posicion = -1;
