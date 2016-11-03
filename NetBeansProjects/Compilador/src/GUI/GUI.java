@@ -38,9 +38,12 @@
 
 package GUI;
 
+import Automata.OpExtra;
 import PendientesDeEliminar.RegexAnalyzer;
 import Exception.IdentException;
 import Parser.Parser;
+
+import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -112,6 +115,7 @@ public class GUI extends JFrame {
         JInternalFrame frame;
         TransferHandler th;
         JTextArea area;
+        JTextArea lines;
         
         
         public Doc(File file) {
@@ -399,7 +403,6 @@ public class GUI extends JFrame {
 
 
         if (debugLexer){
-
             try{
                 File file = new File(debugLexerUrl);
                 test.abrirArchivo(file);
@@ -407,6 +410,10 @@ public class GUI extends JFrame {
                 test.verificarItemActionPerformed(null);
             }
             catch(Exception e){
+                System.out.println("\n\n");
+                OpExtra.imprirLinea();
+                System.out.println("ERROR!");
+                System.out.println("Hubo un problema con el archivo de debug");
                 System.out.println("No se pudo abrir el archivo para debug");
                 System.out.println(e);
             }
@@ -610,7 +617,8 @@ public class GUI extends JFrame {
         
         
         if (existeDocumento == true) {
-            this.parser = new Parser(documento);
+            //this.parser = new Parser(documento);
+            System.out.println("Aqui se deberia de ejecutar la funcion del parser: GUI linea 614");
         }
     }
     

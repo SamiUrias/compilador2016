@@ -1,4 +1,6 @@
-package lexer.BasicAutomatas;
+package lexer;
+
+import lexer.BasicAutomatas.BasicAutomataUtilities;
 
 /**
  * Created by Samuel on 31/10/2016.

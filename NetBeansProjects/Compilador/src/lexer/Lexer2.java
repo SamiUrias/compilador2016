@@ -1,9 +1,9 @@
 package lexer;
 import Automata.*;
+
 import java.util.ArrayList;
 
 import lexer.BasicAutomatas.BasicAutomataUtilities;
-import lexer.BasicAutomatas.Keyword;
 
 /**
  * Esta clase Lexer2 es la clase que se utiliza para hacer el analisis lexico 
@@ -30,6 +30,9 @@ public class Lexer2 {
     private ArrayList<Keyword> keywordArrayList;
 
 
+    /*Almacena los Tokens creados*/
+    private ArrayList<Token> tokensArrayList;
+
     /*Esta es la linea que actualmente se eta recorriendo del archivo*/
     private int linea_actual = 0;
     //************************************* ERRORES *****************************************//
@@ -45,6 +48,8 @@ public class Lexer2 {
     * 2: Verificacion de keywords
     *
     * 3: Verificacion de tokens
+    *
+    * 4: Verificacion de producciones
     * */
     private int analisis_actual = 0;
     /**
@@ -69,7 +74,34 @@ public class Lexer2 {
         firstLineError = verify_correct_starting_and_ending_point(this.documento); //FIX
         charactersAnalyzer();
 
+        /*Una vez terminado el analisis de 'Characters' se procede a analizar las 'Keywords'.
+        * Para poder analizar las keywords se espera que en el analisis de characters de haya detectado
+        * la linea que contiene la palabra 'KEYWORDS' y  se haya cambiado el estado del programa para leer keywords.
+        *
+        * Si no se cambio el estado del programa para leer keywords, entonces es porque no se encontro una linea
+        * cuya totalidad fuera la palabra 'KEYWORDS'
+        * */
+
+        /*Modo Keywords*/
+        if (analisis_actual==2){
+            lexerKeywordAnalisis();
+        }
+
+        /*Una vez terminado el analisis de 'Keywords' se procede a analizar los 'Tokens'.
+        * Para poder analizar los Tokens se espera que en el analisis de keywords de haya detectado
+        * la linea que contiene la palabra 'TOKENS' y  se haya cambiado el estado del programa para leer Tokens.
+        *
+        * Si no se cambio el estado del programa para leer keywords, entonces es porque no se encontro una linea
+        * cuya totalidad fuera la palabra 'TOKENS'
+        * */
+
+        /*Modo Tokens*/
+        if(analisis_actual == 3){
+            lexerTokenAnalisis();
+        }
+
     }
+
 
     /**
      * This method analyze the 'CHARACTER' section of the document.
@@ -85,10 +117,10 @@ public class Lexer2 {
         //OpExtra.imprirLinea();
 
 
-        /*If there's no error.
-        * Se busca en el documento si existe la palabra 'charactersArraylist'. Si esta existe, entonces se analiza el codigo
-        * en busca de 'charactersArraylist'. Se asume que el resto de lo que se encuentra en el proyecto son charactersArraylist hasta
-        * que se */
+        /*Si no hay error.
+        * Se busca en el documento si existe la palabra 'characters'. Si esta existe, entonces se analiza el codigo
+        * en busca de 'characters'. Se asume que el resto de lo que se encuentra en el proyecto son charactersArraylist
+        * hasta que se encuentra la palabra 'KEYWORDS'.*/
         if (characterWordFinder() != -1){
 
             /*Analiza todo el documento en busca de 'characters'*/
@@ -125,23 +157,9 @@ public class Lexer2 {
                     charactersArraylist.add(new SSCharacter(charactersArraylist, characterName, lexema));
                 }
             }
-
-
-        }
-
-        /*Una vez terminado el analisis de 'Characters' se procede a analizar las 'Keywords'.
-        * Para poder analizar las keywords se espera que en el analisis de characters de haya detectado
-        * la linea que contiene la palabra 'KEYWORDS' y  se haya cambiado el estado del programa para leer keywords.
-        *
-        * Si no se cambio el estado del programa para leer keywords, entonces es porque no se encontro una linea
-        * cuya totalidad fuera la palabra 'KEYWORDS'
-        * */
-
-        /*Modo Keywords*/
-        if (analisis_actual==2){
-            lexerKeywordAnalisis();
         }
     }
+
 
     /**
      * Este metodo se encarga de hacer el analisis para las keywords encontradas en el texto
@@ -173,8 +191,8 @@ public class Lexer2 {
             }
 
             /*Se remueve el punto al final de la linea*/
-                /*Verifica si hay error en la escritura de la linea si no encuentra un punto
-                    al final de la misma*/
+            /*Verifica si hay error en la escritura de la linea si no encuentra un punto
+                al final de la misma*/
             String line =  endPointFinder(lines[i], i);
             //String line =  lines[i].substring(0, lines[i].length()-1);
             System.out.println(line);
@@ -194,6 +212,48 @@ public class Lexer2 {
     }
 
     /**
+     * Este metodo se encarga de hacer el analisis para los tokens encontradas en el texto
+     */
+    private void lexerTokenAnalisis() {
+        System.out.println("We are in the token Analisis");
+        System.out.println(lines[linea_actual]);
+
+
+        /*Se asumen que al entrar en este metodo se esta en la linea que contiene la palabra
+        * 'TOKENS'. Se le agrega uno a la linea actual para poder hacer el analisis.*/
+        linea_actual++;
+
+        for(int i = linea_actual; i<lines.length; i++){
+
+            /*Revisa si se ha llegado al punto de producciones en el analisis del archivo*/
+            if(checkForProduction(lines[i])){
+                System.out.println("PRODUCTIONS FOUND");
+                analisis_actual = 4;
+                break;
+            }
+
+            /*En esa ocasion no se remueve el punto al final de la linea, ya que es un requisito para los tokens que
+               estos terminen con punto.Se remueve el punto al final de la linea*/
+            String line =  lines[i];
+            System.out.println(line);
+
+            int equalPosition = equalPositionFinder(line);
+            if (equalPosition != -1){
+                String name = line.substring(0, equalPosition -1);
+                System.out.println("Name: " + name);
+                String lexema = line.substring(equalPosition +1,line.length());
+                System.out.println("Lexema: " + lexema);
+
+                tokensArrayList.add(new Token(name,lexema));
+
+            }
+
+
+        }
+
+    }
+
+    /**
      * Este metodo verifica si existe un punto al final de la linea.
      */
     private String endPointFinder(String line, int line_number){
@@ -204,6 +264,8 @@ public class Lexer2 {
         }
         else{
             System.out.println("ERROR!\nEn la linea " + line_number + " no se encontro un punto '.' al final." );
+            OpExtra.imprirLinea();
+            System.out.println(line);
             System.exit(0);
         }
 
@@ -224,6 +286,19 @@ public class Lexer2 {
             isKeyword = true;
 
         return isKeyword;
+    }
+
+    /**
+     * Este metodo revisa si se ha llegado al punto de producciones
+     * @param cadena
+     * @return
+     */
+    private boolean checkForProduction(String cadena){
+        boolean isProduction = false;
+        if (cadena.trim().equals("PRODUCIONS"))
+            isProduction = true;
+
+        return isProduction;
     }
 
     /**
