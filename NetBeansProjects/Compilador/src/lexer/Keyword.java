@@ -33,9 +33,13 @@ public class Keyword {
 
         if (BasicAutomataUtilities.stringVerifier(pseudoLexema)){
             System.out.println("El pseudoLexema es un String");
-            lexema = BasicAutomataUtilities.stringRegex(pseudoLexema);
+            System.out.println("PL: " + pseudoLexema);
+            //Quita las comillas
+            /*Solamente se le quitan las comillas a los Keywords porque estos son una concatenación*/
+            lexema = pseudoLexema.substring(1,pseudoLexema.length()-1);
         }
 
+        System.out.println("L: " + lexema);
         /*Se verifica si hubo algun error en la creacion del keyboard.
         * Si el lexema esta vacio, significa que no paso la prueba de String y por eso no se pudo crear la expresion
         * regular. */

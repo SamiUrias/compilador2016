@@ -199,7 +199,7 @@ public class Lexer2 {
 
             int equalPosition = equalPositionFinder(line);
             if (equalPosition != -1){
-                String name = line.substring(0, equalPosition -1);
+                String name = line.substring(0, equalPosition );
                 System.out.println("Name: " + name);
                 String lexema = line.substring(equalPosition +1,line.length());
                 System.out.println("Lexema: " + lexema);
