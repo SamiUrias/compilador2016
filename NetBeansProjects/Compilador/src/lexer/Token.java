@@ -8,6 +8,8 @@ package lexer;
 import Automata.OpExtra;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Moi
@@ -27,7 +29,7 @@ public class Token {
     private boolean hasExceptKeywords;
 
     /*Constructor del token*/
-    public Token(String nombre, String lexema) {
+    public Token(String nombre, String lexema, ArrayList<SSCharacter> characters) {
         String lexemaToken = "";
 
         System.out.println("We are in the Token constructor");
@@ -48,6 +50,7 @@ public class Token {
         }
 
         this.hasExceptKeywords = checkForExceptKeywords(lexema);
+
         if (hasExceptKeywords){
             lexema = removeExceptKeywords(lexema);
         }
@@ -55,7 +58,10 @@ public class Token {
         /*Una vez se ha verificado que la expresion tenga un punto para finalizar, y se haya eliminado los
         * 'EXCEPT KEYWORDS' del lexema, entonces se procede a generar el tokenExpr*/
 
-        this.tokenExp = new TokenExpr(lexema);
+        this.tokenExp = new TokenExpr(lexema, characters);
+
+
+        System.out.println("De regreso del token expression en el token"); //<---------------
     }
 
     private String removeExceptKeywords(String lexema){

@@ -14,20 +14,28 @@ public class TokenExpr {
     /*Partes del lexema*/
     String[] partes;
 
-    public TokenExpr (String lexema){
+    private ArrayList<SSCharacter> characters;
+    public TokenExpr (String lexema, ArrayList<SSCharacter> characters){
         System.out.println("Dentro del constructor del TokenExp");
         separarLasPartesDelLexema(lexema);
+        creatTokenTerms(characters);
+        System.out.println("Se ha terminado de crear el token expression");
     }
 
+    /*Se separan todos las partes de la cadena por el simbolo '|' para poder generar TokensExp con ellos.*/
     private void separarLasPartesDelLexema(String lexema){
-         /*Se separan todos las partes de la cadena por el simbolo '|' para poder generar TokensExp con ellos.*/
         partes = lexema.split("\\|");
+    }
 
+    /**
+     * Este metodo crea token terms
+     */
+    private void creatTokenTerms(ArrayList<SSCharacter> characters){
         /*Se imprimen todas las partes encontradas. Estas partes son TokenFactors*/
         System.out.println("Todas las partes encontradas en el TokenTerm");
         for(int i = 0; i<partes.length;i++){
             System.out.println(partes[i]);
-            TokenTerm tt = new TokenTerm(partes[i]);
+            TokenTerm tt = new TokenTerm(partes[i], characters);
         }
     }
 }

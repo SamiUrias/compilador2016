@@ -244,7 +244,9 @@ public class Lexer2 {
                 String lexema = line.substring(equalPosition +1,line.length());
                 System.out.println("Lexema: " + lexema);
 
-                tokensArrayList.add(new Token(name,lexema));
+                Token token = new Token (name,lexema,charactersArraylist);
+                tokensArrayList.add(token);
+                System.out.println("Se ha agregado un nuevo token a la lista de tokens");
 
             }
 

@@ -403,21 +403,21 @@ public class GUI extends JFrame {
 
 
         if (debugLexer){
+            File file = null;
             try{
-                File file = new File(debugLexerUrl);
-                test.abrirArchivo(file);
-                test.setState(Frame.ICONIFIED);
-                test.verificarItemActionPerformed(null);
+                file = new File(debugLexerUrl);
             }
             catch(Exception e){
                 System.out.println("\n\n");
                 OpExtra.imprirLinea();
                 System.out.println("ERROR!");
-                System.out.println("Hubo un problema con el archivo de debug");
-                System.out.println("No se pudo abrir el archivo para debug");
+                System.out.println("Hubo un problema en la apertura del archivo de debug");
                 System.out.println(e);
             }
 
+            test.abrirArchivo(file);
+            test.setState(Frame.ICONIFIED);
+            test.verificarItemActionPerformed(null);
         }
 
     }

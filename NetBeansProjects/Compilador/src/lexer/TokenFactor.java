@@ -13,9 +13,13 @@ public class TokenFactor {
     boolean isIdent = false;
     boolean isChar = false;
 
+    /*Lexema*/
+    String lexema;
+
     public TokenFactor(String lexema){
+        this.lexema = lexema;
         System.out.println("We are in the token factor constructor");
-        System.out.println("El tokenFacto que se intentara crear es: \'"+lexema+"\'");
+        System.out.println("El tokenFactor que se intentara crear es: \'"+lexema+"\'");
         createTokenFactor(lexema);
     }
 
@@ -27,8 +31,6 @@ public class TokenFactor {
         isString = stringVerifier(lexema);  //Revisa si el lexema ingresada es un String
         isIdent = identVerifier(lexema);    //Revisa si el lexema ingresada es un Ident
         isChar = charVerifier(lexema);      //Revisa si el lexema ingresada es un Char
-
-
     }
 
 
@@ -72,15 +74,23 @@ public class TokenFactor {
         return isChar;
     }
 
+    /*Devuelve si es el TokenFactor es un String*/
     public boolean isString() {
         return isString;
     }
 
+    /*Devuelve si es el TokenFactor es un Ident*/
     public boolean isIdent() {
         return isIdent;
     }
 
+    /*Devuelve si es el TokenFactor es un Char*/
     public boolean isChar() {
         return isChar;
+    }
+
+    /*Develve el lexema del TokenFactor*/
+    public String getLexema() {
+        return lexema;
     }
 }
