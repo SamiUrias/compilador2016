@@ -10,7 +10,7 @@ import Automata.OpExtra;
 import java.util.ArrayList;
 
 /**
- * Esta clase modela un set
+ * Esta clase modela un Set
  * @author Samuel
  */
 public class Set {
@@ -40,6 +40,33 @@ public class Set {
     private String regularExpression = "";
     String nombre = "";
 
+    /**
+     * Explicación:
+     * Este metodo toma la lista de caracteres que hay actualmente en el lexer, el ident, el lexema (cadena) que
+     *  se quiere analizar, y los asigna a sus respectivas variables.
+     *
+     *  Despues se separa la cadena (split) con base a los símbolos '+' y '-'. Paralelamente a esto se almacenan los
+     *   símbolos ('+' y '-') encontrados en la cadena en un arreglo.
+     *
+     *  Se clasifican todas las partes encontradas de la cadena, y estas se clasifican en los diferentes tipos de
+     *  BasicSet que hay: Ident, String, Char.
+     *
+     *  Una vez se han separado y clasificado las partes de la cadena se procede a crear las expresiones regulares para
+     *  las mismas. Para crear las expresiones regulares, se crea la expresión regular para la primera 'parte', es decir
+     *  el primer elemento del split de partes que se hizo anteriormente. Este proceso se hace en un ciclo for, y se
+     *  analiza si el ciclo for tiene más de una vuelta, de ser así significa que hay más de una 'parte' en la cadena,
+     *  por lo que va a ser necesario tratarlas previamente para aplicarle las 'reglas' de los símbolos '+' y '-', y se
+     *  dice que la cadena tuvo un 'pre-analisis'. Si la cadena tuvo un pre-analisis, quiere decir que es necesario
+     *  realizar un 'post-analisis'.
+     *
+     *  El 'pre-analisis' corresponde al metodo "analizarSimbolos", el cual altera la expresion regular resultante con
+     *  base al símbolo encontrado.
+     *
+     *  Si hubo un pre-analisis, el pos-analisis
+     * @param charactersArraylist
+     * @param ident
+     * @param cadena
+     */
     Set(ArrayList<SSCharacter> charactersArraylist, String ident,  String cadena) {
         this.nombre = ident;/*Asigna el nombre del set*/
         this.charactersArray = charactersArraylist;/*Asigna los SScharacters creados previamente*/
@@ -68,7 +95,8 @@ public class Set {
         if(setDebug)
             OpExtra.leerPantalla();
 
-
+        /*Se clasifican en BasicSet las partes encontradas.
+        * Los tipos de BasicSet pueden ser: String, Ident o Char*/
         for (int i = 0; i<partes.length;i++){
             basicSetArray.add(basicSetAnalyzer(partes[i]));
         }
@@ -79,7 +107,7 @@ public class Set {
         if(setDebug)
             OpExtra.leerPantalla();
 
-        //Se crean las expresiones regulares con base al tipo de basic set
+        //Se crean las expresiones regulares con base al tipo de BasicSet
         for (int i=0; i<basicSetArray.size();i++){
             /*Si se hace mas de una vuelta, significa que hay varias partes que analizar, entonces se procede a
             * hacer ese analisis*/
@@ -117,12 +145,12 @@ public class Set {
         if (simboloActual.equals("+")){
             System.out.println("Se analizara el signo +");
 
-            /*A la expresion regular actual se le agregan parentesis*/
-            String nueva_expresion_regular = "(" + this.regularExpression + ")*";
+            /*A la expresion regular actual se le agrega un '|'*/
+            String nueva_expresion_regular = regularExpression += "|";
             System.out.println(nueva_expresion_regular);
 
             //Se almacena la nueva expresion regular generada
-            regularExpression =nueva_expresion_regular;
+            regularExpression = nueva_expresion_regular;
 
             //Se asigna como simbolo de preanalisis el simbolo encontrado
             pre_Analisis_simbolo="+";
@@ -221,7 +249,7 @@ public class Set {
         /*Se hace el postAnalisis si el simbolo del preAnalisis es un signo + */
         if (pre_Analisis_simbolo.equals("+")){
             /*Se agregan parentes tipo kleene a la segunda expresion generada*/
-            new_regex = "(" + generatedRegex+")*";
+            new_regex =  generatedRegex;
         }
 
         return new_regex;

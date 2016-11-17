@@ -414,7 +414,6 @@ public class GUI extends JFrame {
                 System.out.println("Hubo un problema en la apertura del archivo de debug");
                 System.out.println(e);
             }
-
             test.abrirArchivo(file);
             test.setState(Frame.ICONIFIED);
             test.verificarItemActionPerformed(null);

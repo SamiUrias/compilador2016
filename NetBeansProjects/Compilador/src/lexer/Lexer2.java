@@ -215,6 +215,9 @@ public class Lexer2 {
      * Este metodo se encarga de hacer el analisis para los tokens encontradas en el texto
      */
     private void lexerTokenAnalisis() {
+        //Se inicializa el ArrayList de tokens
+        tokensArrayList = new ArrayList<>();
+
         System.out.println("We are in the token Analisis");
         System.out.println(lines[linea_actual]);
 

@@ -28,11 +28,11 @@ public class AFD {
      */
     private boolean printAFD = true;
 
-    private boolean printTextAFD = true;
+    private boolean printTextAFD = false;
     /**
      * Si esta variable es true, entonces se simula el automata
      */
-    private boolean simularAFD = true;
+    private boolean simularAFD = false;
     /** **************************************** DEBUG (END)************************************************/
 
 

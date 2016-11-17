@@ -41,10 +41,10 @@ public class main {
 
         /*Variables globales*/
         boolean debugAFN = false;
-        boolean printAFN = false;
+        boolean printAFN = true;
         boolean printTextAFN = false;
-        boolean simularAFN = true;
-        boolean exitAfterAFN = true;
+        boolean simularAFN = false;
+        boolean exitAfterAFN = false;
 
         /*Almacena un arraylist con el alfabeto del automata*/
         ArrayList<String> alfabeto;

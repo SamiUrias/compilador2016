@@ -86,7 +86,7 @@ public class Token {
 
         if(lexema.contains("EXCEPT KEYWORDS")){
             System.out.println("It has except keywords");
-            OpExtra.leerPantalla();
+            //OpExtra.leerPantalla();
             hasExceptKeywords = true;
         }
 
@@ -108,6 +108,11 @@ public class Token {
         return haveEndLinePoint;
     }
 
-    
-    
+    /**
+     * Returns if the token has except keywords
+     * @return
+     */
+    public boolean isHasExceptKeywords() {
+        return hasExceptKeywords;
+    }
 }
