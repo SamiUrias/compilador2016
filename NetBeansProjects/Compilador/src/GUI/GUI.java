@@ -83,7 +83,10 @@ public class GUI extends JFrame {
     private JMenuItem newItem;              /*Added by Moises*/
     private JMenuItem parsearItem;          /*Added by Moises*/
     private JMenuItem expresionesRegularesItem; /*Added by Moises*/
-    
+
+
+    public boolean controller_test = false;
+
     //Permite que el dialogo de abrir archivo se abra en el escritorio
     private static boolean debugOpenDialog = true;
     
@@ -102,7 +105,7 @@ public class GUI extends JFrame {
     /*Se crea una instanacia del analizador de expresiones regulares*/
     private RegexAnalyzer regexAnalyzer;
 
-    private static boolean debugLexer =  true;
+    private static boolean debugLexer =  false;
     private static String debugLexerUrl = "C:\\Users\\Samuel\\Desktop\\bidkar_test\\TheTestC#.ATG";
 
 
@@ -331,16 +334,16 @@ public class GUI extends JFrame {
      * Constructor
      */
     public GUI() {
-        super("...");
+
+        super("Compiler");
+
+
         setJMenuBar(createMenuBar());
         //getContentPane().add(createDummyToolBar(), BorderLayout.NORTH);
 
         JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, list, dp);
         sp.setDividerLocation(120);
         getContentPane().add(sp);
-        //new Doc("sample.txt");
-        //new Doc("sample.txt");
-        //new Doc("sample.txt");
 
         list.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -360,31 +363,45 @@ public class GUI extends JFrame {
         });
         
         final TransferHandler th = list.getTransferHandler();
-/*
-        nullItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                if (nullItem.isSelected()) {
-                    list.setTransferHandler(null);
-                } else {
-                    list.setTransferHandler(th);
-                }
-            }
-        });
-        thItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                if (thItem.isSelected()) {
-                    setTransferHandler(handler);
-                } else {
-                    setTransferHandler(null);
-                }
-            }
-        });*/
-        
         
         dp.setTransferHandler(handler);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (DEMO) {
+            this.setSize(493, 307);
+        } else {
+            this.setSize(800, 600);
+        }
+        this.setLocationRelativeTo(null);
+
+        try {
+
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {}
+
+        this.setVisible(true);
+        this.list.requestFocus();
+
+
+        if (debugLexer){
+            File file = null;
+            try{
+                file = new File(debugLexerUrl);
+            }
+            catch(Exception e){
+                System.out.println("\n\n");
+                OpExtra.imprirLinea();
+                System.out.println("ERROR!");
+                System.out.println("Hubo un problema en la apertura del archivo de debug");
+                System.out.println(e);
+            }
+            this.abrirArchivo(file);
+            this.setState(Frame.ICONIFIED);
+            this.verificarItemActionPerformed(null);
+        }
     }
 
-    private static void createAndShowGUI(String[] args) {
+    public static void createAndShowGUI(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -505,19 +522,20 @@ public class GUI extends JFrame {
         demo.add(lineNumberingItem);
         
         
-                    /*Se agregan los action listeners*/
+        /*Se agregan los action listeners*/
         
         /*Se agrega el action listener de verificarItem
            este action listener llama al metodo verificarItemActionPerformed*/
+        /*
         verificarItem.addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                /*Se llama al metodo verficarItemActionPerformed*/
+                //Se llama al metodo verficarItemActionPerformed
                 verificarItemActionPerformed(e);
             }
-        });
+        });*/
         
         
         parsearItem.addActionListener(new java.awt.event.ActionListener() {
@@ -559,7 +577,14 @@ public class GUI extends JFrame {
         return menu;
     }
     
-    
+    public JMenuItem getVerificarItem(){
+        return verificarItem;
+    }
+
+    public boolean getControllerTest(){
+        return this.controller_test;
+    }
+
     /**
      * Este metodo es el action listener correspondiente a la accion del 
      *  menuItem verificar, el cual llama al metodo 
@@ -592,7 +617,17 @@ public class GUI extends JFrame {
         }   
         
     }
-    
+
+    //Devuelve el documento actual
+    public String getDocumento(){
+        return this.documentoActual.area.getText();
+    }
+
+    //Muestra un error en el caso de que no se encontrara el documento
+    public void showMsgboxError(){
+        System.out.println("No hay documento que se pued analizar");
+        JOptionPane.showMessageDialog(this, "No hay documento para analizar","Error",JOptionPane.ERROR_MESSAGE);
+    }
     
     private void parsearItemActionPerformed(ActionEvent evt){
          String documento = null; boolean existeDocumento = false;

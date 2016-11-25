@@ -41,6 +41,12 @@ public class Lexer2 {
     /*Almacena el resultado si hubo algun error en la primera linea*/
     private boolean firstLineError = false;
 
+    /*Determina si el lexer ha terminado su trabajo*/
+    private boolean finish = false;
+
+    /*Almacena la linea donde se encontraron las producciones*/
+    private int productionsLine = 0;
+
     /*Esta variable almacena la ubicacion o estado actual del escanner para determinar lo que se debe hacer:
     * 0: Verificacion del nombre del archivo
     *
@@ -105,10 +111,23 @@ public class Lexer2 {
         /*Modo Productions*/
         if (analisis_actual == 4){
             System.out.println("Se ha encontrado la parte de producciones");
-            System.exit(0);
+            finish = true;
+            System.out.println("Se ha terminado el Lexer");
         }
 
     }
+
+    /**
+     * Devuelve el valor del estado actual del lexer.
+     * Es decir si ha terminado o no de hacer el lexeo del archivo.
+     * Esto se utiliza en multi-hilo.
+     * @return
+     */
+    public boolean isFinish(){
+        return finish;
+    }
+
+
 
 
     /**
@@ -259,6 +278,7 @@ public class Lexer2 {
             if(checkForProduction(lines[i])){
                 System.out.println("PRODUCTIONS FOUND");
                 analisis_actual = 4;
+                this.productionsLine = linea_actual;
                 break;
             }
 
@@ -473,6 +493,14 @@ public class Lexer2 {
            
         return error_log;
     }
-    
-    
+
+
+
+    public int getProductionsLine() {
+        return productionsLine;
+    }
+
+    public void setProductionsLine(int productionsLine) {
+        this.productionsLine = productionsLine;
+    }
 }
