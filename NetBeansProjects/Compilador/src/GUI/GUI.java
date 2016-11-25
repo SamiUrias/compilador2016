@@ -85,7 +85,7 @@ public class GUI extends JFrame {
     private JMenuItem expresionesRegularesItem; /*Added by Moises*/
     
     //Permite que el dialogo de abrir archivo se abra en el escritorio
-    private static boolean debugOpenDialog = false;
+    private static boolean debugOpenDialog = true;
     
     
     /*This should be the consoele of the GUI*/
@@ -96,14 +96,14 @@ public class GUI extends JFrame {
     /*Se crea una instancia del Lexer2*/
     private Lexer2 lexer = new Lexer2(); 
     
-    /*Se crea una instancia del parser*/
-    private Parser parser = new Parser(); 
+    /*Se declara un parser*/
+    private Parser parser;
     
     /*Se crea una instanacia del analizador de expresiones regulares*/
     private RegexAnalyzer regexAnalyzer;
 
     private static boolean debugLexer =  true;
-    private static String debugLexerUrl = "C:\\Users\\Samuel\\Desktop\\lexer2-test.txt";
+    private static String debugLexerUrl = "C:\\Users\\Samuel\\Desktop\\bidkar_test\\TheTestC#.ATG";
 
 
     /**
@@ -616,8 +616,8 @@ public class GUI extends JFrame {
         
         
         if (existeDocumento == true) {
-            //this.parser = new Parser(documento);
-            System.out.println("Aqui se deberia de ejecutar la funcion del parser: GUI linea 614");
+            this.parser = new Parser(documento);
+           // System.out.println("Aqui se deberia de ejecutar la funcion del parser: GUI linea 614");
         }
     }
     
@@ -638,7 +638,7 @@ public class GUI extends JFrame {
         String userhome = System.getProperty("user.home");
         JFileChooser fc;
         if (debugOpenDialog == true){
-             fc = new JFileChooser(userhome +"\\Desktop");
+             fc = new JFileChooser(userhome +"\\Desktop\\Bidkar_test");
         }
         else{
             fc = new JFileChooser();

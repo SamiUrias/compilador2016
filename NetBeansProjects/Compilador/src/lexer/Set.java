@@ -219,9 +219,10 @@ public class Set {
         System.out.println("We are in the char regex");
         System.out.println("Cadena: " + basicSet.getCadena());
 
-        /*Se verifica si el basicSet tiene algun numero*/
+        /*Se verifica si el basicSet tiene algun numero.
+        * Si tiene un numero, se obtiene el numero. Y se obtiene el char correspondiente a ese numero.*/
         if (basicSet.getCharNumber() >= 0){
-            regex = String.valueOf(basicSet.getCharNumber());
+            regex = String.valueOf(Character.toString((char)basicSet.getCharNumber()));
         }
 
         //DEBUG

@@ -2,6 +2,7 @@ package lexer;
 import Automata.*;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import lexer.BasicAutomatas.BasicAutomataUtilities;
 
@@ -68,6 +69,7 @@ public class Lexer2 {
 
 
     public void analizar (String documento){
+
         this.documento =  documento;
         separarLineas(this.documento); //Separa el archivo en lineas
         createBaseAutomatas();
@@ -100,6 +102,12 @@ public class Lexer2 {
             lexerTokenAnalisis();
         }
 
+        /*Modo Productions*/
+        if (analisis_actual == 4){
+            System.out.println("Se ha encontrado la parte de producciones");
+            System.exit(0);
+        }
+
     }
 
 
@@ -122,9 +130,10 @@ public class Lexer2 {
         * en busca de 'characters'. Se asume que el resto de lo que se encuentra en el proyecto son charactersArraylist
         * hasta que se encuentra la palabra 'KEYWORDS'.*/
         if (characterWordFinder() != -1){
-
             /*Analiza todo el documento en busca de 'characters'*/
             for (int i = characterWordFinder() + 1; i<lines.length; i++){
+                System.out.println("Dentro del for despues de cwf");
+
                 //Se asigna como linea actual la linea que actualmente esta recorriendo el ciclo for
                 linea_actual = i;
 
@@ -134,7 +143,13 @@ public class Lexer2 {
                     analisis_actual = 2;
                     break;
                 }
-                //System.out.println(lines[i]);
+
+                /*Se verifica el largo de la linea, y si la linea no es mayor o igual a uno, significa que es una
+                 *linea en blanco, y se salta la linea. */
+                if(lines[i].length() == 0){
+                    System.out.println("-> La linea " + (i + 1) + " esta vacia");
+                    continue;
+                }
 
                 /*Se remueve el punto al final de la linea*/
                 /*Verifica si hay error en la escritura de la linea si no encuentra un punto
@@ -157,6 +172,11 @@ public class Lexer2 {
                     charactersArraylist.add(new SSCharacter(charactersArraylist, characterName, lexema));
                 }
             }
+        }
+        else {
+            System.out.println("-----------------------------------------------------"+"\n"+
+                    "No se encontró la palabra 'CHARACTERS' en el archivo" + "\n"+
+                    "No se puede comenzar el analisis");
         }
     }
 
@@ -188,6 +208,13 @@ public class Lexer2 {
                 System.out.println("TOKENS FOUND");
                 analisis_actual = 3;
                 break;
+            }
+
+             /*Se verifica el largo de la linea, y si la linea no es mayor o igual a uno, significa que es una
+                 *linea en blanco, y se salta la linea. */
+            if(lines[i].length() == 0){
+                System.out.println("-> La linea " + (i + 1) + " esta vacia");
+                continue;
             }
 
             /*Se remueve el punto al final de la linea*/
@@ -238,7 +265,11 @@ public class Lexer2 {
             /*En esa ocasion no se remueve el punto al final de la linea, ya que es un requisito para los tokens que
                estos terminen con punto.Se remueve el punto al final de la linea*/
             String line =  lines[i];
-            System.out.println(line);
+            System.out.println("\'" + line + "\'");
+
+            if(line.length() == 0){
+                continue;
+            }
 
             int equalPosition = equalPositionFinder(line);
             if (equalPosition != -1){
@@ -262,7 +293,9 @@ public class Lexer2 {
      * Este metodo verifica si existe un punto al final de la linea.
      */
     private String endPointFinder(String line, int line_number){
-        String line_without_point ="";
+        String line_without_point = "";
+
+        line = line.trim(); //Le quitar los espacios en blanco al principio y al final de la linea.
 
         if (line.substring(line.length()-1, line.length()).equals(".")){
             line_without_point = line.substring(0, line.length()-1);
@@ -300,7 +333,7 @@ public class Lexer2 {
      */
     private boolean checkForProduction(String cadena){
         boolean isProduction = false;
-        if (cadena.trim().equals("PRODUCIONS"))
+        if (cadena.trim().equals("PRODUCTIONS"))
             isProduction = true;
 
         return isProduction;
@@ -329,6 +362,7 @@ public class Lexer2 {
      * @return
      */
     private int characterWordFinder(){
+        System.out.println("Dentro del characterWordFinder");
         /*Aqui se almacena la linea en donde se encuentra la palabra
             'CHARACTERS'. De no se encontrada devolvera -1*/
         int characterLine =  -1;
@@ -337,14 +371,17 @@ public class Lexer2 {
         /*Find charactersArraylist line*/
         for (int i = 0; i<lines.length; i++){
             String actualLine = lines[i];
+            actualLine = actualLine.trim();
+            System.out.println("-> " + actualLine);
 
             if (actualLine.equals("CHARACTERS")){
-                // System.out.println("Characters found =D");
+                System.out.println("Characters found =D");
                 characterLine = i;
                 break; //Termina el ciclo for
             }
         }
 
+        System.out.println("Se encontro la palabra 'CHARACTERS' en la linea: " + characterLine);
         return characterLine;
     }
     
