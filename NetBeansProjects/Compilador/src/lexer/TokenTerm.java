@@ -57,9 +57,9 @@ public class TokenTerm {
                             if (chacters.get(i).getToken().equals(nombre)){
                                 System.out.println("Se ha encontrado el ident dentro de los characters previamente generados");
                                 regex += chacters.get(i).getLexema().getSet().getRegularExpression();
-                                OpExtra.leerPantalla();
+                                //OpExtra.leerPantalla();
                                 System.out.println("Regex: " + regex);
-                                OpExtra.leerPantalla();
+                                //OpExtra.leerPantalla();
                             }
                         }
                     }
@@ -70,13 +70,13 @@ public class TokenTerm {
                     //Se analiza la 'cosa rara' que se encontro
                     if (actualCharacter.equals("{")){
                         System.out.println("Al regex se le agregara el simbolo: '('");
-                        OpExtra.leerPantalla();
+                        //OpExtra.leerPantalla();
                         regex+="(";
                     }
 
                     if (actualCharacter.equals("}")){
                         System.out.println("Al regex se le agregara el simbolo: ')*'");
-                        OpExtra.leerPantalla();
+                        //OpExtra.leerPantalla();
                         regex+=")*";
                     }
 

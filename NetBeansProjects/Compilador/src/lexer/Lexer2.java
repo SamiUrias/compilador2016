@@ -279,6 +279,7 @@ public class Lexer2 {
                 System.out.println("PRODUCTIONS FOUND");
                 analisis_actual = 4;
                 this.productionsLine = linea_actual;
+                System.out.println("Productions line: " + productionsLine);
                 break;
             }
 

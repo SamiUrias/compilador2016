@@ -35,29 +35,28 @@ public class Parser {
     * o no.*/
     private boolean final_point = false; //SemAction
 
+    /*Almacena todas las lineas del documento.*/
+    private String[] lineas;
+
     /**
-     * Constructor vacio
+     * Constructor vacio.
+     * Por el momento este constructor no hace nada.
      */
     public Parser(){}
+
+
+
 
     /**
      * Esto inicializa el parser con un documento.
      * @param documento
      */
     public Parser(String documento){
+        System.out.println("Dentro del parser");
         System.out.println("Se ha recibido el documento");
         this.documento = documento;
-        //analizar(); //Se parsea el documento ingresado.
     }
 
-    /**
-     * Este metodo se encarga de guiar el proceso de parseo.
-     * */
-    public void analizar(){
-        separarProducciones();
-        separarTerminalesYNoTerminales();
-        mostrarMenu();
-    }
 
     /**
      * ESTE ES EL CONSTRUCTOR QUE SE ESTA UTILIZANDO ACTUALMENTE.
@@ -67,30 +66,59 @@ public class Parser {
     public void analizar(String documento){
         System.out.println("\n\n->  Dentro del metodo de 'analizar' en el parser. ");
         System.out.println("El largo del documento es:  " + documento.length());
+        separarElDocumentoEnLineas();
+        checkForProductionsWord();
         separarProducciones(); //Se encuentra todas las proddducciones.
-
-
     }
+
+    /**
+     * Este metodo se encarga de revisar si existe o no la palabra 'PRODUCTIONS' dentro del documento.
+     */
+    private void checkForProductionsWord(){
+        int result = productionsWordFinder();
+        if (result != -1){
+            productionsLine = result;
+            System.out.println("Si de ha encontrado la palabra 'Productions'");
+            //OpExtra.leerPantalla();
+        }
+        else{
+            System.out.println("Error, dentro del parse no se encontro 'PRODUCTIONS'");
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Este metodo separa todas las lineas del documento.
+     */
+    private void separarElDocumentoEnLineas(){
+        lineas = documento.split("\\r?\\n");
+        System.out.println("Se ha separado el documento en lineas");
+        System.out.println("En total hay: " + lineas.length + " lineas");
+    }
+
+
+
     /**
      * Este metodo separa toda las producciones que hay en el archivo.
+     * Esto se hace empezando desde 'productionsLine' que es la linea que contiene las producciones.
+     * Una vez encontrada esa linea, el proceso de parseo empieza desde la linea siguiente.
      * Esto lo hace buscando el '.'
      * */
     public void separarProducciones(){
+
         String produccion = "";
         String caracterActual = "";
-        int contador = 0;
 
-        //Ajustar contador
-        System.out.println("Se ajusta el contador para que tenga el valor donde se encontro la palabra characters.");
-        contador = productionsLine;
 
-        System.out.printf("Contador: " + contador);
-        System.out.println("L: " + documento.length());
+        int contador = documento.indexOf("PRODUCTIONS"); //Se encuentra la palabra 'PRODUCTIONS'.
+        contador += 11; //El contador se coloca exactamente despues de la palabra 'PRODUCTIONS'.
+
+        System.out.println("Contador: " + contador); //Imprimer la posicion actual del contador
+        OpExtra.leerPantalla();
 
         while (contador<documento.length()){
             caracterActual = documento.substring(contador, contador + 1);
-            System.out.println(caracterActual);
-
+           // System.out.println(caracterActual);
             if (!caracterActual.equals(".")){
                 produccion += caracterActual;
             }
@@ -107,11 +135,37 @@ public class Parser {
                 }
             }
 
+            System.out.println(produccion);
             contador++; //Aumenta uno al contador para evitar el ciclo infinito
         }
 
         System.out.println("Las producciones son: ");
         System.out.println(producciones);
+    }
+
+    /**
+     * Este metodo al igual que en el lexer se encarga de buscar la palabra 'productions' dentro del documento para
+     * poder empezar el proceso de parseo.
+     */
+    private int productionsWordFinder(){
+        //Mantiene el control de las lineas
+        int cont = 0;
+        boolean find = false;
+
+        for (int i = 0; i<lineas.length; i++){
+            if (lineas[i].trim().equals("PRODUCTIONS")){
+                System.out.println("Dentro del parsers se ha eoncontrado la linea de producciones");
+                System.out.println("La linea de producciones es: " + i);
+                find = true;
+            }
+        }
+
+        //Si no se encontro la palabra 'PRODUCTIONS' entonces se devuelve -1
+        if (find == false){
+            cont  = -1;
+        }
+
+        return cont;
     }
 
 
@@ -187,13 +241,20 @@ public class Parser {
         boolean isFinalPoint = false;
 
         try{
-            //Se revisa el caracter anterior
+            //Se revisa si el caracter anterior era un parentesis o unas comillas '"'
             if (documento.substring(posicion - 1, posicion).equals("(")){
-                System.out.println("El caracter anterior tenia un 'parentesis");
+                System.out.println("El caracter anterior tenia un 'parentesis'");
+                OpExtra.leerPantalla();
+            }
+            else if ((documento.substring(posicion -1, posicion).equals("\"")) && (documento.substring(posicion,posicion+1).equals("\""))){
+                System.out.println("El caracter anterior tenia unas 'comillas'");
+                System.out.println("El caracter siguiente tenia unas 'comillas'");
+                System.out.println("Este punto esta dentro de comill");
                 OpExtra.leerPantalla();
             }
             //Si no se cumple ninguno de los requisitos anteriores, entonces se dice que si es un punto final.
             else {
+                System.out.println("Se encontro un punto final en la produccion");
                 isFinalPoint = true;
             }
         }
