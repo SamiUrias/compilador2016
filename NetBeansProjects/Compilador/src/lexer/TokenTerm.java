@@ -89,7 +89,8 @@ public class TokenTerm {
                         System.out.println("Al regex se le agregara el simbolo: '('");
                         //OpExtra.leerPantalla();
                         if(cont!=0){
-                            regex+="|";
+                            regex+=")";
+                            regex = "(" +regex;
                         }
                         regex+="(";
                     }

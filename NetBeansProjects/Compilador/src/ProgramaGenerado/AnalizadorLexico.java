@@ -123,7 +123,7 @@ public class AnalizadorLexico {
             automata.setNombre(keywordsArrayList.get(i).getNombre());
 
             //Se le coloca el tipo de automata correspondiente
-            //0 = Characters
+            //0 = Keywords
             automata.setLexer_kind(1);
 
             //Se agrega el automata generado al arreglo de automatas
@@ -150,8 +150,11 @@ public class AnalizadorLexico {
             automata.setNombre(tokensArrayList.get(i).getNombre());
 
             //Se le coloca el tipo de automata correspondiente
-            //0 = Characters
+            //2 = Tokens
             automata.setLexer_kind(2);
+
+            /*Le asigna al automata la caracteristica del token correspondiente a la propiedad exceptkeywords*/
+            automata.setExecptKeywords(tokensArrayList.get(i).isHasExceptKeywords());
 
             //Se agrega el automata generado al arreglo de automatas
             automatasGenerados.add(automata);
@@ -166,7 +169,7 @@ public class AnalizadorLexico {
     public void crearSimuladores(){
         //Se crea un simulador por cada uno de los automatas previamente generados
         for(int i=0; i<automatasGenerados.size(); i++){
-            simuladoresArrayList.add(new SimuladorAFN(automatasGenerados.get(i)));
+            simuladoresArrayList.add(new SimuladorAFN(automatasGenerados.get(i), automatasGenerados.get(i).getLexer_kind()));
         }
     }
 
@@ -218,35 +221,51 @@ public class AnalizadorLexico {
            boolean found_once=false;                                    //Revisa si se encontro la cadena_leida
            boolean exceptKeywordFound = false;                          //Revisa si tiene except keywords
 
+            boolean isAKeyword = false;                                 //Revisa si es un keyword
+            boolean isAToken = false;                                   //Revisa si es un token
 
-           //Encuentra la cadena_leida dentro de los simuladores.
+
+           ///Se revisa el caso EXCEPT KEYWORDS
            for(int i =0; i<simuladoresArrayList.size(); i++){
-
+               //Encuentra la cadena_leida dentro de los simuladores.
                boolean success = simuladoresArrayList.get(i).simular(cadena_leida);
 
 
-               //Si la cadena_leida se encontro dentro de los simuladores
+               /*Si la cadena esta dentro de los simuladores, se revisa lo sieguiente:
+                    1.si esta pertenece o no al tipo keyword
+                    2.Si esta pertenece o no al grupo tokens.
+
+                Si la cadena pertenece a ambos grupos, entonces se revisa si el token tiene como valor verdadero
+                la popiedad 'except keywords'*/
+
                if(success){
-                   System.out.println("Keywords");
-                   String nombre = simuladoresArrayList.get(i).getAutomata().getNombre();
-                   for(int j=0;j<keywordsArrayList.size();j++){
-                       if(nombre.equals(keywordsArrayList.get(j).getNombre())){
-                           System.out.println("esta cosa es un keyword");
+                   System.out.println(simuladoresArrayList.get(i).getLexer_kind());
+                   OpExtra.leerPantalla();
+                   if(simuladoresArrayList.get(i).getLexer_kind()==1){
+                       isAKeyword = true;
+                   }
+                   if(simuladoresArrayList.get(i).getLexer_kind()==2){
+                       isAToken = true;
 
-
-
-                           //if(tokensArrayList.get(j).g)
-                           exceptKeywordFound = true;
-                           OpExtra.leerPantalla();
-                           break;
+                       if(isAToken){
+                           exceptKeywordFound = simuladoresArrayList.get(i).getAutomata().isExecptKeywords();
                        }
                    }
-                   System.out.println("La cadena: \'" + cadena_leida+"\' pertenece al automata: \'"+simuladoresArrayList.get(i).getAutomata().getNombre()+"\'");
-                   found_once = true;
                }
            }
 
-           if(!exceptKeywordFound) {
+           System.out.println("Es un keyword? " + isAKeyword);
+           System.out.println("Es un token? " + isAToken);
+           System.out.println("Se encontro 'Exept Keywords'? " + exceptKeywordFound);
+           OpExtra.leerPantalla();
+
+           if((isAKeyword) && (isAToken) &&(exceptKeywordFound)){
+               System.out.println("La cadena: \'" + cadena_leida + "\' pertenece al automata: \'" + "\'");
+               System.out.println("Esta cadena es un keyword unicamente, ya que se encuentra declarada como Except Keyword");
+               OpExtra.leerPantalla();
+               found_once = true;
+           }
+           else {
                for (int i = 0; i < simuladoresArrayList.size(); i++) {
                    boolean success = simuladoresArrayList.get(i).simular(cadena_leida);
                    //Si se encontro el automata
@@ -260,7 +279,7 @@ public class AnalizadorLexico {
 
 
            if(found_once == false){
-               System.out.println("D:");
+               System.out.println("D: La cadena no se reconoce en ningun automata generado por el lexer");
            }
 
            if(cadena_leida.equals("exit")){

@@ -37,6 +37,16 @@ public class SimuladorAFN {
     }
 
     /**
+     *  Constructor del simulador de AFN (Automatas finitos no determinstas)
+     *  Este constructor acepta un automata, y una localizacion (lexer_kind).
+     *  Para más información: revisar el programa generado del lexer (AnalizadorLexico). .... :D
+     */
+    public SimuladorAFN(Automata automata, int lexer_kind){
+        this.automata = automata;
+        this.lexer_kind = lexer_kind;
+    }
+
+    /**
      * Constructor del simulador del AFN (Automata finito no determinista).
      * Este constructor tiene como parametro un AFN y tambien la cadena que se va a simular.
      * Esto se hace asi con el fin de ahorrar una linea de codigo en otras partes del programa.

@@ -33,6 +33,13 @@ public class Automata {
      */
     private int lexer_kind;
 
+
+    /**
+     * Esta variable se utiliza en el programa generado del lexer para saber si el token al que pertenece la expresion
+     * regular tiene la caracteristica 'EXCEPT KEYWORDS' o no.
+     */
+    private boolean execptKeywords = false;
+
     /**
      * Contiene el alfabeto que es utilizado en el automata
      */
@@ -581,6 +588,14 @@ public class Automata {
 
     public void setLexer_kind(int lexer_kind) {
         this.lexer_kind = lexer_kind;
+    }
+
+    public boolean isExecptKeywords() {
+        return execptKeywords;
+    }
+
+    public void setExecptKeywords(boolean execptKeywords) {
+        this.execptKeywords = execptKeywords;
     }
 }
             
