@@ -115,4 +115,12 @@ public class Token {
     public boolean isHasExceptKeywords() {
         return hasExceptKeywords;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getFullLexema(){
+        return this.tokenExp.getTokenTerm().getRegex();
+    }
 }

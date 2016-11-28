@@ -10,6 +10,9 @@ import java.util.ArrayList;
  */
 public class Generador_de_Automatas {
 
+    /*Variables de control de flujo*/
+    boolean remover_espacios_en_blanco = false;
+
     /* Constructor del Generador de Automtas    */
     public Generador_de_Automatas(){    
         
@@ -30,8 +33,10 @@ public class Generador_de_Automatas {
         long time1 = System.currentTimeMillis();
 
 
-        cadena = cadena.trim();
-        cadena = cadena.replace(" ", "");
+       if(remover_espacios_en_blanco){
+           cadena = cadena.trim();
+           cadena = cadena.replace(" ", "");
+       }
 
         
         /*Se agrega la funcion de cerradura positiva*/

@@ -24,7 +24,15 @@ public class Automata {
     
     /*Este sera el nombre del automata, este se utiliza en el Lexer*/
     private String nombre;
-    
+
+    /**
+     * 0=Character
+     * 1=Keyword
+     * 2=Token
+     * Esta variable se utiliza para saber que tipo de elemento se esta simulando en el programa generado del lexer
+     */
+    private int lexer_kind;
+
     /**
      * Contiene el alfabeto que es utilizado en el automata
      */
@@ -565,6 +573,14 @@ public class Automata {
      */
     public void agregarEstado(Nodo estado){
         this.estados.add(estado);
+    }
+
+    public int getLexer_kind() {
+        return lexer_kind;
+    }
+
+    public void setLexer_kind(int lexer_kind) {
+        this.lexer_kind = lexer_kind;
     }
 }
             

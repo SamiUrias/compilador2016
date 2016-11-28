@@ -495,13 +495,28 @@ public class Lexer2 {
         return error_log;
     }
 
-
-
-    public int getProductionsLine() {
-        return productionsLine;
+    /************************************* Getters y Setters *********************************************/
+    public ArrayList<SSCharacter> getCharactersArraylist() {
+        return charactersArraylist;
     }
 
-    public void setProductionsLine(int productionsLine) {
-        this.productionsLine = productionsLine;
+    public void setCharactersArraylist(ArrayList<SSCharacter> charactersArraylist) {
+        this.charactersArraylist = charactersArraylist;
+    }
+
+    public ArrayList<Keyword> getKeywordArrayList() {
+        return keywordArrayList;
+    }
+
+    public void setKeywordArrayList(ArrayList<Keyword> keywordArrayList) {
+        this.keywordArrayList = keywordArrayList;
+    }
+
+    public ArrayList<Token> getTokensArrayList() {
+        return tokensArrayList;
+    }
+
+    public void setTokensArrayList(ArrayList<Token> tokensArrayList) {
+        this.tokensArrayList = tokensArrayList;
     }
 }

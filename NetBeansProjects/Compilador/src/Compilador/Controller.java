@@ -1,17 +1,18 @@
 package Compilador;
 
 
-import Automata.OpExtra;
-import com.sun.xml.internal.bind.v2.model.annotation.RuntimeAnnotationReader;
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
+import ProgramaGenerado.AnalizadorLexico;
+import lexer.Keyword;
 import lexer.Lexer2;
 import GUI.GUI;
 import Parser.Parser;
+import lexer.SSCharacter;
+import lexer.Token;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigInteger;
+import java.util.ArrayList;
 
 /**
  * Created by Samuel on 24/11/2016.
@@ -26,6 +27,11 @@ public class Controller {
 
     ActionListener actionListenerLexer;                     //Action listener para la interfaz grafica
     boolean existeDocumento = false;                        //Almacena la posibilidad de que exista el documento
+
+
+
+    /*Atributos de control de flujo*/
+    boolean createLexerProgram = true;
 
 
     //Este Runnable es el thread que se utiliza para hacer el parseo del documento.
@@ -89,8 +95,16 @@ public class Controller {
         if (existeDocumento == true) {
             lexer.analizar(documento);
             System.out.println("Se ha terminado el proceso del lexer");
-            parser = new Parser(documento);
-            parser.analizar(documento);
+
+
+            //Crea el lexer si la variable de control de flujo 'createLexerProgram' es verdara
+            if(createLexerProgram){
+                crearProgramaGeneradoDeLexer(lexer.getCharactersArraylist(), lexer.getKeywordArrayList(),
+                        lexer.getTokensArrayList());
+            }
+
+            //parser = new Parser(documento);
+            //parser.analizar(documento);
         }
         else{
             System.out.println("No existe el documento");
@@ -111,5 +125,22 @@ public class Controller {
             gui.showMsgboxError();
             existeDocumento = false;
         }
+    }
+
+
+    /**
+     * Este metodo se encarga de guiar el proceso de la creacion del programa generado de lexer.
+     * Basicamente crea el """lexer"""
+     * @param characters
+     * @param keywords
+     */
+    public void crearProgramaGeneradoDeLexer(ArrayList<SSCharacter> characters, ArrayList<Keyword> keywords, ArrayList<Token> tokens){
+
+        //Crea una instancia de analizadorLexico
+        AnalizadorLexico analizador_lexico_programa_generado = new AnalizadorLexico(characters,keywords,tokens);
+        analizador_lexico_programa_generado.imprimirTitulo(); //DEBUG :3
+        analizador_lexico_programa_generado.crearAutomatas();
+        analizador_lexico_programa_generado.crearSimuladores();
+        analizador_lexico_programa_generado.tesing();
     }
 }

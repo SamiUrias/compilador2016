@@ -19,6 +19,14 @@ public class SimuladorAFN {
     /*Automata que se estara simlando*/
     private Automata automata;
 
+    /**
+     * 0=Character
+     * 1=Keyword
+     * 2=Token
+     * Esta variable se utiliza para saber que tipo de elemento se esta simulando en el programa generado del lexer
+     */
+    private int lexer_kind;
+
 
     /**
      * Constructor del simulador de AFN (Automatas finitos no determinstas)
@@ -98,6 +106,12 @@ public class SimuladorAFN {
     public void setAutomata(Automata automata) {
         this.automata = automata;
     }
-    
-    
+
+    public int getLexer_kind() {
+        return lexer_kind;
+    }
+
+    public void setLexer_kind(int lexer_kind) {
+        this.lexer_kind = lexer_kind;
+    }
 }

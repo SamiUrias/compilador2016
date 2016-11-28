@@ -18,8 +18,9 @@ import java.util.ArrayList;
  */
 public class SSCharacter {
 
-    private String token;
-    private SetDecl lexema;
+
+    private String token;       //Nombre (ojo!)
+    private SetDecl lexema;     //Lexema
 
     /**
      * Constructor vacio
@@ -45,5 +46,12 @@ public class SSCharacter {
 
     public SetDecl getLexema() {
         return lexema;
+    }
+
+
+
+    //Devuelve la expresion regular del lexema.
+    public String getRegularExpression(){
+        return lexema.getSet().getRegularExpression();
     }
 }

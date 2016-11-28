@@ -39,11 +39,8 @@
 package GUI;
 
 import Automata.OpExtra;
-import PendientesDeEliminar.RegexAnalyzer;
-import Exception.IdentException;
 import Parser.Parser;
 
-import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -51,11 +48,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.awt.datatransfer.*;
-import java.awt.dnd.*;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.Element;
+
 import lexer.*;
 
 /**
@@ -103,7 +96,7 @@ public class GUI extends JFrame {
     private Parser parser;
     
     /*Se crea una instanacia del analizador de expresiones regulares*/
-    private RegexAnalyzer regexAnalyzer;
+    //private RegexAnalyzer regexAnalyzer;
 
     private static boolean debugLexer =  false;
     private static String debugLexerUrl = "C:\\Users\\Samuel\\Desktop\\bidkar_test\\TheTestC#.ATG";

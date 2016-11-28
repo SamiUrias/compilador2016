@@ -8,8 +8,11 @@ package Automata;
 import java.util.Scanner;
 
 /**
- * Esta clase realiza la simulacion de un AFN
+ * Esta clase realiza la simulacion de un AFN.
+ * Esta fue la primera clase simulador que se hizo durante la fase del automata.
+ * En la fase del lexer se utiliza la version 2 de esta clase 'SimuladorAFN'.
  * @author Moises Urias
+ * @version 1.0
  */
 public class Simulador {
     

@@ -41,9 +41,9 @@ public class main {
 
         /*Variables globales*/
         boolean debugAFN = false;
-        boolean printAFN = true;
+        boolean printAFN = false;
         boolean printTextAFN = false;
-        boolean simularAFN = false;
+        boolean simularAFN = true;
         boolean exitAfterAFN = false;
 
         /*Almacena un arraylist con el alfabeto del automata*/

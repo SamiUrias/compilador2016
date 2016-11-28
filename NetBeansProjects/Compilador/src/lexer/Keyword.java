@@ -1,5 +1,6 @@
 package lexer;
 
+import Automata.OpExtra;
 import lexer.BasicAutomatas.BasicAutomataUtilities;
 
 /**
@@ -34,9 +35,21 @@ public class Keyword {
         if (BasicAutomataUtilities.stringVerifier(pseudoLexema)){
             System.out.println("El pseudoLexema es un String");
             System.out.println("PL: " + pseudoLexema);
+
             //Quita las comillas
+            int primeraComilla = pseudoLexema.indexOf("\"");
+
+            //Cadena intermedia 1
+            String cadena_intermedia_1 = pseudoLexema.substring(primeraComilla+1, pseudoLexema.length());
+            System.out.println("CI1: " + cadena_intermedia_1);
+            OpExtra.leerPantalla();
+
+            int segundaComilla = cadena_intermedia_1.indexOf("\"");
+            String cadena_intermedia_2 = cadena_intermedia_1.substring(0, segundaComilla);
+            System.out.println("CI2: " + cadena_intermedia_2);
+
             /*Solamente se le quitan las comillas a los Keywords porque estos son una concatenación*/
-            lexema = pseudoLexema.substring(1,pseudoLexema.length()-1);
+            lexema = cadena_intermedia_2;
         }
 
         System.out.println("L: " + lexema);

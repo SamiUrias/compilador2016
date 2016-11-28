@@ -223,6 +223,10 @@ public class Set {
         * Si tiene un numero, se obtiene el numero. Y se obtiene el char correspondiente a ese numero.*/
         if (basicSet.getCharNumber() >= 0){
             regex = String.valueOf(Character.toString((char)basicSet.getCharNumber()));
+
+            System.out.println("char number: " + basicSet.getCharNumber());
+            System.out.println("char: \'" + regex+"\'");
+            //OpExtra.leerPantalla();
         }
 
         //DEBUG

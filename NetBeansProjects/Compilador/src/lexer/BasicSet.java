@@ -88,6 +88,22 @@ public class BasicSet {
                 isChar = true;
             }
         }
+
+        else if(cadena.substring(0,1).equals("\'")){
+            System.out.println("Se encontro un CHAR que esta entre comillas");
+
+
+            /*Se combierte el caracter encontrado entre las comillas*/
+            System.out.println("\'" + cadena.substring(1,2)+"\'");
+            char character = Character.valueOf(cadena.charAt(1));
+            int ascii =  (int)character;
+            System.out.println("Character: " + character);
+            System.out.println("ascii: " + ascii);
+            charNumber = ascii;
+
+
+            isChar = true;
+        }
         return isChar;
     }
 
